@@ -13,7 +13,8 @@ dependencies {
 	addFlatDirResolver('root-lib', new File(rootDir, 'lib'))
     addFlatDirResolver('ingrid-lib', new File(rootDir, 'lib/ingrid'))
     addFlatDirResolver('jetty-lib', new File(rootDir, 'lib/jetty'))
-    addFlatDirResolver('spring-lib', new File(rootDir, 'lib/spring')) 
+    addFlatDirResolver('spring-lib', new File(rootDir, 'lib/spring'))
+    addFlatDirResolver('poi-lib', new File(rootDir, 'lib/poi')) 
         
     //providedCompile ":jetty:6.1.14"
     clientModule(['providedCompile'], ":jsp-2.1:6.1.14") { 
@@ -32,6 +33,8 @@ dependencies {
     }
     
     clientModule(['compile'], ":ingrid-utils:1.2-dev") {
+    	dependency(":xstream:1.1.2")
+    	dependency(":xpp3:1.1.2a")
     }
     
     compile ":ingrid-communication:1.2-dev"
@@ -49,6 +52,15 @@ dependencies {
     providedCompile ":ingrid-base-webapp-jsp:0.1-dev"    
     providedCompile ":ingrid-base-webapp:0.1-dev"
     
+    
+    clientModule(['compile'], ":poi:3.2-FINAL-20081019") {
+    	dependency(":log4j:1.2.13")
+    	dependency(":commons-logging:1.1")
+    }
+    
+    providedCompile ":commons-fileupload:1.2.1"
+    
+    compile ":lucene-core:2.4.1"
        
 }
 

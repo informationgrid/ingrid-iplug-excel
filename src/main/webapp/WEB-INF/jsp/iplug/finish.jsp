@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<%@ include file="/WEB-INF/jsp/base/include.jsp" %>
 <html>
 <head>
-	<title>Grids CSS Example - YUI Grids - Special Nesting Grid B: 1/3 - 1/3 - 1/3</title>
+	<title>iPlug Excel</title>
 	<link rel="stylesheet" type="text/css" href="../css/yui/reset-fonts-grids/reset-fonts-grids.css"> 
 </head>
 
@@ -22,16 +21,15 @@
 			<!-- the first child of a Grid needs the "first" class -->
 			<div class="yui-u first">
 				<p>
-					<a href="communication.html">Setup Communication</a>
-					<a href="workingDir.html">Basic Setup</a>
-					<a href="indexing.html">Index Creation</a>
 				</p>
 			</div>	
 	
 			<div class="yui-u">
 				<p>
 				
-				Welcome in your Admin Configuration Site 
+				<form action="finish.html" method="post">
+					<input type="submit" value="Plugdescription Speichern">
+				</form> 
 							
 				</p>
 			</div>

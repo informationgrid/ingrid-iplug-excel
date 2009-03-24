@@ -16,8 +16,6 @@ public class ExcelConfigurationController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject commandObject) {
-		System.out.println("ExcelConfigurationController.welcome() "
-				+ commandObject.getWorkingDir());
 		return "/iplug/welcome";
 	}
 

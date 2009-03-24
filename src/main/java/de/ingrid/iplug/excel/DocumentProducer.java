@@ -28,7 +28,6 @@ public class DocumentProducer implements IDocumentProducer {
 	private Iterator<HSSFRow> _rowIterator;
 
 	public boolean hasNext() {
-		System.out.println("DocumentProducer.hasNext()");
 		boolean hasNext = _rowIterator == null ? false : _rowIterator.hasNext();
 		if (!hasNext) {
 			if (_currentSheet < _numberOfSheets) {
@@ -43,7 +42,6 @@ public class DocumentProducer implements IDocumentProducer {
 	}
 
 	public Document next() {
-		System.out.println("DocumentProducer.next()");
 		HSSFRow row = _rowIterator.next();
 		Iterator<HSSFCell> cellIterator = row.cellIterator();
 		Document document = new Document();

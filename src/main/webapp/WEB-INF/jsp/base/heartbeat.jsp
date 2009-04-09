@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/base/include.jsp" %>
 <html>
 <head>
-	<title>Working Dir</title>
+	<title>Heart Beat</title>
 	<link rel="stylesheet" type="text/css" href="../css/yui/reset-fonts-grids/reset-fonts-grids.css"> 
 </head>
 
@@ -21,23 +21,29 @@
 	
 			<!-- the first child of a Grid needs the "first" class -->
 			<div class="yui-u first">
-				<p>A</p>
+				<p>
+				</p>
 			</div>	
 	
 			<div class="yui-u">
 				<p>
-					<div id="myDialog"> 
-	 					<div class="hd">Please enter your information</div> 
-	    				<div class="bd"> 
-	        				<form:form name="dlgForm" method="POST" action="workingDir.html" modelAttribute="plugDescription"> 
-            					<p>In diesem Folder wird der Index gespeichert.</p> 
-	            				<label for="workingDir">Working Directory:</label>
-	            				<form:input path="workinDirectory" />
-	            				<input type="submit" value="Weiter" /> 
-	        				</form:form> 
-	    				</div> 
-					</div>
 				
+				<c:if test="${heartBeat.beatable}">
+					<form action="heartbeat.html" method="POST">
+						<c:choose>
+							<c:when test="${!heartBeat.enable}">
+								<input type="hidden" name="start" value="true">
+								<input type="submit" value="Start">
+							</c:when>
+							<c:otherwise>
+								<input type="hidden" name="start" value="false">
+								<input type="submit" value="Stop">
+							</c:otherwise>
+						</c:choose>
+						
+					</form>
+				</c:if>
+							
 				</p>
 			</div>
 	

@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.ingrid.admin.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.SheetContainer.Sheet;
 import de.ingrid.iplug.excel.SheetContainer.Sheet.Column;
-import de.ingrid.utils.PlugDescription;
-import de.ingrid.utils.xml.XMLSerializer;
 
 @Controller
 @SessionAttributes(value = { "plugDescription", "tableListCommand",
 		"uploadBean" })
 @RequestMapping("/iplug/finish.html")
-public class FinishController {
+public class ExcelFinishController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String finish() {
@@ -35,12 +33,6 @@ public class FinishController {
 			@ModelAttribute("uploadBean") UploadBean uploadBean)
 			throws IOException {
 
-		File workinDirectory = new File(plugdescriptionCommandObject
-				.getWorkingDir());
-		PlugDescription plugDescription = new PlugDescription();
-		plugDescription.setWorkinDirectory(workinDirectory);
-		plugDescription.addPartner(plugdescriptionCommandObject.getPartner());
-		plugDescription.addProvider(plugdescriptionCommandObject.getProvider());
 		List<TableCommand> tableCommands = tableListCommand.getTableCommands();
 		SheetContainer sheetContainer = new SheetContainer();
 		for (TableCommand tableCommand : tableCommands) {
@@ -51,20 +43,18 @@ public class FinishController {
 				Column column = new SheetContainer.Sheet.Column();
 				column.setName(headString);
 				sheet.addColumn(column);
+				plugdescriptionCommandObject.addToList("fields", headString);
 			}
 			sheetContainer.addSheet(sheet);
 		}
-		plugDescription.put("sheets", sheetContainer);
-
-		String plugDescriptionFile = System.getProperty("plugDescription");
-		workinDirectory.mkdirs();
-		XMLSerializer serializer = new XMLSerializer();
-		serializer.serialize(plugDescription, new File(plugDescriptionFile));
-
+		plugdescriptionCommandObject.put("sheets", sheetContainer);
+		plugdescriptionCommandObject.setRecordLoader(false);
+		File workinDirectory = plugdescriptionCommandObject
+				.getWorkinDirectory();
 		FileOutputStream outputStream = new FileOutputStream(new File(
 				workinDirectory, "datasource.xls"));
 		outputStream.write(uploadBean.getFile());
 		outputStream.close();
-		return "redirect:/base/welcome.html";
+		return "redirect:/base/save.html";
 	}
 }

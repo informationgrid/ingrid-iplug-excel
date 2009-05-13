@@ -16,62 +16,6 @@
 		.yui-skin-sam .yui-dt-liner { white-space:nowrap; } 
 	</style>
 	
-	
-						
-<script type="text/javascript" >
-<c:set var="tableCounter" value="0" />
-<c:forEach items="${tableListCommand.tableCommands}" var="table" >
-YAHOO.example.Data_${tableCounter} = {
-    bookorders: [
-        <c:forEach items="${table.rows}" var="row" >
-        {
-        	<c:set var="columnCounter" value="0" />
-			<c:forEach items="${row.cells}" var="cell" >
-				${table.head.headers[columnCounter]}:"${cell}",
-				<c:set var="columnCounter" value="${columnCounter+1}" />
-			</c:forEach>
-        },
-        </c:forEach>         
-    ]
-}
-
-YAHOO.util.Event.addListener(window, "load", function() {
-    YAHOO.example.Basic = function() {
-        var myColumnDefs = [
-            <c:forEach items="${table.head.headers}" var="head" >
-        	   	{key:"${head}", resizeable:true, editor: new YAHOO.widget.TextareaCellEditor()},
-            </c:forEach>         
-        ];
-
-        var myDataSource = new YAHOO.util.DataSource(YAHOO.example.Data_${tableCounter}.bookorders);
-        myDataSource.responseType = YAHOO.util.DataSource.TYPE_JSARRAY;
-        myDataSource.responseSchema = {
-            fields: [
-         			<c:forEach items="${table.head.headers}" var="head" >
-                	   	"${head}",
-                    </c:forEach>         
-                    ]
-        };
-
-        var myDataTable = new YAHOO.widget.DataTable("basic_${tableCounter}",
-                myColumnDefs, myDataSource, {caption:"DataTable Caption"});
-
-        myDataTable.subscribe("cellClickEvent", myDataTable.onEventShowCellEditor); 
-        
-        return {
-            oDS: myDataSource,
-            oDT: myDataTable
-        };
-    }();
-});
-
-
-<c:set var="tableCounter" value="${tableCounter+1}" />
-</c:forEach>
-</script>	
-	
-	
-	
 </head>
 
 
@@ -101,30 +45,76 @@ YAHOO.util.Event.addListener(window, "load", function() {
 			<div class="yui-u">
 				<p>
 
-					<c:set var="tableCounter" value="0" />
-					<c:forEach items="${tableListCommand.tableCommands}" var="table" >
-						<div id="basic_${tableCounter}"></div>
-						<form:form method="post" modelAttribute="tableListCommand">
-			    			<fieldset>
-	        					<legend>Index Feldnamen abändern</legend>
-	        					<c:set var="headerCounter" value="0" />
-	        					<c:forEach items="${table.head.headers}" var="head" >
-							        <form:input path="tableCommands[${tableCounter}].head.headers[${headerCounter}]" />
-							        <c:set var="headerCounter" value="${headerCounter+1}" />
-            					</c:forEach>         
-						        <input type="submit" value="Umbenennen"> 
-							</fieldset>
-						</form:form>
-						
-						<c:set var="tableCounter" value="${tableCounter+1}" />
-					</c:forEach>						
-					
 					<hr/>
-					<form:form method="post" modelAttribute="tableListCommand">
-						<input type="hidden" name="finish"/>
-						<input type="submit" value="Weiter">
-					</form:form>
-					
+					<a href="finish.html">Weiter</a>
+
+
+
+	<c:set var="tableCounter" value="0" />
+	<c:forEach items="${tableListCommand.tableCommands}" var="table" >
+		<div id="markup_${tableCounter}">
+			<table id="table_${tableCounter}">
+				<thead>
+					<tr>
+						<c:forEach items="${table.head.headers}" var="head" >
+	    					<th>${head}</th>       	   		
+		            	</c:forEach>
+					</tr>
+				</thead>
+				<tbody>
+		    	   	<c:forEach items="${table.rows}" var="row" >
+		    	   		<tr>
+							<c:forEach items="${row.cells}" var="cell" >
+								<td>${cell}</td>
+							</c:forEach>
+						</tr>
+			        </c:forEach>
+		        </tbody>
+	      	</table>
+      	</div>
+
+		<script>
+		YAHOO.util.Event.addListener(window, "load", function() {
+		    YAHOO.example.EnhanceFromMarkup = new function() {
+		        var myColumnDefs = [
+						<c:set var="headerCounter" value="0" />                            	
+						<c:forEach items="${table.head.headers}" var="head" >
+							{key:"<form id=\"${tableCounter}_${headerCounter}\" action=\"mapping.html\" method=\"post\"><input name=\"val\" value=\"${head}\"/><input type=\"hidden\" name=\"table\" value=\"${tableCounter}\" /><input type=\"hidden\" name=\"column\" value=\"${headerCounter}\" /><input type=\"submit\"/></form>"},
+							<c:set var="headerCounter" value="${headerCounter+1}" />
+		            	</c:forEach>
+		        ];
+		
+		
+		        this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("table_${tableCounter}"));
+		        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
+		        this.myDataSource.responseSchema = {
+		            fields: [
+							<c:set var="headerCounter" value="0" />
+		     				<c:forEach items="${table.head.headers}" var="head" >
+			     				{key:"<form id=\"${tableCounter}_${headerCounter}\" action=\"mapping.html\" method=\"post\"><input name=\"val\" value=\"${head}\"/><input type=\"hidden\" name=\"table\" value=\"${tableCounter}\" /><input type=\"hidden\" name=\"column\" value=\"${headerCounter}\" /><input type=\"submit\"/></form>"},
+								<c:set var="headerCounter" value="${headerCounter+1}" />
+			            	</c:forEach>
+		
+		            ]
+		        };
+		
+		        this.myDataTable = new YAHOO.widget.DataTable("markup_${tableCounter}", myColumnDefs, this.myDataSource);
+		    };
+		});
+		
+		</script>
+      	
+      	
+	<c:set var="tableCounter" value="${tableCounter+1}" />      	         
+	</c:forEach>
+</div>
+
+
+
+
+
+
+
 				</p>
 			</div>
 	

@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import de.ingrid.admin.PlugdescriptionCommandObject;
+import de.ingrid.admin.command.PlugdescriptionCommandObject;
+
 
 @Controller
 @RequestMapping(value = "/iplug/welcome.html")

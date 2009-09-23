@@ -2,7 +2,8 @@ package de.ingrid.iplug.excel;
 
 import org.springframework.stereotype.Service;
 
-import de.ingrid.admin.IPlugdescriptionFieldFilter;
+import de.ingrid.admin.object.IPlugdescriptionFieldFilter;
+
 
 @Service
 public class MappingFilter implements IPlugdescriptionFieldFilter {

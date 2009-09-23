@@ -47,6 +47,7 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-utils</artifactId>
+			<version>1.2.3-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -55,6 +56,7 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-communication</artifactId>
+			<version>1.2.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
             <groupId>de.ingrid</groupId>
@@ -80,6 +82,11 @@
 		    <groupId>commons-fileupload</groupId>
 		    <artifactId>commons-fileupload</artifactId>
 		    <version>1.2.1</version>
+		</dependency>
+		<dependency>
+    		<groupId>commons-io</groupId>
+    		<artifactId>commons-io</artifactId>
+    		<version>1.3.2</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.poi</groupId>
@@ -108,6 +115,7 @@
                 </executions>
             </plugin>
 		
+			
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>maven-jetty-plugin</artifactId>
@@ -128,7 +136,7 @@
 							<maxIdleTime>60000</maxIdleTime>
 						</connector>
 					</connectors>
-					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
 			</plugin>
  			<plugin>

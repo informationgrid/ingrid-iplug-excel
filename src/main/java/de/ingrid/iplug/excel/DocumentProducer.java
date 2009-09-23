@@ -15,7 +15,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import de.ingrid.admin.IDocumentProducer;
+
+import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.excel.SheetContainer.Sheet;
 import de.ingrid.iplug.excel.SheetContainer.Sheet.Column;
 import de.ingrid.utils.PlugDescription;

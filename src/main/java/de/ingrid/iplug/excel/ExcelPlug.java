@@ -3,7 +3,8 @@ package de.ingrid.iplug.excel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.ingrid.admin.IngridIndexSearcher;
+
+import de.ingrid.admin.service.IngridIndexSearcher;
 import de.ingrid.utils.IPlug;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;

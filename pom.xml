@@ -68,6 +68,7 @@
             <artifactId>ingrid-base-webapp</artifactId>
             <version>0.1-SNAPSHOT</version>
             <classifier>res</classifier>
+            <type>zip</type>
         </dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>

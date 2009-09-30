@@ -24,27 +24,31 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Datei auswählen</h1>
-		<div class="controls">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
-		</div>
-		<div class="controls cBottom">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
-		</div>
+		<h1 id="head">Daten Mappings</h1>
 		<div id="content">
-			<h2>Wählen Sie eine Excel Datei aus, die Sie indizieren möchten</h2>
-			<form:form  enctype="multipart/form-data" modelAttribute="uploadBean"> 
-				<table id="konfigForm">
-					<tr>
-						<td class="leftCol">Excel Datei:</td>
-						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
-					</tr>
-				</table>
-			</form:form>
+			<h2>Folgende Excel Sheets sind bereits gemappt</h2>
+			<table class="data">
+				<tr>
+					<th>Pfad</th>
+					<th>Sheet</th>
+					<th>&nbsp;</th>
+				</tr>
+				<tr>
+					<td>/abc/test.xls</td>
+					<td>Sheet1</td>
+					<td>
+						<form>
+							<button>Löschen</button>
+							<button>Bearbeiten</button>
+						</form>
+					</td>
+				</tr>
+			</table>
+			
+			<br/>
+			<br/>
+			<button onclick="document.location = 'upload.html'">Neue Excel Datei mappen</button>
+			
 		</div>
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>

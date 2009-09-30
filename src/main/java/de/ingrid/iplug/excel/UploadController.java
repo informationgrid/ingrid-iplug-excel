@@ -76,7 +76,7 @@ public class UploadController {
 		}
 		model.addAttribute("tableListCommand", new TableListCommand(list));
 
-		return "redirect:/iplug/mapping.html";
+		return "redirect:/iplug/settings.html";
 
 	}
 

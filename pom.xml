@@ -107,7 +107,7 @@
                         </goals>
                         <configuration>
                             <source>
-                                ant.unzip(src: "${settings.localRepository}/de/ingrid/ingrid-base-webapp/0.1-SNAPSHOT/ingrid-base-webapp-0.1-SNAPSHOT-res.jar",
+                                ant.unzip(src: "${settings.localRepository}/de/ingrid/ingrid-base-webapp/0.1-SNAPSHOT/ingrid-base-webapp-0.1-SNAPSHOT-res.zip",
                                     dest: 'src/main/webapp')
                             </source>
                         </configuration>

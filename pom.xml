@@ -67,7 +67,7 @@
             <groupId>de.ingrid</groupId>
             <artifactId>ingrid-base-webapp</artifactId>
             <version>0.1-SNAPSHOT</version>
-            <classifier>jsp</classifier>
+            <classifier>res</classifier>
         </dependency>
 		<dependency>
 			<groupId>org.apache.lucene</groupId>

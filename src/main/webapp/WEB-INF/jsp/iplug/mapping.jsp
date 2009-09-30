@@ -1,133 +1,101 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <%@ include file="/WEB-INF/jsp/base/include.jsp" %>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="de">
 <head>
-	<title>iPlug Excel</title>
-	<link rel="stylesheet" type="text/css" href="../css/yui/reset-fonts-grids/reset-fonts-grids.css">
-	
-	<!-- Combo-handled YUI CSS files: -->
-	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/combo?2.7.0/build/datatable/assets/skins/sam/datatable.css">
-	<!-- Combo-handled YUI JS files: -->
-	<script type="text/javascript" src="http://yui.yahooapis.com/combo?2.7.0/build/yahoo-dom-event/yahoo-dom-event.js&2.7.0/build/dragdrop/dragdrop-min.js&2.7.0/build/element/element-min.js&2.7.0/build/datasource/datasource-min.js&2.7.0/build/datatable/datatable-min.js"></script>
-	 
-	<!--begin custom header content for this example-->
-	<style type="text/css">
-		/* custom styles for this example */
-		.yui-skin-sam .yui-dt-liner { white-space:nowrap; } 
-	</style>
-	
+<title>Portal U Administration</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="author" content="wemove digital solutions" />
+<meta name="copyright" content="wemove digital solutions GmbH" />
+<link rel="StyleSheet" href="../css/base/portal_u.css" type="text/css" media="all" />
+<link rel="StyleSheet" href="../css/iplug/iplug_excel.css" type="text/css" media="all" />
 </head>
-
-
-
-
-<body class=" yui-skin-sam">
-
-
-<!-- the id on the containing div determines the page width. -->
-<!-- #doc = 750px; #doc2 = 950px; #doc3 = 100%; #doc4 = 974px -->
-<div id="doc">					
-	<div id="hd">
-		<p>Header</p>
+<body>
+	<div id="header">
+		<img src="../images/base/logo.gif" width="168" height="60" alt="Portal U" />
+		<h1>Konfiguration</h1>
+		<div id="language"><a href="#">Englisch</a></div>
 	</div>
-	<div id="bd">
-
-		<!-- Use Standard Nesting Grids and Special Nesting Grids to subdivid regions of your layout. -->
-		<!-- Special Nesting Grid B tells three children to split space evenly -->
-		<div class="yui-gb">
 	
-			<!-- the first child of a Grid needs the "first" class -->
-			<div class="yui-u first">
-				<p>
-				</p>
-			</div>	
+	<div id="help"><a href="#">[?]</a></div>
 	
-			<div class="yui-u">
-				<p>
-
-					<hr/>
-					<a href="finish.html">Weiter</a>
-
-
-
-	<c:set var="tableCounter" value="0" />
-	<c:forEach items="${tableListCommand.tableCommands}" var="table" >
-		<div id="markup_${tableCounter}">
-			<table id="table_${tableCounter}">
-				<thead>
-					<tr>
-						<c:forEach items="${table.head.headers}" var="head" >
-	    					<th>${head}</th>       	   		
-		            	</c:forEach>
-					</tr>
-				</thead>
-				<tbody>
-		    	   	<c:forEach items="${table.rows}" var="row" >
-		    	   		<tr>
-							<c:forEach items="${row.cells}" var="cell" >
-								<td>${cell}</td>
-							</c:forEach>
-						</tr>
-			        </c:forEach>
-		        </tbody>
-	      	</table>
-      	</div>
-
-		<script>
-		YAHOO.util.Event.addListener(window, "load", function() {
-		    YAHOO.example.EnhanceFromMarkup = new function() {
-		        var myColumnDefs = [
-						<c:set var="headerCounter" value="0" />                            	
-						<c:forEach items="${table.head.headers}" var="head" >
-							{key:"<form id=\"${tableCounter}_${headerCounter}\" action=\"mapping.html\" method=\"post\"><input name=\"val\" value=\"${head}\"/><input type=\"hidden\" name=\"table\" value=\"${tableCounter}\" /><input type=\"hidden\" name=\"column\" value=\"${headerCounter}\" /><input type=\"submit\"/></form>"},
-							<c:set var="headerCounter" value="${headerCounter+1}" />
-		            	</c:forEach>
-		        ];
-		
-		
-		        this.myDataSource = new YAHOO.util.DataSource(YAHOO.util.Dom.get("table_${tableCounter}"));
-		        this.myDataSource.responseType = YAHOO.util.DataSource.TYPE_HTMLTABLE;
-		        this.myDataSource.responseSchema = {
-		            fields: [
-							<c:set var="headerCounter" value="0" />
-		     				<c:forEach items="${table.head.headers}" var="head" >
-			     				{key:"<form id=\"${tableCounter}_${headerCounter}\" action=\"mapping.html\" method=\"post\"><input name=\"val\" value=\"${head}\"/><input type=\"hidden\" name=\"table\" value=\"${tableCounter}\" /><input type=\"hidden\" name=\"column\" value=\"${headerCounter}\" /><input type=\"submit\"/></form>"},
-								<c:set var="headerCounter" value="${headerCounter+1}" />
-			            	</c:forEach>
-		
-		            ]
-		        };
-		
-		        this.myDataTable = new YAHOO.widget.DataTable("markup_${tableCounter}", myColumnDefs, this.myDataSource);
-		    };
-		});
-		
-		</script>
-      	
-      	
-	<c:set var="tableCounter" value="${tableCounter+1}" />      	         
-	</c:forEach>
-</div>
-
-
-
-
-
-
-
-				</p>
-			</div>
+	<c:set var="active" value="mapping" scope="request"/>
+	<c:import url="../base/subNavi.jsp"></c:import>
 	
-			<div class="yui-u">
-				<p>C</p>
-			</div>
-	
+	<div id="contentBox" class="contentMiddle">
+		<h1 id="head">Welche Daten?</h1>
+		<div class="controls">
+			<a href="#" onclick="document.location='settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../base/save.html';">Mapping Beenden und Speichern</a>
 		</div>
-	
+		<div class="controls cBottom">
+			<a href="#" onclick="document.location='settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../base/save.html';">Mapping Beenden und Speichern</a>
+		</div>
+		<div id="content">
+			<h2>Excel Sheet</h2>
+			<a href="">Globalen Bereich Auswählen</a>
+			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
+			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="background:#F4F4F4">&nbsp;</td>
+					<c:forEach items="${table.head.headers}" var="head" varStatus="i">
+    					<td style="background:#F4F4F4">
+    						<!-- instead of i.index use isIndexed or isFiltered -->
+    						<c:choose>
+    							<c:when test="${i.index == 2 }">
+    								<b>title</b> <a href="">DEL</a><br/>
+    								<b>!= 'aaa'</b> <a href="">DEL</a>
+    							</c:when>
+    							<c:otherwise>
+		    						<a href="">Indizieren</a><br/>
+		    						<a href="">Filter</a>
+    							</c:otherwise>
+    						</c:choose>
+    					</td>       	   		
+	            	</c:forEach>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<c:forEach items="${table.head.headers}" var="head" varStatus="i">
+    					<th <c:if test="${i.index == 2 }">style="background:#DDE9BD;"</c:if>>${head}</th>       	   		
+	            	</c:forEach>
+				</tr>
+	    	   	<c:forEach items="${table.rows}" var="row" begin="0" end="4">
+	    	   		<tr>
+						<td class="rowCountLabel">${i.index +1}</td>
+						<c:forEach items="${row.cells}" var="cell" varStatus="i">
+							<td <c:if test="${i.index == 2 }">style="background:#F5F8EB"</c:if>>${cell}</td>
+						</c:forEach>
+					</tr>
+		        </c:forEach>
+	      	</table>
+	      	</c:forEach>
+	      	<button>&laquo; Vorherige</button>
+	      	<button>Nächste &raquo;</button>
+	      	
+	      	<br/><br/>
+	      	<h2>Index Vorschau</h2>
+	      	<table class="data">
+	      		<tr>
+	      			<th>#</th>
+	      			<th>title</th>
+	      			<th>description</th>
+	      		</tr>
+	      		<tr>
+	      			<td>1</td>
+	      			<td>headline</td>
+	      			<td>description</td>
+	      		</tr>
+	      	</table>
+	      	<br/><br/>
+	      	
+	      </div>	
 	</div>
-	<div id="ft">
-		<p>Footer</p>
-	</div>
-</div>
+	<div id="footer" style="height:100px; width:90%"></div>
 </body>
 </html>

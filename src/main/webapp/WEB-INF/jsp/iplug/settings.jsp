@@ -71,6 +71,7 @@
 			<c:set var="tableCounter" value="0" />
 			<h2>Vorschau Sheet${tableCounter+1}</h2>
 			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
+			<div style="overflow:auto">
 			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">
 				<tr>
 					<th>&nbsp;</th>
@@ -78,7 +79,7 @@
     					<th>${head}</th>       	   		
 	            	</c:forEach>
 				</tr>
-	    	   	<c:forEach items="${table.rows}" var="row" begin="0" end="4" varStatus="i">
+	    	   	<c:forEach items="${table.rows}" var="row" begin="0" end="9" varStatus="i">
 	    	   		<tr>
 						<td class="rowCountLabel">${i.index +1}</td>
 						<c:forEach items="${row.cells}" var="cell" >
@@ -87,7 +88,9 @@
 					</tr>
 		        </c:forEach>
 	      	</table>
-	      	<c:set var="tableCounter" value="${tableCounter+1}" />      	   
+	      	<c:set var="tableCounter" value="${tableCounter+1}" />
+	      	</div>      	   
+	      	<br/><br/>
 	      	</c:forEach>
 	      </div>	
 	</div>

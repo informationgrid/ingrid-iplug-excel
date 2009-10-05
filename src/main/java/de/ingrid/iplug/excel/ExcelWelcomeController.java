@@ -12,12 +12,12 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 @Controller
 @RequestMapping(value = "/iplug/welcome.html")
 @SessionAttributes("plugDescription")
-public class ExcelConfigurationController {
+public class ExcelWelcomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject commandObject) {
-		return "/iplug/welcome";
+		return "redirect:/iplug/upload.html";
 	}
 
 }

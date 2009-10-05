@@ -13,6 +13,18 @@
         <property name="suffix" value=".jsp"></property>
     </bean>
 
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:messages_base</value>
+				<value>classpath:messages</value>
+			</list>
+		</property>
+		<property name="cacheSeconds" value="0" />
+		<property name="fallbackToSystemLocale" value="false"></property>
+	</bean>
+
     <context:component-scan base-package="de.ingrid"/>
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
 		<property name="maxUploadSize" value="1000000"/> 

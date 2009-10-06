@@ -69,6 +69,17 @@
 							</select>
 						</td>
 					</tr>
+					<tr>
+						<td class="leftCol">Relative Wertigkeit:</td>
+						<td>
+							<select name="localRanking">
+								<c:set var="preset" value="5"/>
+								<c:forEach var="i" begin="1" end="10">
+									<option value="${i}" <c:if test="${i == preset}">selected="selected"</c:if>>${i}</option>
+								</c:forEach>
+							</select>
+						</td>
+					</tr>
 				</table>
 			</form>
 			

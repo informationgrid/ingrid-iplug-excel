@@ -24,7 +24,12 @@ public class SettingsController {
 
 	@RequestMapping(value = "/iplug/settings.html", method = RequestMethod.POST)
 	public String postSettings(@ModelAttribute("sheets") Sheets sheets){
-			// todo
+		System.out.println("SettingsController.postSettings() size: " +sheets.getSheets().size());
+		System.out.println("SettingsController.postSettings() desc: " +sheets.getSheets().get(0).getDescription());
+		System.out.println("SettingsController.postSettings() isFirstIsLabel: " +sheets.getSheets().get(0).isFirstIsLabel());
+		System.out.println("SettingsController.postSettings() documentType: " +sheets.getSheets().get(0).getDocumentType());
+
+		
 		return "redirect:/iplug/mapping.html";
 	}
 

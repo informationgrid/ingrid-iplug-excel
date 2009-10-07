@@ -91,6 +91,7 @@ public class UploadController {
 					de.ingrid.iplug.excel.model.Point point = new de.ingrid.iplug.excel.model.Point(
 							columnCount, rowCounter);
 					// TODO handle different values for example: formula, number
+					// TODO set filename
 					// etc
 					values.addValue(point, cell.toString());
 					columnCount++;
@@ -99,8 +100,12 @@ public class UploadController {
 			}
 		}
 		model.addAttribute("sheets", sheets);
+		
+		if(sheets.getSheets().size() == 1){
+			return "redirect:/iplug/settings.html";
+		}
 
-		return "redirect:/iplug/settings.html";
+		return "redirect:/iplug/previewExcelFile.html";
 
 	}
 

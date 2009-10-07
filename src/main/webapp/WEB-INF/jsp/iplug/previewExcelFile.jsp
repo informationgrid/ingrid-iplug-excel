@@ -25,7 +25,7 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Weitere Angaben</h1>
+		<h1 id="head">Sheet auswählen</h1>
 		<div class="controls">
 			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
@@ -37,34 +37,12 @@
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
-			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
+			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
 			<form:form method="post" action="" modelAttribute="sheets"> 
-				<table id="konfigForm">
-					<tr>
-						<td class="leftCol">Ein Datensatz ist:</td>
-						<td>
-							<form:select path="sheets[0].documentType" items="${documentTypes}"></form:select>
-						</td>
-					</tr>
-					<tr>
-						<td class="leftCol">Label:</td>
-						<td>
-							<form:checkbox path="sheets[0].firstIsLabel" value="true"/> Erste Zeile / Spalte enthält Überschriften
-						</td>
-					</tr>
-					<tr>
-						<td class="leftCol">Beschreibung der Daten:</td>
-						<td>
-							<form:input path="sheets[0].description"/>
-						</td>
-					</tr>
-				</table>
-			</form:form>
-			
-			
-			<c:set var="tableCounter" value="0" />
 			<c:forEach items="${sheets.sheets}" var="sheet" varStatus="i">
-			<h2>Vorschau Sheet${i.index+1}</h2>
+			<h2>
+				<input type="radio" name="sheetIndex" value="${i.index}"/> Sheet${i.index+1}
+			</h2>
 			<div style="overflow:auto">
 			<table class="sheet" cellpadding="0" cellspacing="0">
 				<tr>
@@ -85,6 +63,7 @@
 	      	</div>      	   
 	      	<br/><br/>
 	      	</c:forEach>
+	      	</form:form>
 	      </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>

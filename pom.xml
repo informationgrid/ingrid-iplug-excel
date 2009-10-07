@@ -95,6 +95,34 @@
 		    <artifactId>poi</artifactId>
 		    <version>3.2-FINAL</version>
 		</dependency>
+				<dependency>
+            <groupId>de.ingrid</groupId>
+            <artifactId>ingrid-iplug</artifactId>
+            <version>1.2.2-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>quartz</groupId>
+                    <artifactId>quartz</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>tomcat</groupId>
+                    <artifactId>jasper-compiler</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>tomcat</groupId>
+                    <artifactId>jasper-runtime</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jetty</groupId>
+                    <artifactId>servlet-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>jetty</groupId>
+                    <artifactId>org.mortbay.jetty</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

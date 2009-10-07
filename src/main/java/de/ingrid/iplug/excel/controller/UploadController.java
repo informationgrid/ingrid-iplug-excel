@@ -1,4 +1,4 @@
-package de.ingrid.iplug.excel;
+package de.ingrid.iplug.excel.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import de.ingrid.iplug.excel.UploadBean;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;

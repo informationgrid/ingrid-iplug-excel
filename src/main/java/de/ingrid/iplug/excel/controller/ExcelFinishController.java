@@ -1,4 +1,4 @@
-package de.ingrid.iplug.excel;
+package de.ingrid.iplug.excel.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
-import de.ingrid.iplug.excel.SheetContainer.Sheet;
-import de.ingrid.iplug.excel.SheetContainer.Sheet.Column;
+import de.ingrid.iplug.excel.UploadBean;
+import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Sheet;
 
 @Controller
-@SessionAttributes(value = { "plugDescription", "tableListCommand",
-		"uploadBean" })
+@SessionAttributes(value = { "plugDescription", "sheets", "uploadBean" })
 @RequestMapping("/iplug/finish.html")
 public class ExcelFinishController {
 
@@ -29,28 +29,23 @@ public class ExcelFinishController {
 	@RequestMapping(method = RequestMethod.POST)
 	public String postFinish(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("tableListCommand") TableListCommand tableListCommand,
+			@ModelAttribute("sheets") de.ingrid.iplug.excel.model.Sheets sheets,
 			@ModelAttribute("uploadBean") UploadBean uploadBean)
 			throws IOException {
 
-		List<TableCommand> tableCommands = tableListCommand.getTableCommands();
-		SheetContainer sheetContainer = new SheetContainer();
-		for (TableCommand tableCommand : tableCommands) {
-			Sheet sheet = new SheetContainer.Sheet();
-			TableHeadCommand head = tableCommand.getHead();
-			List<String> headers = head.getHeaders();
-			for (String headString : headers) {
-				Column column = new SheetContainer.Sheet.Column();
-				column.setName(headString);
-				sheet.addColumn(column);
-				plugdescriptionCommandObject.addToList("fields", headString);
+		List<Sheet> sheetsList = sheets.getSheets();
+		for (Sheet sheet : sheetsList) {
+			List<Column> columns = sheet.getColumns();
+			for (Column column : columns) {
+				String label = column.getLabel();
+				plugdescriptionCommandObject.addToList("fields", label);
 			}
-			sheetContainer.addSheet(sheet);
 		}
-		plugdescriptionCommandObject.put("sheets", sheetContainer);
+		plugdescriptionCommandObject.put("sheets", sheets);
 		plugdescriptionCommandObject.setRecordLoader(false);
 		File workinDirectory = plugdescriptionCommandObject
 				.getWorkinDirectory();
+		workinDirectory.mkdirs();
 		FileOutputStream outputStream = new FileOutputStream(new File(
 				workinDirectory, "datasource.xls"));
 		outputStream.write(uploadBean.getFile());

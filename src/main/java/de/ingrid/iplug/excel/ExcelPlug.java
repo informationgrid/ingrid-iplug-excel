@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.service.IngridIndexSearcher;
-import de.ingrid.utils.IPlug;
+import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
@@ -12,12 +12,13 @@ import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 
 @Service
-public class ExcelPlug implements IPlug {
+public class ExcelPlug extends HeartBeatPlug {
 
 	private final IngridIndexSearcher _indexSearcher;
 
 	@Autowired
 	public ExcelPlug(IngridIndexSearcher indexSearcher) {
+		super(10000);
 		_indexSearcher = indexSearcher;
 	}
 
@@ -46,6 +47,11 @@ public class ExcelPlug implements IPlug {
 		IngridHitDetail[] details = _indexSearcher.getDetails(hitArray, query,
 				fields);
 		return details;
+	}
+
+	@Override
+	public boolean isRecordLoader() {
+		return true;
 	}
 
 }

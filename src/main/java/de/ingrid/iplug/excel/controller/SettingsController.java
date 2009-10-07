@@ -1,4 +1,4 @@
-package de.ingrid.iplug.excel;
+package de.ingrid.iplug.excel.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

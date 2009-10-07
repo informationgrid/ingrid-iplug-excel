@@ -29,17 +29,22 @@
 			<h2>Folgende Excel Sheets sind bereits gemappt</h2>
 			<table class="data">
 				<tr>
-					<th>Pfad</th>
+					<th>Datei</th>
 					<th>Sheet</th>
+					<th>Bereich</th>
+					<th>Beschreibung</th>
 					<th>&nbsp;</th>
 				</tr>
 				<tr>
-					<td>/abc/test.xls</td>
+					<td>safghsghj.xls</td>
 					<td>Sheet1</td>
+					<td>A1:D19 / alles</td>
+					<td>Meßwerte 2009, Schwermetalle Elbe </td>
 					<td>
 						<form>
 							<button>Löschen</button>
 							<button>Bearbeiten</button>
+							<button>Weiteres Sheet Mappen</button>
 						</form>
 					</td>
 				</tr>

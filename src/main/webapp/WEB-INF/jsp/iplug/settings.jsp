@@ -25,7 +25,7 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Welche Daten?</h1>
+		<h1 id="head">Weitere Angaben</h1>
 		<div class="controls">
 			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
@@ -37,7 +37,7 @@
 			<a href="#" onclick="document.getElementById('settings').submit();">Weiter</a>
 		</div>
 		<div id="content">
-			<h2>Weitere Einstellungen</h2>
+			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
 			<form method="post" action="" id="settings"> 
 				<table id="konfigForm">
 					<tr>
@@ -62,6 +62,12 @@
 								<option value="0">Sheet1</option>
 								<option value="1">Sheet2</option>
 							</select>
+						</td>
+					</tr>
+					<tr>
+						<td class="leftCol">Beschreibung der Daten:</td>
+						<td>
+							<input type="text" name="desc" value=""/>
 						</td>
 					</tr>
 				</table>

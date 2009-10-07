@@ -11,6 +11,10 @@ public class Column extends AbstractEntry {
 			"E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
 			"R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
 
+	public Column() {
+		super();
+	}
+
 	public Column(Values values, int columnIndex) {
 		super(values, columnIndex);
 		setLabel(getDefaultLabel());

@@ -21,11 +21,6 @@ import de.ingrid.iplug.excel.model.Sheet;
 @RequestMapping("/iplug/finish.html")
 public class ExcelFinishController {
 
-	@RequestMapping(method = RequestMethod.GET)
-	public String finish() {
-		return "/iplug/finish";
-	}
-
 	@RequestMapping(method = RequestMethod.POST)
 	public String postFinish(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,

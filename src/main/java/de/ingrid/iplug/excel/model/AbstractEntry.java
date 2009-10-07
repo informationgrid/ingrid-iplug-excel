@@ -1,10 +1,14 @@
 package de.ingrid.iplug.excel.model;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractEntry {
+public abstract class AbstractEntry implements Externalizable {
 
 	private String _label;
 	private List<Filter> _filters = new ArrayList<Filter>();
@@ -13,8 +17,12 @@ public abstract class AbstractEntry {
 	private boolean _mapped;
 	private boolean _excluded;
 
-	protected final Values _values;
+	protected Values _values;
 	private int _index;
+
+	public AbstractEntry() {
+		// extermalizable
+	}
 
 	public AbstractEntry(Values values, int index) {
 		_values = values;
@@ -78,4 +86,15 @@ public abstract class AbstractEntry {
 	}
 
 	public abstract Serializable getValue(int index);
+
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		_label = in.readUTF();
+
+	}
+
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeUTF(_label);
+
+	}
 }

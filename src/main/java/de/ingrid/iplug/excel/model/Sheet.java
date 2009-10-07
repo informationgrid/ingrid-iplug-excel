@@ -1,9 +1,13 @@
 package de.ingrid.iplug.excel.model;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sheet {
+public class Sheet implements Externalizable {
 
 	private String _fileName;
 	private String _description;
@@ -12,9 +16,9 @@ public class Sheet {
 	private List<Row> _rows = new ArrayList<Row>();
 	private DocumentType _documentType;
 	private boolean _firstIsLabel;
-	private Point _selectFrom;
-	private Point _selectTo;
-	private Values _values;
+	private Point _selectFrom = new Point();
+	private Point _selectTo = new Point();
+	private Values _values = new Values();
 
 	public String getFileName() {
 		return _fileName;
@@ -102,6 +106,56 @@ public class Sheet {
 
 	public Values getValues() {
 		return _values;
+	}
+
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		_fileName = in.readUTF();
+		_description = in.readUTF();
+		_sheetIndex = in.readInt();
+		_firstIsLabel = in.readBoolean();
+
+		_documentType = (DocumentType) in.readObject();
+		int size = in.readInt();
+		_rows.clear();
+		for (int i = 0; i < size; i++) {
+			Row row = new Row();
+			row.readExternal(in);
+			_rows.add(row);
+		}
+
+		size = in.readInt();
+		_columns.clear();
+		for (int i = 0; i < size; i++) {
+			Column column = new Column();
+			column.readExternal(in);
+			_columns.add(column);
+		}
+
+		_values.readExternal(in);
+	}
+
+	public void writeExternal(ObjectOutput out) throws IOException {
+
+		// flat types
+		out.writeUTF(_fileName);
+		out.writeUTF(_description);
+		out.writeInt(_sheetIndex);
+		out.writeBoolean(_firstIsLabel);
+
+		// objects
+		out.writeObject(_documentType);
+		out.writeInt(_rows.size());
+		for (Row row : _rows) {
+			row.writeExternal(out);
+		}
+		out.writeInt(_columns.size());
+		for (Column column : _columns) {
+			column.writeExternal(out);
+		}
+
+		_values.writeExternal(out);
+
 	}
 
 }

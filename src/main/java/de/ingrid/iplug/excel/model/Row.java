@@ -11,6 +11,10 @@ public class Row extends AbstractEntry {
 		super(values, rowIndex);
 	}
 
+	public Row() {
+		super();
+	}
+
 	public String getLabel() {
 		return (getIndex() + 1) + "";
 	}

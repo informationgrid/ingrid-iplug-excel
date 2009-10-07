@@ -29,13 +29,17 @@
 		<div class="controls">
 			<a href="#" onclick="document.location='settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.location='../base/save.html';">Mapping Beenden und Speichern</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
 		<div class="controls cBottom">
 			<a href="#" onclick="document.location='settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.location='../base/save.html';">Mapping Beenden und Speichern</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping Beenden und Speichern</a>
 		</div>
+		<form action="finish.html" method="post" style="display:none" id="submit">
+			
+		</form>
+		
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll</h2>
 			<a href="selectArea.html">Globalen Bereich Auswählen</a> (A3:D7) 

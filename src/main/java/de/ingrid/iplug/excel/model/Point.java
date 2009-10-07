@@ -1,10 +1,19 @@
 package de.ingrid.iplug.excel.model;
 
-public class Point {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class Point implements Externalizable {
 
 	private int _x;
 
 	private int _y;
+
+	public Point() {
+		// externalizable
+	}
 
 	public Point(int x, int y) {
 		_x = x;
@@ -50,6 +59,17 @@ public class Point {
 		if (_y != other._y)
 			return false;
 		return true;
+	}
+
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		_x = in.readInt();
+		_y = in.readInt();
+	}
+
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeInt(_x);
+		out.writeInt(_y);
 	}
 
 }

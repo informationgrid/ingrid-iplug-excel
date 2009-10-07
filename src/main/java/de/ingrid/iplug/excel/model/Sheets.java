@@ -21,12 +21,19 @@ public class Sheets implements Externalizable {
 
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
-		// TODO Auto-generated method stub
-
+		_sheets.clear();
+		int size = in.readInt();
+		for (int i = 0; i < size; i++) {
+			Sheet sheet = new Sheet();
+			sheet.readExternal(in);
+			_sheets.add(sheet);
+		}
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
-		// TODO Auto-generated method stub
-
+		out.writeInt(_sheets.size());
+		for (Sheet sheet : _sheets) {
+			sheet.writeExternal(out);
+		}
 	}
 }

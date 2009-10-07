@@ -29,72 +29,65 @@
 		<div class="controls">
 			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('settings').submit();">Weiter</a>
+			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
 			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('settings').submit();">Weiter</a>
+			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
 			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
-			<form method="post" action="" id="settings"> 
+			<form:form method="post" action="" modelAttribute="sheets"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Ein Datensatz ist:</td>
 						<td>
-							<select>
-								<option value="row">eine Zeile</option>
-								<option value="column">eine Spalte</option>
-							</select>
+							<form:select path="documentType" items="documentTypes"></form:select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Label:</td>
 						<td>
-							<input type="checkbox" name="ignoreFirst" value="true"/> Erste Zeile / Spalte enthält Überschriften
+							<form:checkbox path="firstIsLabel" value="true"/> Erste Zeile / Spalte enthält Überschriften
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Sheet:</td>
 						<td>
-							<select name="sheet">
-								<option value="0">Sheet1</option>
-								<option value="1">Sheet2</option>
-							</select>
+							<form:select path="sheetIndex" items="sheets.sheets"></form:select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Beschreibung der Daten:</td>
 						<td>
-							<input type="text" name="desc" value=""/>
+							<form:input path="description"/>
 						</td>
 					</tr>
 				</table>
-			</form>
+			</form:form>
 			
 			
 			<c:set var="tableCounter" value="0" />
-			<h2>Vorschau Sheet${tableCounter+1}</h2>
-			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
+			<c:forEach items="${sheets.sheets}" var="sheet" varStatus="i">
+			<h2>Vorschau Sheet${i.index+1}</h2>
 			<div style="overflow:auto">
-			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">
+			<table class="sheet" cellpadding="0" cellspacing="0">
 				<tr>
 					<th>&nbsp;</th>
-					<c:forEach items="${table.head.headers}" var="head" >
-    					<th>${head}</th>       	   		
+					<c:forEach items="${sheet.columns}" var="column" >
+    					<th>${column.label}</th>       	   		
 	            	</c:forEach>
 				</tr>
-	    	   	<c:forEach items="${table.rows}" var="row" begin="0" end="9" varStatus="i">
+	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
 	    	   		<tr>
-						<td class="rowCountLabel">${i.index +1}</td>
-						<c:forEach items="${row.cells}" var="cell" >
-							<td>${cell}</td>
+						<td class="rowCountLabel">${row.label}</td>
+						<c:forEach items="${row.values}" var="value" >
+							<td>${value}</td>
 						</c:forEach>
 					</tr>
 		        </c:forEach>
 	      	</table>
-	      	<c:set var="tableCounter" value="${tableCounter+1}" />
 	      	</div>      	   
 	      	<br/><br/>
 	      	</c:forEach>

@@ -2,9 +2,7 @@ package de.ingrid.iplug.excel;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -20,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 
+import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Row;
+import de.ingrid.iplug.excel.model.Sheet;
+import de.ingrid.iplug.excel.model.Sheets;
+import de.ingrid.iplug.excel.model.Values;
+
 @Controller
 @RequestMapping(value = "/iplug/upload.html")
-@SessionAttributes(value = { "uploadBean", "tableListCommand" })
+@SessionAttributes(value = { "uploadBean", "sheets" })
 public class UploadController {
 
 	@InitBinder
@@ -48,33 +52,53 @@ public class UploadController {
 		HSSFWorkbook workbook = new HSSFWorkbook(
 				new ByteArrayInputStream(bytes));
 		int numberOfSheets = workbook.getNumberOfSheets();
-		List<TableCommand> list = new ArrayList<TableCommand>();
+		Sheets sheets = new Sheets();
 		for (int i = 0; i < numberOfSheets; i++) {
-			HSSFSheet sheet = workbook.getSheetAt(i);
-			TableCommand tableCommand = new TableCommand();
-			tableCommand.setHead(new TableHeadCommand());
-			list.add(tableCommand);
-			Iterator<HSSFRow> rowIterator = sheet.rowIterator();
+			HSSFSheet hssfSheet = workbook.getSheetAt(i);
+			Iterator<HSSFRow> rowIterator = hssfSheet.rowIterator();
 
-			int columnCount = 0;
+			// create sheet
+			Sheet sheet = new Sheet();
+			sheets.addSheet(sheet);
+
+			Values values = new Values();
+			sheet.setValues(values);
+
+			int rowCounter = 0;
 			while (rowIterator.hasNext()) {
-				HSSFRow row = (HSSFRow) rowIterator.next();
-				RowCommand rowCommand = new RowCommand();
-				tableCommand.addRow(rowCommand);
-				Iterator<HSSFCell> cellIterator = row.cellIterator();
-				int counter = 0;
+				HSSFRow hssfRow = (HSSFRow) rowIterator.next();
+
+				// create excel row
+				Row row = new Row(values, rowCounter);
+				row.setIndex(rowCounter);
+
+				// add row
+				sheet.addRow(row);
+
+				// create values
+				Iterator<HSSFCell> cellIterator = hssfRow.cellIterator();
+				int columnCount = 0;
 				while (cellIterator.hasNext()) {
-					counter++;
 					HSSFCell cell = cellIterator.next();
-					rowCommand.addCell(cell.toString());
+
+					// create column
+					if (rowCounter == 0) {
+						Column column = new Column(values, columnCount);
+						column.setIndex(columnCount);
+						sheet.addColumn(column);
+					}
+
+					de.ingrid.iplug.excel.model.Point point = new de.ingrid.iplug.excel.model.Point(
+							columnCount, rowCounter);
+					// TODO handle different values for example: formula, number
+					// etc
+					values.addValue(point, cell.toString());
+					columnCount++;
 				}
-				columnCount = columnCount < counter ? counter : columnCount;
-			}
-			for (int j = 0; j < columnCount; j++) {
-				tableCommand.getHead().addHeader("Index_Field_" + j);
+				rowCounter++;
 			}
 		}
-		model.addAttribute("tableListCommand", new TableListCommand(list));
+		model.addAttribute("sheets", sheets);
 
 		return "redirect:/iplug/settings.html";
 

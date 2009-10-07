@@ -1,11 +1,11 @@
 package de.ingrid.iplug.excel.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractEntry {
 
-	private int _index;
 	private String _label;
 	private List<Filter> _filters = new ArrayList<Filter>();
 	private FieldType _fieldType;
@@ -13,12 +13,20 @@ public abstract class AbstractEntry {
 	private boolean _mapped;
 	private boolean _excluded;
 
+	protected final Values _values;
+	private int _index;
+
+	public AbstractEntry(Values values, int index) {
+		_values = values;
+		_index = index;
+	}
+
 	public int getIndex() {
 		return _index;
 	}
 
-	public void setIndex(int columnIndex) {
-		_index = columnIndex;
+	public void setIndex(int index) {
+		_index = index;
 	}
 
 	public String getLabel() {
@@ -69,4 +77,5 @@ public abstract class AbstractEntry {
 		_excluded = excluded;
 	}
 
+	public abstract Serializable getValue(int index);
 }

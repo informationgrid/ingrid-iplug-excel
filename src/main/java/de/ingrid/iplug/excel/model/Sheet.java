@@ -14,6 +14,7 @@ public class Sheet {
 	private boolean _firstIsLabel;
 	private Point _selectFrom;
 	private Point _selectTo;
+	private Values _values;
 
 	public String getFileName() {
 		return _fileName;
@@ -85,6 +86,22 @@ public class Sheet {
 
 	public void setSelectTo(Point selectTo) {
 		_selectTo = selectTo;
+	}
+
+	public void addRow(Row row) {
+		_rows.add(row);
+	}
+
+	public void addColumn(Column column) {
+		_columns.add(column);
+	}
+
+	public void setValues(Values values) {
+		_values = values;
+	}
+
+	public Values getValues() {
+		return _values;
 	}
 
 }

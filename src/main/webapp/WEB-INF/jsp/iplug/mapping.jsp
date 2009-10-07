@@ -25,7 +25,7 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Welche Daten?</h1>
+		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
 			<a href="#" onclick="document.location='settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
@@ -37,8 +37,9 @@
 			<a href="#" onclick="document.location='../base/save.html';">Mapping Beenden und Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Excel Sheet</h2>
-			<a href="">Globalen Bereich Auswählen</a>
+			<h2>Definieren Sie, was indexiert werden soll</h2>
+			<a href="selectArea.html">Globalen Bereich Auswählen</a> (A3:D7) 
+			<a href="excludeDocument.html">Einzelne Zeilen / Spalten ausschließen</a> (7,9,15)
 			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
 			<div style="overflow:auto">
 			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">
@@ -89,8 +90,8 @@
 		        </c:forEach>
 	      	</table>
 	      	</div>
-	      	<button>&laquo; Vorherige</button>
-	      	<button>Nächste &raquo;</button>
+	      	<button>&laquo; Vorherige anzeigen</button>
+	      	<button>Nächste anzeigen &raquo;</button>
 	      	</c:forEach>
 	      	
 	      	<br/><br/>

@@ -49,7 +49,35 @@
 			<c:set var="sheet" value="${sheets.sheets[0]}"/>
 			<div style="overflow:auto">
 			<table class="sheet" cellpadding="0" cellspacing="0">
+				<c:if test="${sheet.documentType == 'ROW'}">
+					<!-- index functions column -->
+					<tr>
+						<td class="fn">&nbsp;</td>
+						<c:forEach items="${sheet.columns}" var="column" >
+    						<td class="fn">
+    							<c:choose>
+    								<c:when test="${column.mapped}">
+    									<b>${column.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    								</c:when>
+    								<c:otherwise>
+		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${column.index}">Indizieren</a><br/>
+    								</c:otherwise>
+    							</c:choose>
+    							
+   								<c:forEach var="f" items="${column.filters}">
+   									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+   								</c:forEach>
+		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${column.index}">Filter</a>
+    						</td>    	   		
+	            		</c:forEach>
+					</tr>
+				
+				</c:if>
+				
 				<tr>
+					<c:if test="${sheet.documentType == 'COLUMN'}">
+						<td class="fn">&nbsp;</td>
+					</c:if>
 					<th>&nbsp;</th>
 					<c:forEach items="${sheet.columns}" var="column" >
     					<th>${column.label}</th>       	   		
@@ -57,6 +85,25 @@
 				</tr>
 	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
 	    	   		<tr>
+		    	   		<c:if test="${sheet.documentType == 'COLUMN'}">
+		    	   			<!-- index functions column -->
+		    	   			<td class="fn">
+		    	   				<c:choose>
+    								<c:when test="${row.mapped}">
+    									<b>${row.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    								</c:when>
+    								<c:otherwise>
+		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=row&index=${row.index}">Indizieren</a><br/>
+    								</c:otherwise>
+    							</c:choose>
+    							
+    							<c:forEach var="f" items="${row.filters}">
+   									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+   								</c:forEach>
+		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=row&index=${row.index}">Filter</a>
+		    	   			</td>
+		    	   		</c:if>
+						
 						<td class="rowCountLabel">${row.label}</td>
 						<c:forEach items="${sheet.columns}" var="col">
 							<td>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>

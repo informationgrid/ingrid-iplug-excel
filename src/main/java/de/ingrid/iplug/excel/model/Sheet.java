@@ -4,8 +4,13 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Sheet implements Externalizable {
 
@@ -106,6 +111,24 @@ public class Sheet implements Externalizable {
 
 	public Values getValues() {
 		return _values;
+	}
+
+	public Map<Integer, List<Serializable>> getValuesAsMap() {
+		HashMap<Integer, List<Serializable>> map = new LinkedHashMap<Integer, List<Serializable>>();
+		List<Row> rows = getRows();
+		int columnSize = getColumns().size();
+		for (Row row : rows) {
+			int rowIndex = row.getIndex();
+			List<Serializable> rowValues = new ArrayList<Serializable>();
+			map.put(rowIndex, rowValues);
+			for (int i = 0; i < columnSize; i++) {
+				Point point = new Point(i, rowIndex);
+				Serializable value = _values.getValue(point);
+				rowValues.add(value);
+			}
+
+		}
+		return map;
 	}
 
 	public void readExternal(ObjectInput in) throws IOException,

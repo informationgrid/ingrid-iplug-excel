@@ -73,11 +73,11 @@
     					<th>${column.label}</th>       	   		
 	            	</c:forEach>
 				</tr>
-	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
+	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9" varStatus="j">
 	    	   		<tr>
 						<td class="rowCountLabel">${row.label}</td>
-						<c:forEach items="${row.values}" var="value" >
-							<td>${value}</td>
+						<c:forEach items="${sheet.columns}" var="col" varStatus="k">
+							<td>${sheet.valuesAsMap[j.index][k.index]}&nbsp;</td>
 						</c:forEach>
 					</tr>
 		        </c:forEach>

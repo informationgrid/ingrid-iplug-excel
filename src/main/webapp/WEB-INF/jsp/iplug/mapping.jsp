@@ -44,6 +44,32 @@
 			<h2>Definieren Sie, was indexiert werden soll</h2>
 			<a href="selectArea.html">Globalen Bereich Ausw‰hlen</a> (A3:D7) 
 			<a href="excludeDocument.html">Einzelne Zeilen / Spalten ausschlieﬂen</a> (7,9,15)
+			
+			<br/>
+			<c:set var="sheet" value="${sheets.sheets[0]}"/>
+			<div style="overflow:auto">
+			<table class="sheet" cellpadding="0" cellspacing="0">
+				<tr>
+					<th>&nbsp;</th>
+					<c:forEach items="${sheet.columns}" var="column" >
+    					<th>${column.label}</th>       	   		
+	            	</c:forEach>
+				</tr>
+	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
+	    	   		<tr>
+						<td class="rowCountLabel">${row.label}</td>
+						<c:forEach items="${sheet.columns}" var="col">
+							<td>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
+						</c:forEach>
+					</tr>
+		        </c:forEach>
+	      	</table>
+	      	</div>      	   
+			
+			
+			
+			
+			####
 			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
 			<div style="overflow:auto">
 			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">

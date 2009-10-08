@@ -55,7 +55,7 @@
 	    	   		<tr>
 						<td class="rowCountLabel">${row.label}</td>
 						<c:forEach items="${sheet.columns}" var="col" varStatus="k">
-							<td>${sheet.valuesAsMap[j.index][k.index]}</td>
+							<td>${sheet.valuesAsMap[j.index][k.index]}&nbsp;</td>
 						</c:forEach>
 					</tr>
 		        </c:forEach>

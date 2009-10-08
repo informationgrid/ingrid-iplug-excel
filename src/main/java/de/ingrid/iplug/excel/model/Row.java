@@ -7,16 +7,13 @@ import java.util.List;
 
 public class Row extends AbstractEntry {
 
-	public Row(Values values, int rowIndex) {
-		super(values, rowIndex);
-	}
-
 	public Row() {
 		super();
 	}
 
-	public String getLabel() {
-		return (getIndex() + 1) + "";
+	public Row(Values values, int rowIndex) {
+		super(values, rowIndex);
+		setLabel(rowIndex + 1 + "");
 	}
 
 	public Serializable getValue(int columnIndex) {

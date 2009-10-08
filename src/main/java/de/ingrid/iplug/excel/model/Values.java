@@ -29,7 +29,6 @@ public class Values implements Externalizable {
 	public Iterator<Point> getPointIterator() {
 		return _values.keySet().iterator();
 	}
-	
 
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
@@ -41,7 +40,10 @@ public class Values implements Externalizable {
 			Serializable serializable = (Serializable) in.readObject();
 			_values.put(point, serializable);
 		}
+	}
 
+	public int getSize() {
+		return _values.size();
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {

@@ -44,7 +44,8 @@
 						<form>
 							<button>Löschen</button>
 							<button>Bearbeiten</button>
-							<button>Weiteres Sheet Mappen</button>
+							<button>Weiteres Sheet mappen</button>
+							<button>Datei aktualisieren</button>
 						</form>
 					</td>
 				</tr>

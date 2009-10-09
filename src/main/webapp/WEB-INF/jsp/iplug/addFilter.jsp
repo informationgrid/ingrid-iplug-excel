@@ -38,28 +38,33 @@
 		<div id="content">
 			<h2>Legen Sie über einen Filter fest, welche Daten indiziert werden sollen</h2>
 			<form method="post" action="addFilter.html" id="addFilter">
+				<input type="hidden" name="index" value="${index}"/>
+				<input type="hidden" name="type" value="${type}"/>
+				
 				<table id="konfigForm">
 					<tr>
-						<td class="leftCol">Zeile / Spalte:</td>
-						<td>A</td>
+						<td class="leftCol">
+							<c:choose>
+								<c:when test="${type == 'col'}">Spalte:</c:when>
+								<c:when test="${type == 'row'}">Zeile:</c:when>
+							</c:choose>
+						</td>
+						<td>${label}</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Filter:</td>
 						<td>
-							<select name="filter">
-								<option value="">ist gleich</option>
-								<option value="">ist ungleich</option>
-								<option value="">enthält</option>
-								<option value="">enthält nicht</option>
-								<option value="">ist größer als</option>
-								<option value="">ist kleiner als</option>
+							<select name="filterType">
+								<c:forEach var="filterType" items="${filterTypes}">
+									<option value="${filterType}">${filterType}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Wert:</td>
 						<td>
-							<input type="text" name="value" value=""/>
+							<input type="text" name="expression" value=""/>
 						</td>
 					</tr>
 				</table>

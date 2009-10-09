@@ -53,21 +53,21 @@
 					<!-- index functions column -->
 					<tr>
 						<td class="fn">&nbsp;</td>
-						<c:forEach items="${sheet.columns}" var="column" >
+						<c:forEach items="${sheet.columns}" var="col" >
     						<td class="fn">
     							<c:choose>
-    								<c:when test="${column.isMapped}">
-    									<b>${column.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    								<c:when test="${col.isMapped}">
+    									<b>${col.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
     								</c:when>
     								<c:otherwise>
-		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${column.index}&label=${column.label}">Indizieren</a><br/>
+		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${col.index}&label=${col.label}">Indizieren</a><br/>
     								</c:otherwise>
     							</c:choose>
     							
-   								<c:forEach var="f" items="${column.filters}">
+   								<c:forEach var="f" items="${col.filters}">
    									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
-		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${column.index}">Filter</a>
+		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${col.index}&label=${col.label}">Filter</a>
     						</td>    	   		
 	            		</c:forEach>
 					</tr>
@@ -100,7 +100,7 @@
     							<c:forEach var="f" items="${row.filters}">
    									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
-		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=row&index=${row.index}">Filter</a>
+		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=row&index=${row.index}&label=${row.label}">Filter</a>
 		    	   			</td>
 		    	   		</c:if>
 						

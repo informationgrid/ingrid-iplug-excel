@@ -8,11 +8,11 @@ public class Filter {
 
 	private String _expression;
 
-	private FilterType _fieldType;
+	private FilterType _filterType;
 
-	public Filter(String expression, FilterType fieldType) {
+	public Filter(String expression, FilterType filterType) {
 		_expression = expression;
-		_fieldType = fieldType;
+		_filterType = filterType;
 	}
 
 	public String getExpression() {
@@ -20,7 +20,7 @@ public class Filter {
 	}
 
 	public FilterType getFieldType() {
-		return _fieldType;
+		return _filterType;
 	}
 
 }

@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.model.Values;
+import de.ingrid.iplug.excel.service.SheetService;
 
 @Controller
 @SessionAttributes("sheets")
@@ -37,11 +36,7 @@ public class SettingsController {
 
 		Sheet sheet = sheets.getSheets().get(0);
 		List<Column> columns = sheet.getColumns();
-		Iterator<Column> columnsIterator = columns.iterator();
 		List<Row> rows = sheet.getRows();
-		Iterator<Row> rowIterator = rows.iterator();
-		Values values = sheet.getValues();
-		Iterator<Point> pointIterator = values.getPointIterator();
 		Map<Integer, List<Serializable>> valuesAsMap = sheet.getValuesAsMap();
 		Iterator<Integer> valuesAsMapIterator = valuesAsMap.keySet().iterator();
 
@@ -56,19 +51,8 @@ public class SettingsController {
 					Column column = columns.get(i);
 					column.setLabel(firstRowValues.get(i).toString());
 				}
-
-				// remove first row and its values
-				while (rowIterator.hasNext()) {
-					rowIterator.next();
-					rowIterator.remove();
-					break;
-				}
-				while (pointIterator.hasNext()) {
-					Point point = (Point) pointIterator.next();
-					if (point.getY() == 0) {
-						pointIterator.remove();
-					}
-				}
+				
+				SheetService.removeRow(sheet,0);
 			}else if(sheet.getDocumentType().equals(DocumentType.COLUMN)){
 				// we map rows to index fields, a column is a doc
 				
@@ -84,19 +68,7 @@ public class SettingsController {
 					}
 				}
 				
-				// remove first column and its values
-				while (columnsIterator.hasNext()) {
-					columnsIterator.next();
-					columnsIterator.remove();
-					break;
-				}
-				while (pointIterator.hasNext()) {
-					Point point = (Point) pointIterator.next();
-					if (point.getX() == 0) {
-						pointIterator.remove();
-					}
-				}
-				
+				SheetService.removeColumn(sheet,0);
 			}
 		}
 		

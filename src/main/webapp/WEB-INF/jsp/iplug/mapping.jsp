@@ -118,63 +118,6 @@
 	      	</div>      	   
 			
 			
-			
-			
-			####
-			<c:forEach items="${tableListCommand.tableCommands}" var="table" >
-			<div style="overflow:auto">
-			<table id="table_${tableCounter}" class="sheet" cellpadding="0" cellspacing="0">
-				<tr>
-					<td style="background:#F4F4F4">&nbsp;</td>
-					<td style="background:#F4F4F4">&nbsp;</td>
-					<c:forEach items="${table.head.headers}" var="head" varStatus="i">
-    					<td style="background:#F4F4F4">
-    						<!-- instead of i.index use isIndexed or isFiltered -->
-    						<c:choose>
-    							<c:when test="${i.index == 2 }">
-    								<b>title</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
-    								<b>!= 'aaa'</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"></a>
-    							</c:when>
-    							<c:otherwise>
-		    						<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html">Indizieren</a><br/>
-		    						<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html">Filter</a>
-    							</c:otherwise>
-    						</c:choose>
-    					</td>       	   		
-	            	</c:forEach>
-				</tr>
-				<tr>
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>
-					<c:forEach items="${table.head.headers}" var="head" varStatus="i">
-    					<c:choose>
-    							<c:when test="${i.index == 2 }">
-			    					<th style="background:#DDE9BD;">title</th>       	   		
-    							</c:when>
-    							<c:otherwise>
-    								<th>${head}</th>
-    							</c:otherwise>
-    						</c:choose>
-	            	</c:forEach>
-				</tr>
-	    	   	<c:forEach items="${table.rows}" var="row" begin="0" end="9" varStatus="i">
-	    	   		<tr>
-						<td style="background:#F4F4F4; white-space:nowrap;">
-							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html">Indizieren</a><br/>
-		    				<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html">Filter</a>
-						</td>
-						<td class="rowCountLabel">${i.index +1}</td>
-						<c:forEach items="${row.cells}" var="cell" varStatus="j">
-							<td <c:if test="${j.index == 2 }">style="background:#F5F8EB"</c:if>>${cell}</td>
-						</c:forEach>
-					</tr>
-		        </c:forEach>
-	      	</table>
-	      	</div>
-	      	<button>&laquo; Vorherige anzeigen</button>
-	      	<button>Nächste anzeigen &raquo;</button>
-	      	</c:forEach>
-	      	
 	      	<br/><br/>
 	      	<h2>Index Vorschau</h2>
 	      	<table class="data">

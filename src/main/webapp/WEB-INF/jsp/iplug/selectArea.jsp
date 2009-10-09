@@ -36,16 +36,16 @@
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>W‰hlen Sie einen Teilbereich Ihres Sheets aus</h2>
-			<form method="post" action="addFilter.html" id="selectArea">
+			<h2>W‰hlen Sie einen Teilbereich Ihres Sheets aus. Auﬂerhalb liegende Daten werden verworfen.</h2>
+			<form method="post" action="selectArea.html" id="selectArea">
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Von Spalte:</td>
 						<td>
 							<select name="fromCol">
-								<option value="0">A</option>
-								<option value="1">B</option>
-								<option value="2">C</option>
+								<c:forEach var="col" items="${columns}">
+									<option value="${col.index}">${col.label}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
@@ -53,9 +53,10 @@
 						<td class="leftCol">Bis Spalte:</td>
 						<td>
 							<select name="toCol">
-								<option value="0">A</option>
-								<option value="1">B</option>
-								<option value="2">C</option>
+								<c:forEach var="col" items="${columns}" varStatus="status">
+									<option value="${col.index}" <c:if test="${status.last}">selected="selected"</c:if>>${col.label}</option>
+								</c:forEach>
+							</select>
 							</select>
 						</td>
 					</tr>
@@ -63,9 +64,10 @@
 						<td class="leftCol">Von Zeile:</td>
 						<td>
 							<select name="fromRow">
-								<c:forEach var="i" begin="0" end="9">
-									<option value="${i}">${i+1}</option>
+								<c:forEach var="row" items="${rows}">
+									<option value="${row.index}">${row.label}</option>
 								</c:forEach>
+							</select>
 							</select>
 						</td>
 					</tr>
@@ -73,8 +75,8 @@
 						<td class="leftCol">Bis Zeile:</td>
 						<td>
 							<select name="toRow">
-								<c:forEach var="i" begin="0" end="9">
-									<option value="${i}">${i+1}</option>
+								<c:forEach var="row" items="${rows}" varStatus="status">
+									<option value="${row.index}" <c:if test="${status.last}">selected="selected"</c:if>>${row.label}</option>
 								</c:forEach>
 							</select>
 						</td>

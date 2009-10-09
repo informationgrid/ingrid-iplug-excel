@@ -36,14 +36,11 @@ public class SheetService {
 		Iterator<Column> columnsIterator = columns.iterator();
 		
 		// handle Column
-		int i = 0;
 		while (columnsIterator.hasNext()) {
-			columnsIterator.next();
-			if(i == colIndex){
+			Column column = (Column) columnsIterator.next();
+			if(column.getIndex() == colIndex){
 				columnsIterator.remove();
-				break;
 			}
-			i++;
 		}
 		
 		// handle the values
@@ -52,7 +49,7 @@ public class SheetService {
 		
 		while (pointIterator.hasNext()) {
 			Point point = (Point) pointIterator.next();
-			if (point.getX() == 0) {
+			if (point.getX() == colIndex) {
 				pointIterator.remove();
 			}
 		}
@@ -63,14 +60,11 @@ public class SheetService {
 		Iterator<Row> rowIterator = rows.iterator();
 
 		// handle row
-		int i = 0;
 		while (rowIterator.hasNext()) {
-			rowIterator.next();
-			if(i == rowIndex){
+			Row row = (Row)rowIterator.next();
+			if(row.getIndex() == rowIndex){
 				rowIterator.remove();
-				break;
 			}
-			i++;
 		}
 
 		// handle the values
@@ -83,7 +77,6 @@ public class SheetService {
 				pointIterator.remove();
 			}
 		}
-		
 	}
 
 }

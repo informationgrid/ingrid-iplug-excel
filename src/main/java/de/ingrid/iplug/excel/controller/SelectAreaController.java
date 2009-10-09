@@ -1,5 +1,6 @@
 package de.ingrid.iplug.excel.controller;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,28 +35,36 @@ public class SelectAreaController {
 			@RequestParam(required=true) final int toCol, @RequestParam(required=true) final int fromRow, 
 			@RequestParam(required=true) final int toRow) {
 		
+		// remove columns
 		Sheet sheet = sheets.getSheets().get(0);
 		List<Column> columns = sheet.getColumns();
 		Iterator<Column> columnIterator = columns.iterator();
+		List<Integer> columnIndices = new ArrayList<Integer>();
 		while (columnIterator.hasNext()) {
 			Column column = (Column) columnIterator.next();
 			int colIndex = column.getIndex();
 			if(colIndex < fromCol || colIndex > toCol){
-			//	System.out.println("remove col " +column.getLabel());
-				SheetService.removeColumn(sheet, colIndex);
+				columnIndices.add(colIndex);
 			}
 		}
+		for (int i = 0; i < columnIndices.size(); i++) {
+			SheetService.removeColumn(sheet, columnIndices.get(i));
+		}
 		
+		// remove rows
 		List<Row> rows = sheet.getRows();
 		Iterator<Row> rowIterator = rows.iterator();
+		List<Integer> rowIndices = new ArrayList<Integer>();
 		while (rowIterator.hasNext()) {
 			Row row = (Row) rowIterator.next();
 			int rowIndex = row.getIndex();
-			if(rowIndex < fromCol || rowIndex > toCol){
-				//System.out.println("remove row " +row.getLabel());
-				SheetService.removeRow(sheet, rowIndex);
+			if(rowIndex < fromRow || rowIndex > toRow){
+				rowIndices.add(rowIndex);
 			}
 			
+		}
+		for (int i = 0; i < rowIndices.size(); i++) {
+			SheetService.removeRow(sheet, rowIndices.get(i));
 		}
 		
 		return "redirect:/iplug/mapping.html";

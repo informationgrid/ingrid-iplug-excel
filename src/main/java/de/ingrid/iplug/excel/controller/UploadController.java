@@ -70,7 +70,7 @@ public class UploadController {
 				HSSFRow hssfRow = (HSSFRow) rowIterator.next();
 
 				// create excel row
-				Row row = new Row(values, rowCounter);
+				Row row = new Row(rowCounter);
 				row.setIndex(rowCounter);
 
 				// add row
@@ -84,7 +84,7 @@ public class UploadController {
 
 					// create column
 					if (rowCounter == 0) {
-						Column column = new Column(values, columnCount);
+						Column column = new Column(columnCount);
 						column.setIndex(columnCount);
 						sheet.addColumn(column);
 					}
@@ -101,8 +101,8 @@ public class UploadController {
 			}
 		}
 		model.addAttribute("sheets", sheets);
-		
-		if(sheets.getSheets().size() == 1){
+
+		if (sheets.getSheets().size() == 1) {
 			return "redirect:/iplug/settings.html";
 		}
 

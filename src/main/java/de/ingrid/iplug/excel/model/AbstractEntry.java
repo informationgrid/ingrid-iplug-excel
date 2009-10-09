@@ -4,7 +4,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,20 +11,18 @@ public abstract class AbstractEntry implements Externalizable {
 
 	private String _label;
 	private List<Filter> _filters = new ArrayList<Filter>();
-	private FieldType _fieldType;
+	private FieldType _fieldType = FieldType.TEXT;
 	private float _rank;
 	private boolean _mapped;
 	private boolean _excluded;
 
-	protected Values _values;
 	private int _index;
 
 	public AbstractEntry() {
-		// extermalizable
+		// externalizable
 	}
 
-	public AbstractEntry(Values values, int index) {
-		_values = values;
+	public AbstractEntry(int index) {
 		_index = index;
 	}
 
@@ -52,7 +49,7 @@ public abstract class AbstractEntry implements Externalizable {
 	public void addFilter(Filter filter) {
 		_filters.add(filter);
 	}
-	
+
 	public void removeFilter(Filter filter) {
 		_filters.remove(filter);
 	}
@@ -76,7 +73,7 @@ public abstract class AbstractEntry implements Externalizable {
 	public boolean isMapped() {
 		return _mapped;
 	}
-	
+
 	public boolean getIsMapped() {
 		return _mapped;
 	}
@@ -93,16 +90,34 @@ public abstract class AbstractEntry implements Externalizable {
 		_excluded = excluded;
 	}
 
-	public abstract Serializable getValue(int index);
-
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_label = in.readUTF();
-
+		_excluded = in.readBoolean();
+		_mapped = in.readBoolean();
+		_rank = in.readFloat();
+		_index = in.readInt();
+		_fieldType = FieldType.valueOf(in.readUTF());
+		int size = in.readInt();
+		_filters.clear();
+		for (int i = 0; i < size; i++) {
+			Filter filter = new Filter();
+			filter.readExternal(in);
+			_filters.add(filter);
+		}
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(_label);
+		out.writeBoolean(_excluded);
+		out.writeBoolean(_mapped);
+		out.writeFloat(_rank);
+		out.writeInt(_index);
+		out.writeUTF(_fieldType.name());
+		out.writeInt(_filters.size());
+		for (Filter filter : _filters) {
+			filter.writeExternal(out);
+		}
 
 	}
 }

@@ -1,14 +1,23 @@
 package de.ingrid.iplug.excel.model;
 
-public class Filter {
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+public class Filter implements Externalizable {
 
 	public static enum FilterType {
-		GREATER_THAN, LOWER_THAN, CONTAINS, NOT_CONTAINS, EQUAL, NOT_EQUAL
+		All, GREATER_THAN, LOWER_THAN, CONTAINS, NOT_CONTAINS, EQUAL, NOT_EQUAL
 	}
 
 	private String _expression;
 
-	private FilterType _filterType;
+	private FilterType _filterType = FilterType.All;
+
+	public Filter() {
+		// externalizable
+	}
 
 	public Filter(String expression, FilterType filterType) {
 		_expression = expression;
@@ -19,8 +28,19 @@ public class Filter {
 		return _expression;
 	}
 
-	public FilterType getFieldType() {
+	public FilterType getFilterType() {
 		return _filterType;
+	}
+
+	public void readExternal(ObjectInput in) throws IOException,
+			ClassNotFoundException {
+		_filterType = FilterType.valueOf(in.readUTF());
+		_expression = in.readUTF();
+	}
+
+	public void writeExternal(ObjectOutput out) throws IOException {
+		out.writeUTF(_filterType.name());
+		out.writeUTF(_expression);
 	}
 
 }

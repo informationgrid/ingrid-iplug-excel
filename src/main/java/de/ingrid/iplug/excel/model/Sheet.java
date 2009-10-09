@@ -7,7 +7,6 @@ import java.io.ObjectOutput;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,7 @@ public class Sheet implements Externalizable {
 	private int _sheetIndex;
 	private List<Column> _columns = new ArrayList<Column>();
 	private List<Row> _rows = new ArrayList<Row>();
-	private DocumentType _documentType;
+	private DocumentType _documentType = DocumentType.COLUMN;
 	private boolean _firstIsLabel;
 	private Point _selectFrom = new Point();
 	private Point _selectTo = new Point();
@@ -138,7 +137,7 @@ public class Sheet implements Externalizable {
 		_sheetIndex = in.readInt();
 		_firstIsLabel = in.readBoolean();
 
-		_documentType = (DocumentType) in.readObject();
+		_documentType = DocumentType.valueOf(in.readUTF());
 		int size = in.readInt();
 		_rows.clear();
 		for (int i = 0; i < size; i++) {
@@ -155,7 +154,7 @@ public class Sheet implements Externalizable {
 			_columns.add(column);
 		}
 
-		_values.readExternal(in);
+		// values does not need to deserialize
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
@@ -167,7 +166,7 @@ public class Sheet implements Externalizable {
 		out.writeBoolean(_firstIsLabel);
 
 		// objects
-		out.writeObject(_documentType);
+		out.writeUTF(_documentType.name());
 		out.writeInt(_rows.size());
 		for (Row row : _rows) {
 			row.writeExternal(out);
@@ -177,7 +176,7 @@ public class Sheet implements Externalizable {
 			column.writeExternal(out);
 		}
 
-		_values.writeExternal(out);
+		// values does not need to serialize
 
 	}
 

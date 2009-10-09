@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
@@ -66,6 +67,16 @@ public class SelectAreaController {
 		for (int i = 0; i < rowIndices.size(); i++) {
 			SheetService.removeRow(sheet, rowIndices.get(i));
 		}
+		
+		Point pointFrom = new Point();
+		pointFrom.setX(fromCol);
+		pointFrom.setY(fromRow);
+		sheet.setSelectFrom(pointFrom);
+		
+		Point pointTo = new Point();
+		pointTo.setX(toCol);
+		pointTo.setY(toRow);
+		sheet.setSelectTo(pointTo);
 		
 		return "redirect:/iplug/mapping.html";
 	}

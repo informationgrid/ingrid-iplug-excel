@@ -20,7 +20,7 @@ public class Column extends AbstractEntry {
 		setLabel(getDefaultLabel());
 	}
 
-	private String getDefaultLabel() {
+	public String getDefaultLabel() {
 		if (getIndex() < 26) {
 			return LABELS[getIndex()];
 		}

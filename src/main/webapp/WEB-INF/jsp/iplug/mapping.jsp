@@ -57,7 +57,7 @@
     						<td class="fn" valign="top">
     							<c:choose>
     								<c:when test="${col.isMapped}">
-    									<b>${col.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    									<b>${col.label}</b> <a href="removeFromIndex.html?type=col&index=${col.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
     								</c:when>
     								<c:otherwise>
 		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${col.index}&label=${col.label}">Indizieren</a><br/>
@@ -92,7 +92,7 @@
 		    	   			<td class="fn">
 		    	   				<c:choose>
     								<c:when test="${row.isMapped}">
-    									<b>${row.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    									<b>${row.label}</b> <a href="removeFromIndex.html?type=row&index=${row.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
     								</c:when>
     								<c:otherwise>
 		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=row&index=${row.index}&label=${row.label}">Indizieren</a><br/>

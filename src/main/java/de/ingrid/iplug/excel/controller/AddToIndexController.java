@@ -1,5 +1,8 @@
 package de.ingrid.iplug.excel.controller;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.FieldType;
+import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.service.SheetService;
@@ -63,6 +67,41 @@ public class AddToIndexController {
 			}
 		}
 		
+		return "redirect:/iplug/mapping.html";
+	}
+	
+	@RequestMapping(value = "/iplug/removeFromIndex.html", method = RequestMethod.GET)
+	public String removeFromIndex(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=true) final String type,
+			@RequestParam(required=true) final int index) {
+		if(type.equals("col")){
+			Column column = SheetService.getColumnByIndex(sheets.getSheets().get(0), index);
+			// remove filters first
+			List<Filter> filters = column.getFilters();
+			Iterator<Filter> iterator = filters.iterator();
+			while (iterator.hasNext()) {
+				iterator.next();
+				iterator.remove();
+			}
+			
+			column.setMapped(false);
+			column.setRank(0);
+			column.setFieldType(null);
+			column.setLabel(column.getDefaultLabel());
+		}else if(type.equals("row")){
+			Row row = SheetService.getRowByIndex(sheets.getSheets().get(0), index);
+			// remove filters first
+			List<Filter> filters = row.getFilters();
+			Iterator<Filter> iterator = filters.iterator();
+			while (iterator.hasNext()) {
+				iterator.next();
+				iterator.remove();
+			}
+			
+			row.setMapped(false);
+			row.setRank(0);
+			row.setFieldType(null);
+			row.setLabel( (row.getIndex()+1) +"");
+		}
 		return "redirect:/iplug/mapping.html";
 	}
 }

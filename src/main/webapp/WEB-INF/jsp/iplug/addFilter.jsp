@@ -36,7 +36,7 @@
 			<a href="#" onclick="document.getElementById('addFilter').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Legen Sie über einen Filter fest, welche Daten indiziert werden sollen</h2>
+			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdrücke zutreffen. Mehrere Filter sind AND verknüpft.</h2>
 			<form method="post" action="addFilter.html" id="addFilter">
 				<input type="hidden" name="index" value="${index}"/>
 				<input type="hidden" name="type" value="${type}"/>

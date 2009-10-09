@@ -56,11 +56,11 @@
 						<c:forEach items="${sheet.columns}" var="column" >
     						<td class="fn">
     							<c:choose>
-    								<c:when test="${column.mapped}">
+    								<c:when test="${column.isMapped}">
     									<b>${column.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
     								</c:when>
     								<c:otherwise>
-		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${column.index}">Indizieren</a><br/>
+		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=col&index=${column.index}&label=${column.label}">Indizieren</a><br/>
     								</c:otherwise>
     							</c:choose>
     							
@@ -79,8 +79,8 @@
 						<td class="fn">&nbsp;</td>
 					</c:if>
 					<th>&nbsp;</th>
-					<c:forEach items="${sheet.columns}" var="column" >
-    					<th>${column.label}</th>       	   		
+					<c:forEach items="${sheet.columns}" var="col" >
+    					<th <c:if test="${col.isMapped}">style="background:#DDE9BD"</c:if>>${col.label}</th>       	   		
 	            	</c:forEach>
 				</tr>
 	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
@@ -89,11 +89,11 @@
 		    	   			<!-- index functions column -->
 		    	   			<td class="fn">
 		    	   				<c:choose>
-    								<c:when test="${row.mapped}">
+    								<c:when test="${row.isMapped}">
     									<b>${row.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
     								</c:when>
     								<c:otherwise>
-		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=row&index=${row.index}">Indizieren</a><br/>
+		    							<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addToIndex.html?type=row&index=${row.index}&label=${row.label}">Indizieren</a><br/>
     								</c:otherwise>
     							</c:choose>
     							
@@ -106,7 +106,7 @@
 						
 						<td class="rowCountLabel">${row.label}</td>
 						<c:forEach items="${sheet.columns}" var="col">
-							<td>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
+							<td <c:if test="${col.isMapped || row.isMapped}">class="mapped"</c:if>>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
 						</c:forEach>
 					</tr>
 		        </c:forEach>

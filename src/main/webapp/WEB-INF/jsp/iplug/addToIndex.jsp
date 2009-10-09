@@ -38,41 +38,49 @@
 		<div id="content">
 			<h2>Geben Sie die Eigenschaften des zu indizierenden Feldes an</h2>
 			<form method="post" action="addToIndex.html" id="addToIndex">
+				<input type="hidden" name="index" value="${index}"/>
+				<input type="hidden" name="type" value="${type}"/>
+				
 				<table id="konfigForm">
 					<tr>
-						<td class="leftCol">Zeile / Spalte:</td>
-						<td>A</td>
+						<td class="leftCol">
+							<c:choose>
+								<c:when test="${type == 'col'}">Spalte:</c:when>
+								<c:when test="${type == 'row'}">Zeile:</c:when>
+							</c:choose>
+						</td>
+						<td>${label}</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Index Feldname:</td>
 						<td>
 							<select name="fieldName">
-								<option value="">title</option>
-								<option value="">description</option>
+								<option value="">-- bitte wählen --</option>
+								<option value="title">title</option>
+								<option value="description">description</option>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Oder eigener Index Feldname:</td>
 						<td>
-							<input type="text" name="" value=""/>
+							<input type="text" name="ownFieldName" value=""/>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Feld Typ:</td>
 						<td>
-							<select name="type">
-								<option value="">Text</option>
-								<option value="">Keyword</option>
-								<option value="">Zahl</option>
-								<option value="">Datum</option>
+							<select name="fieldType">
+								<c:forEach var="fieldType" items="${fieldTypes}">
+									<option value="${fieldType}">${fieldType}</option>
+								</c:forEach>
 							</select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Relative Wertigkeit:</td>
 						<td>
-							<select name="localRanking">
+							<select name="rank">
 								<c:set var="preset" value="5"/>
 								<c:forEach var="i" begin="1" end="10">
 									<option value="${i}" <c:if test="${i == preset}">selected="selected"</c:if>>${i}</option>

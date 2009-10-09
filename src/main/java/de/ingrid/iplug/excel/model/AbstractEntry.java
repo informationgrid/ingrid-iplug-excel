@@ -72,6 +72,10 @@ public abstract class AbstractEntry implements Externalizable {
 	public boolean isMapped() {
 		return _mapped;
 	}
+	
+	public boolean getIsMapped() {
+		return _mapped;
+	}
 
 	public void setMapped(boolean mapped) {
 		_mapped = mapped;

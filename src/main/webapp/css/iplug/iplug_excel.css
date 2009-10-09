@@ -1,4 +1,6 @@
 table.sheet { border-color: #ccc; border-width: 0 0 1px 1px; border-style: solid;}
 table.sheet th, table.sheet .rowCountLabel {background-color:#ccc; border: 1px outset #ccc; height:25px; color:#000; font-weight:normal; min-width:100px}
 table.sheet td { border-color: #ccc; border-width: 1px 1px 0 0; border-style: solid; margin: 0; padding: 2px; height:25px; width:200px}
+
 td.fn {background-color:#F4F4F4; white-space: nowrap;}
+td.mapped {background:#F5F8EB;}

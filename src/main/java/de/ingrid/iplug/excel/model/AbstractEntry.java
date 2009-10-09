@@ -52,6 +52,10 @@ public abstract class AbstractEntry implements Externalizable {
 	public void addFilter(Filter filter) {
 		_filters.add(filter);
 	}
+	
+	public void removeFilter(Filter filter) {
+		_filters.remove(filter);
+	}
 
 	public FieldType getFieldType() {
 		return _fieldType;

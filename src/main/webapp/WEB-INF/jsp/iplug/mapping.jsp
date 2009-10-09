@@ -54,7 +54,7 @@
 					<tr>
 						<td class="fn">&nbsp;</td>
 						<c:forEach items="${sheet.columns}" var="col" >
-    						<td class="fn">
+    						<td class="fn" valign="top">
     							<c:choose>
     								<c:when test="${col.isMapped}">
     									<b>${col.label}</b> <a href=""><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
@@ -64,10 +64,12 @@
     								</c:otherwise>
     							</c:choose>
     							
-   								<c:forEach var="f" items="${col.filters}">
-   									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+   								<c:forEach var="f" items="${col.filters}" varStatus="i">
+   									${f.fieldType} ${f.expression} <a href="removeFilter.html?type=col&index=${col.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
-		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${col.index}&label=${col.label}">Filter</a>
+		    					<c:if test="${col.isMapped}">
+		    						<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${col.index}&label=${col.label}">Filter</a>
+		    					</c:if>
     						</td>    	   		
 	            		</c:forEach>
 					</tr>
@@ -97,10 +99,12 @@
     								</c:otherwise>
     							</c:choose>
     							
-    							<c:forEach var="f" items="${row.filters}">
-   									${f.fieldType} ${f.expression} <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+    							<c:forEach var="f" items="${row.filters}" varStatus="i">
+   									${f.fieldType} ${f.expression} <a href="removeFilter.html?type=row&index=${row.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
+		    					<c:if test="${row.isMapped}">
 		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=row&index=${row.index}&label=${row.label}">Filter</a>
+		    					</c:if>
 		    	   			</td>
 		    	   		</c:if>
 						

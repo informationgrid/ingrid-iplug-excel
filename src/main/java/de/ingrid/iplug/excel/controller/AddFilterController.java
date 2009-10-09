@@ -45,4 +45,21 @@ public class AddFilterController {
 		
 		return "redirect:/iplug/mapping.html";
 	}
+	
+	@RequestMapping(value = "/iplug/removeFilter.html", method = RequestMethod.GET)
+	public String removeFilter(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=true) final String type,
+			@RequestParam(required=true) final int index, @RequestParam(required=true) final int filterIndex){
+		
+		if(type.equals("col")){
+			Column column = SheetService.getColumnByIndex(sheets.getSheets().get(0), index);
+			Filter filter = column.getFilters().get(filterIndex);
+			column.removeFilter(filter);
+		}else if(type.equals("row")){
+			Row row = SheetService.getRowByIndex(sheets.getSheets().get(0), index);
+			Filter filter = row.getFilters().get(filterIndex);
+			row.removeFilter(filter);
+		}
+		
+		return "redirect:/iplug/mapping.html";
+	}
 }

@@ -1,15 +1,17 @@
 package de.ingrid.iplug.excel;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class UploadBean {
 
-	private byte[] _file;
+	private MultipartFile _multipartFile;
 
-	public void setFile(byte[] file) {
-		_file = file;
+	public MultipartFile getFile() {
+		return _multipartFile;
 	}
 
-	public byte[] getFile() {
-		return _file;
+	public void setFile(MultipartFile multipartFile) {
+		_multipartFile = multipartFile;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,13 @@ import de.ingrid.iplug.excel.service.SheetService;
 @Controller
 @SessionAttributes("sheets")
 public class SettingsController {
+
+	private final SheetService _sheetService;
+
+	@Autowired
+	public SettingsController(SheetService sheetService) {
+		_sheetService = sheetService;
+	}
 
 	@RequestMapping(value = "/iplug/settings.html", method = RequestMethod.GET)
 	public String settings(ModelMap model,
@@ -51,28 +59,28 @@ public class SettingsController {
 					Column column = columns.get(i);
 					column.setLabel(firstRowValues.get(i).toString());
 				}
-				
-				SheetService.removeRow(sheet,0);
-			}else if(sheet.getDocumentType().equals(DocumentType.COLUMN)){
+
+				_sheetService.removeRow(sheet, 0);
+			} else if (sheet.getDocumentType().equals(DocumentType.COLUMN)) {
 				// we map rows to index fields, a column is a doc
-				
+
 				// set the label
-				for(int i=0; i<rows.size(); i++){
+				for (int i = 0; i < rows.size(); i++) {
 					Row row = rows.get(i);
 					int rowIndex = row.getIndex();
-					
+
 					while (valuesAsMapIterator.hasNext()) {
 						valuesAsMapIterator.next();
-						Serializable firstColValue = valuesAsMap.get(rowIndex).get(0);
-						row.setLabel(firstColValue+"");
+						Serializable firstColValue = valuesAsMap.get(rowIndex)
+								.get(0);
+						row.setLabel(firstColValue + "");
 					}
 				}
-				
-				SheetService.removeColumn(sheet,0);
+
+				_sheetService.removeColumn(sheet, 0);
 			}
 		}
-		
-		
+
 		return "redirect:/iplug/mapping.html";
 	}
 

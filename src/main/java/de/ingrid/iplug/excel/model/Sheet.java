@@ -22,7 +22,8 @@ public class Sheet implements Externalizable {
 	private boolean _firstIsLabel;
 	private Point _selectFrom = new Point();
 	private Point _selectTo = new Point();
-	private Values _values = new Values();
+	private transient Values _values = new Values();
+	private transient byte[] _workBook;
 
 	public String getFileName() {
 		return _fileName;
@@ -178,6 +179,14 @@ public class Sheet implements Externalizable {
 
 		// values does not need to serialize
 
+	}
+
+	public void setWorkbook(byte[] workBook) {
+		_workBook = workBook;
+	}
+
+	public byte[] getWorkbook() {
+		return _workBook;
 	}
 
 }

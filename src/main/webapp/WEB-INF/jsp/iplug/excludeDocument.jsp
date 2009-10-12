@@ -24,7 +24,8 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Einzelne Zeilen / Spalten ausschließen</h1>
+		<h1 id="head">Einzelnen Datensatz ausschließen</h1>
+		<c:set var="sheet" value="${sheets.sheets[0]}"/>
 		<div class="controls">
 			<a href="#" onclick="document.location='mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
@@ -37,15 +38,30 @@
 		</div>
 		<div id="content">
 			<h2>Sie können für einzelne Datensätze definieren, dass diese nicht berücksichtigt werden sollen</h2>
-			<form method="post" action="addFilter.html" id="excludeDocument">
+			<form method="post" action="excludeDocument.html" id="excludeDocument">
+				<input type="hidden" name="type" value="${sheet.documentType}"/>
 				<table id="konfigForm">
 					<tr>
-						<td class="leftCol">Zeile / Spalte:</td>
+						<td class="leftCol">
+							<c:choose>
+								<c:when test="${sheet.documentType == 'COLUMN'}">Spalte:</c:when>
+								<c:when test="${sheet.documentType == 'ROW'}">Zeile:</c:when>
+							</c:choose>
+						</td>
 						<td>
-							<select name="exclude">
-								<c:forEach var="i" begin="0" end="9">
-									<option value="${i}">${i+1}</option>
-								</c:forEach>
+							<select name="index">
+								<c:choose>
+									<c:when test="${sheet.documentType == 'COLUMN'}">
+										<c:forEach var="doc" items="${sheet.columns}">
+											<option value="${doc.index}">${doc.label}</option>
+										</c:forEach>
+									</c:when>
+									<c:when test="${sheet.documentType == 'ROW'}">
+										<c:forEach var="doc" items="${sheet.rows}">
+											<option value="${doc.index}">${doc.label}</option>
+										</c:forEach>
+									</c:when>
+								</c:choose>
 							</select>
 						</td>
 					</tr>

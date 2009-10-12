@@ -41,12 +41,20 @@
 		</form>
 		
 		<div id="content">
+			<c:set var="sheet" value="${sheets.sheets[0]}"/>
 			<h2>Definieren Sie, was indexiert werden soll</h2>
-			<a href="selectArea.html">Globalen Bereich Ausw‰hlen</a> (A3:D7) 
-			<a href="excludeDocument.html">Einzelne Zeilen / Spalten ausschlieﬂen</a> (7,9,15)
+			<a href="selectArea.html">Globalen Bereich Ausw‰hlen</a>
+			&nbsp;|&nbsp;
+			<c:choose>
+				<c:when test="${sheet.documentType == 'COLUMN'}">
+					<a href="excludeDocument.html">Einzelne Spalte ausschlieﬂen</a>
+				</c:when>
+				<c:when test="${sheet.documentType == 'ROW'}">
+					<a href="excludeDocument.html">Einzelne Zeile ausschlieﬂen</a>
+				</c:when>
+			</c:choose>
 			
 			<br/>
-			<c:set var="sheet" value="${sheets.sheets[0]}"/>
 			<div style="overflow:auto">
 			<table class="sheet" cellpadding="0" cellspacing="0">
 				<c:if test="${sheet.documentType == 'ROW'}">

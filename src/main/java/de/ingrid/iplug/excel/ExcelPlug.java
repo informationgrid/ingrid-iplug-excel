@@ -17,41 +17,37 @@ public class ExcelPlug extends HeartBeatPlug {
 	private final IngridIndexSearcher _indexSearcher;
 
 	@Autowired
-	public ExcelPlug(IngridIndexSearcher indexSearcher) {
+	public ExcelPlug(final IngridIndexSearcher indexSearcher) {
 		super(10000);
 		_indexSearcher = indexSearcher;
 	}
 
-	public void close() throws Exception {
+	@Override
+    public void close() throws Exception {
 		_indexSearcher.close();
 	}
 
-	public void configure(PlugDescription plugDescription) throws Exception {
+	@Override
+    public void configure(final PlugDescription plugDescription) throws Exception {
 		_indexSearcher.configure(plugDescription);
 	}
 
-	public IngridHits search(IngridQuery query, int start, int length)
+	public IngridHits search(final IngridQuery query, final int start, final int length)
 			throws Exception {
-		IngridHits ingridHits = _indexSearcher.search(query, start, length);
+		final IngridHits ingridHits = _indexSearcher.search(query, start, length);
 		return ingridHits;
 	}
 
-	public IngridHitDetail getDetail(IngridHit hit, IngridQuery query,
-			String[] fields) throws Exception {
-		IngridHitDetail detail = _indexSearcher.getDetail(hit, query, fields);
+	public IngridHitDetail getDetail(final IngridHit hit, final IngridQuery query,
+			final String[] fields) throws Exception {
+		final IngridHitDetail detail = _indexSearcher.getDetail(hit, query, fields);
 		return detail;
 	}
 
-	public IngridHitDetail[] getDetails(IngridHit[] hitArray,
-			IngridQuery query, String[] fields) throws Exception {
-		IngridHitDetail[] details = _indexSearcher.getDetails(hitArray, query,
+	public IngridHitDetail[] getDetails(final IngridHit[] hitArray,
+			final IngridQuery query, final String[] fields) throws Exception {
+		final IngridHitDetail[] details = _indexSearcher.getDetails(hitArray, query,
 				fields);
 		return details;
 	}
-
-	@Override
-	public boolean isRecordLoader() {
-		return true;
-	}
-
 }

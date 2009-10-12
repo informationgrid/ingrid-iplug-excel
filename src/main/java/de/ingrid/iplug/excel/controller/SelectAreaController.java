@@ -1,6 +1,5 @@
 package de.ingrid.iplug.excel.controller;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,36 +46,31 @@ public class SelectAreaController {
 			@RequestParam(required = true) final int fromRow,
 			@RequestParam(required = true) final int toRow) {
 
-		// remove columns
+		// exclude columns
 		Sheet sheet = sheets.getSheets().get(0);
 		List<Column> columns = sheet.getColumns();
 		Iterator<Column> columnIterator = columns.iterator();
-		List<Integer> columnIndices = new ArrayList<Integer>();
 		while (columnIterator.hasNext()) {
 			Column column = (Column) columnIterator.next();
 			int colIndex = column.getIndex();
 			if (colIndex < fromCol || colIndex > toCol) {
-				columnIndices.add(colIndex);
+				column.setExcluded(true);
+			}else{
+				column.setExcluded(false);
 			}
 		}
-		for (int i = 0; i < columnIndices.size(); i++) {
-			_sheetService.excludeColumn(sheet, columnIndices.get(i));
-		}
 
-		// remove rows
+		// exclude rows
 		List<Row> rows = sheet.getRows();
 		Iterator<Row> rowIterator = rows.iterator();
-		List<Integer> rowIndices = new ArrayList<Integer>();
 		while (rowIterator.hasNext()) {
 			Row row = (Row) rowIterator.next();
 			int rowIndex = row.getIndex();
 			if (rowIndex < fromRow || rowIndex > toRow) {
-				rowIndices.add(rowIndex);
+				row.setExcluded(true);
+			}else{
+				row.setExcluded(false);
 			}
-
-		}
-		for (int i = 0; i < rowIndices.size(); i++) {
-			_sheetService.excludeRow(sheet, rowIndices.get(i));
 		}
 
 		Point pointFrom = new Point();

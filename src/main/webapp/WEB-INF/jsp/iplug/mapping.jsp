@@ -44,16 +44,37 @@
 			<c:set var="sheet" value="${sheets.sheets[0]}"/>
 			<h2>Definieren Sie, was indexiert werden soll</h2>
 			<a href="selectArea.html">Globalen Bereich Ausw‰hlen</a>
-			&nbsp;|&nbsp;
+			<c:choose>
+				<c:when test="${sheet.selectFrom.x > -1  && sheet.selectFrom.y > -1 && sheet.selectTo.x > -1 && sheet.selectTo.y > -1}">
+					${sheet.columns[sheet.selectFrom.x].label }/${sheet.rows[sheet.selectFrom.y].label } : ${sheet.columns[sheet.selectTo.x].label }/${sheet.rows[sheet.selectTo.y].label}
+				</c:when>
+				<c:otherwise>
+					nicht gesetzt
+				</c:otherwise>
+			</c:choose>
+			
+			<br/>
 			<c:choose>
 				<c:when test="${sheet.documentType == 'COLUMN'}">
 					<a href="excludeDocument.html">Einzelne Spalte ausschlieﬂen</a>
+					<c:forEach var="col" items="${sheet.columns}">
+						<c:if test="${col.excluded}">
+							${col.label} <a href=""> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
+						</c:if>
+					</c:forEach>
 				</c:when>
 				<c:when test="${sheet.documentType == 'ROW'}">
 					<a href="excludeDocument.html">Einzelne Zeile ausschlieﬂen</a>
+					<c:forEach var="row" items="${sheet.rows}">
+						<c:if test="${row.excluded}">
+							<c:if test="${sheet.selectFrom.y <= row.index && sheet.selectTo.y >= row.index}">
+								${row.label} <a href=""> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
+							</c:if>		
+						</c:if>
+					</c:forEach>
 				</c:when>
 			</c:choose>
-			
+			<br/>
 			<br/>
 			<div style="overflow:auto">
 			<table class="sheet" cellpadding="0" cellspacing="0">
@@ -74,7 +95,7 @@
     							</c:choose>
     							
    								<c:forEach var="f" items="${col.filters}" varStatus="i">
-   									${f.fieldType} ${f.expression} <a href="removeFilter.html?type=col&index=${col.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+   									${f.filterType} ${f.expression} <a href="removeFilter.html?type=col&index=${col.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
 		    					<c:if test="${col.isMapped}">
 		    						<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${col.index}&label=${col.label}">Filter</a>
@@ -113,7 +134,7 @@
     							</c:choose>
     							
     							<c:forEach var="f" items="${row.filters}" varStatus="i">
-   									${f.fieldType} ${f.expression} <a href="removeFilter.html?type=row&index=${row.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
+   									${f.filterType} ${f.expression} <a href="removeFilter.html?type=row&index=${row.index}&filterIndex=${i.index}"><img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a><br/>
    								</c:forEach>
 		    					<c:if test="${row.isMapped}">
 		    					<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=row&index=${row.index}&label=${row.label}">Filter</a>

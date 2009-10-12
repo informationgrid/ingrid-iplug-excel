@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
@@ -107,7 +108,7 @@ public class SheetsService {
 			sheets.addSheet(sheet);
 			Values values = new Values();
 			sheet.setValues(values);
-
+			
 			Iterator<HSSFRow> rowIterator = hssfSheet.rowIterator();
 			int rowCounter = 0;
 			while (rowIterator.hasNext()) {
@@ -142,6 +143,11 @@ public class SheetsService {
 				}
 				rowCounter++;
 			}
+			Point fromPoint = new Point(0,0);
+			sheet.setSelectFrom(fromPoint);
+			
+			Point toPoint = new Point(sheet.getColumns().size() -1, sheet.getRows().size() -1);
+			sheet.setSelectTo(toPoint);
 		}
 
 		List<Sheet> sheetsList = sheets.getSheets();

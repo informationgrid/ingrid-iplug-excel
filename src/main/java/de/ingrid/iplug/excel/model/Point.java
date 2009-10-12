@@ -7,9 +7,9 @@ import java.io.ObjectOutput;
 
 public class Point implements Externalizable {
 
-	private int _x;
+	private int _x = -1;
 
-	private int _y;
+	private int _y = -1;
 
 	public Point() {
 		// externalizable

@@ -13,7 +13,8 @@ import de.ingrid.iplug.excel.model.Values;
 public class SheetsServiceTest extends TestCase {
 
 	public void testCreateSheets() throws Exception {
-		SheetsService sheetsService = new SheetsService(new SheetService());
+		SheetsService sheetsService = new SheetsService(new ExcludeFilters(
+				new EmptySheetFilter(new SheetService())));
 		Sheets sheets = sheetsService.createSheets(new File(
 				"src/test/resources/test.xls"));
 		List<Sheet> sheetList = sheets.getSheets();
@@ -21,13 +22,13 @@ public class SheetsServiceTest extends TestCase {
 		Sheet sheet = sheetList.get(0);
 
 		List<Row> rows = sheet.getRows();
-		assertEquals(4, rows.size());
+		assertEquals(45, rows.size());
 
 		List<Column> columns = sheet.getColumns();
-		assertEquals(3, columns.size());
+		assertEquals(13, columns.size());
 
 		Values values = sheet.getValues();
-		assertEquals(12, values.getSize());
+		assertEquals(585, values.getSize());
 
 		assertEquals("Vorname", values.getValue(0, 0));
 		assertEquals("Name", values.getValue(1, 0));

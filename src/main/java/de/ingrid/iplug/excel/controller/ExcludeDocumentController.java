@@ -44,7 +44,7 @@ public class ExcludeDocumentController {
 			while (iterator.hasNext()) {
 				Column column = (Column) iterator.next();
 				if(index == column.getIndex()){
-					_sheetService.removeColumn(sheet, column.getIndex());
+					_sheetService.excludeColumn(sheet, column.getIndex());
 					break;
 				}
 			}
@@ -54,7 +54,7 @@ public class ExcludeDocumentController {
 			while (iterator.hasNext()) {
 				Row row = (Row) iterator.next();
 				if(index == row.getIndex()){
-					_sheetService.removeRow(sheet, row.getIndex());
+					_sheetService.excludeRow(sheet, row.getIndex());
 					break;
 				}
 			}

@@ -61,7 +61,7 @@ public class SheetsService {
 		}
 		for (int i = 0; i < bitSet.size(); i++) {
 			if (bitSet.get(i)) {
-				_sheetService.removeColumn(sheet, i);
+				_sheetService.excludeColumn(sheet, i);
 			}
 		}
 	}
@@ -84,7 +84,7 @@ public class SheetsService {
 		}
 		for (int i = 0; i < bitSet.size(); i++) {
 			if (bitSet.get(i)) {
-				_sheetService.removeRow(sheet, i);
+				_sheetService.excludeRow(sheet, i);
 			}
 		}
 

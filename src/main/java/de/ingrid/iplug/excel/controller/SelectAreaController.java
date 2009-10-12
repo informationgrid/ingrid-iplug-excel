@@ -60,7 +60,7 @@ public class SelectAreaController {
 			}
 		}
 		for (int i = 0; i < columnIndices.size(); i++) {
-			_sheetService.removeColumn(sheet, columnIndices.get(i));
+			_sheetService.excludeColumn(sheet, columnIndices.get(i));
 		}
 
 		// remove rows
@@ -76,7 +76,7 @@ public class SelectAreaController {
 
 		}
 		for (int i = 0; i < rowIndices.size(); i++) {
-			_sheetService.removeRow(sheet, rowIndices.get(i));
+			_sheetService.excludeRow(sheet, rowIndices.get(i));
 		}
 
 		Point pointFrom = new Point();

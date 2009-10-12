@@ -60,7 +60,7 @@ public class SettingsController {
 					column.setLabel(firstRowValues.get(i).toString());
 				}
 
-				_sheetService.removeRow(sheet, 0);
+				_sheetService.excludeRow(sheet, 0);
 			} else if (sheet.getDocumentType().equals(DocumentType.COLUMN)) {
 				// we map rows to index fields, a column is a doc
 
@@ -77,7 +77,7 @@ public class SettingsController {
 					}
 				}
 
-				_sheetService.removeColumn(sheet, 0);
+				_sheetService.excludeColumn(sheet, 0);
 			}
 		}
 

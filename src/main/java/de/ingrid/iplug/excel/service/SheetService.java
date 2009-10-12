@@ -34,7 +34,7 @@ public class SheetService {
 		return null;
 	}
 
-	public void removeColumn(Sheet sheet, int colIndex) {
+	public void excludeColumn(Sheet sheet, int colIndex) {
 		List<Column> columns = sheet.getColumns();
 		Iterator<Column> columnsIterator = columns.iterator();
 
@@ -42,23 +42,24 @@ public class SheetService {
 		while (columnsIterator.hasNext()) {
 			Column column = (Column) columnsIterator.next();
 			if (column.getIndex() == colIndex) {
-				columnsIterator.remove();
+				//columnsIterator.remove();
+				column.setExcluded(true);
 			}
 		}
 
-		// handle the values
-		Values values = sheet.getValues();
-		Iterator<Point> pointIterator = values.getPointIterator();
-
-		while (pointIterator.hasNext()) {
-			Point point = (Point) pointIterator.next();
-			if (point.getX() == colIndex) {
-				pointIterator.remove();
-			}
-		}
+//		// handle the values
+//		Values values = sheet.getValues();
+//		Iterator<Point> pointIterator = values.getPointIterator();
+//
+//		while (pointIterator.hasNext()) {
+//			Point point = (Point) pointIterator.next();
+//			if (point.getX() == colIndex) {
+//				pointIterator.remove();
+//			}
+//		}
 	}
 
-	public void removeRow(Sheet sheet, int rowIndex) {
+	public void excludeRow(Sheet sheet, int rowIndex) {
 		List<Row> rows = sheet.getRows();
 		Iterator<Row> rowIterator = rows.iterator();
 
@@ -66,20 +67,21 @@ public class SheetService {
 		while (rowIterator.hasNext()) {
 			Row row = (Row) rowIterator.next();
 			if (row.getIndex() == rowIndex) {
-				rowIterator.remove();
+				//rowIterator.remove();
+				row.setExcluded(true);
 			}
 		}
 
-		// handle the values
-		Values values = sheet.getValues();
-		Iterator<Point> pointIterator = values.getPointIterator();
-
-		while (pointIterator.hasNext()) {
-			Point point = (Point) pointIterator.next();
-			if (point.getY() == rowIndex) {
-				pointIterator.remove();
-			}
-		}
+//		// handle the values
+//		Values values = sheet.getValues();
+//		Iterator<Point> pointIterator = values.getPointIterator();
+//
+//		while (pointIterator.hasNext()) {
+//			Point point = (Point) pointIterator.next();
+//			if (point.getY() == rowIndex) {
+//				pointIterator.remove();
+//			}
+//		}
 	}
 
 }

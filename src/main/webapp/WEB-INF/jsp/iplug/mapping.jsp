@@ -62,6 +62,7 @@
 					<tr>
 						<td class="fn">&nbsp;</td>
 						<c:forEach items="${sheet.columns}" var="col" >
+    						<c:if test="${!col.excluded}">
     						<td class="fn" valign="top">
     							<c:choose>
     								<c:when test="${col.isMapped}">
@@ -78,7 +79,8 @@
 		    					<c:if test="${col.isMapped}">
 		    						<img src="../images/iplug/add.png" border="0" align="absmiddle"> <a href="addFilter.html?type=col&index=${col.index}&label=${col.label}">Filter</a>
 		    					</c:if>
-    						</td>    	   		
+    						</td>
+    						</c:if>    	   		
 	            		</c:forEach>
 					</tr>
 				
@@ -90,10 +92,13 @@
 					</c:if>
 					<th>&nbsp;</th>
 					<c:forEach items="${sheet.columns}" var="col" >
-    					<th <c:if test="${col.isMapped}">style="background:#DDE9BD"</c:if>>${col.label}</th>       	   		
+						<c:if test="${!col.excluded}">
+	    					<th <c:if test="${col.isMapped}">style="background:#DDE9BD"</c:if>>${col.label}</th>       	   		
+						</c:if>
 	            	</c:forEach>
 				</tr>
 	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
+	    	   		<c:if test="${!row.excluded}">
 	    	   		<tr>
 		    	   		<c:if test="${sheet.documentType == 'COLUMN'}">
 		    	   			<!-- index functions column -->
@@ -118,31 +123,16 @@
 						
 						<td class="rowCountLabel">${row.label}</td>
 						<c:forEach items="${sheet.columns}" var="col">
+							<c:if test="${!col.excluded}">
 							<td <c:if test="${col.isMapped || row.isMapped}">class="mapped"</c:if>>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
+							</c:if>
 						</c:forEach>
 					</tr>
+					</c:if>
 		        </c:forEach>
 	      	</table>
 	      	</div>      	   
-			
-			
-	      	<br/><br/>
-	      	<h2>Index Vorschau</h2>
-	      	<table class="data">
-	      		<tr>
-	      			<th width="40">Doc #</th>
-	      			<th>title</th>
-	      			<th>description</th>
-	      		</tr>
-	      		<tr>
-	      			<td>1</td>
-	      			<td>headline</td>
-	      			<td>description</td>
-	      		</tr>
-	      	</table>
-	      	<br/><br/>
-	      	
-	      </div>	
+        </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>
 </body>

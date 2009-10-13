@@ -3,7 +3,6 @@ package de.ingrid.iplug.excel.controller;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,27 +15,35 @@ import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.service.SheetService;
 
 @Controller
 @SessionAttributes("sheets")
 public class ExcludeDocumentController {
 
-	private SheetService _sheetService;
-
-	@Autowired
-	public ExcludeDocumentController(SheetService sheetService) {
-		_sheetService = sheetService;
+	public ExcludeDocumentController() {
+		//
 	}
 
 	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.GET)
-	public String selectArea(@ModelAttribute("sheets") Sheets sheets) {
+	public String excludeDocument(@ModelAttribute("sheets") Sheets sheets) {
 		return "/iplug/excludeDocument";
 	}
 
 	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.POST)
-	public String subitSelectArea(@ModelAttribute("sheets") Sheets sheets,
+	public String submitExcludeDocument(@ModelAttribute("sheets") Sheets sheets,
 			@RequestParam(required = true) final int index) {
+		handleExclusion(sheets, index, true);
+		return "redirect:/iplug/mapping.html";
+	}
+	
+	@RequestMapping(value = "/iplug/removeExclusion.html", method = RequestMethod.GET)
+	public String removeExclusion(@ModelAttribute("sheets") Sheets sheets,
+			@RequestParam(required = true) final int index){
+		handleExclusion(sheets, index, false);
+		return "redirect:/iplug/mapping.html";
+	}
+
+	private void handleExclusion(Sheets sheets, final int index, boolean exclude) {
 		Sheet sheet = sheets.getSheets().get(0);
 		DocumentType documentType = sheet.getDocumentType();
 		if (documentType.equals(DocumentType.COLUMN)) {
@@ -45,7 +52,7 @@ public class ExcludeDocumentController {
 			while (iterator.hasNext()) {
 				Column column = (Column) iterator.next();
 				if (index == column.getIndex()) {
-					column.setExcluded(true);
+					column.setExcluded(exclude);
 					break;
 				}
 			}
@@ -55,13 +62,12 @@ public class ExcludeDocumentController {
 			while (iterator.hasNext()) {
 				Row row = (Row) iterator.next();
 				if (index == row.getIndex()) {
-					row.setExcluded(true);
+					row.setExcluded(exclude);
 					break;
 				}
 			}
 		}
-
-		return "redirect:/iplug/mapping.html";
 	}
+	
 
 }

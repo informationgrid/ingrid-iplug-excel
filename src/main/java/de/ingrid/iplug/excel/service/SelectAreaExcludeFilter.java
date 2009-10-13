@@ -30,10 +30,10 @@ public class SelectAreaExcludeFilter extends ExcludeFilter {
 		BitSet rowBitSet = filterRows(sheet);
 		excludeRows(sheet, rowBitSet);
 
-		int fromX = columnBitSet.nextClearBit(0);
-		int fromY = rowBitSet.nextClearBit(0);
-		int toX = columnBitSet.nextSetBit(fromX);
-		int toY = rowBitSet.nextSetBit(fromY) - 1;
+		int fromX = columnBitSet.nextClearBit(0) >-1 ? columnBitSet.nextClearBit(0) : 0;
+		int fromY = rowBitSet.nextClearBit(0) > -1 ? rowBitSet.nextClearBit(0) : 0;
+		int toX = columnBitSet.nextSetBit(fromX) > -1 ? (columnBitSet.nextSetBit(fromX)-1) : (sheet.getColumns().size() -1);
+		int toY = rowBitSet.nextSetBit(fromY) > - 1 ? (rowBitSet.nextSetBit(fromY) -1) : (sheet.getRows().size() -1) ;
 
 		sheet.setSelectFrom(new Point(fromX, fromY));
 		sheet.setSelectTo(new Point(toX, toY));

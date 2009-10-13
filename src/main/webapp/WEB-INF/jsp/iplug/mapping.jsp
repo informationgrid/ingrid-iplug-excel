@@ -59,7 +59,7 @@
 					<a href="excludeDocument.html">Einzelne Spalte ausschlieﬂen</a>
 					<c:forEach var="col" items="${sheet.columns}">
 						<c:if test="${col.excluded}">
-							${col.label} <a href=""> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
+							${col.label} <a href="removeExclusion.html?index=${col.index}"> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
 						</c:if>
 					</c:forEach>
 				</c:when>
@@ -68,7 +68,7 @@
 					<c:forEach var="row" items="${sheet.rows}">
 						<c:if test="${row.excluded}">
 							<c:if test="${sheet.selectFrom.y <= row.index && sheet.selectTo.y >= row.index}">
-								${row.label} <a href=""> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
+								${row.label} <a href="removeExclusion.html?index=${row.index}"> <img src="../images/iplug/delete.png" border="0" align="absmiddle"/></a>
 							</c:if>		
 						</c:if>
 					</c:forEach>

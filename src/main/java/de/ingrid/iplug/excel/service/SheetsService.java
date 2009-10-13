@@ -79,12 +79,7 @@ public class SheetsService {
 				}
 				rowCounter++;
 			}
-			Point fromPoint = new Point(0, 0);
-			sheet.setSelectFrom(fromPoint);
 
-			Point toPoint = new Point(sheet.getColumns().size() - 1, sheet
-					.getRows().size() - 1);
-			sheet.setSelectTo(toPoint);
 		}
 
 		return sheets;

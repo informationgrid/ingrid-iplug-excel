@@ -57,7 +57,8 @@ public class SettingsController {
 				// set the label
 				for (int i = 0; i < columns.size(); i++) {
 					Column column = columns.get(i);
-					column.setLabel(firstRowValues.get(i).toString());
+					Serializable value = firstRowValues.get(i);
+					column.setLabel(value.toString());
 				}
 
 				_sheetService.excludeRow(sheet, 0);

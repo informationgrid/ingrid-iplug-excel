@@ -5,12 +5,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Iterator;
+import java.io.Serializable;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.iplug.excel.model.Column;
@@ -34,52 +33,50 @@ public class SheetsService {
 	private Sheets createSheets(InputStream inputStream) throws IOException {
 		Sheets sheets = new Sheets();
 
-		HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
-		int numberOfSheets = workbook.getNumberOfSheets();
-		for (int i = 0; i < numberOfSheets; i++) {
-			HSSFSheet hssfSheet = workbook.getSheetAt(i);
-			// create sheet
+		Workbook workbook = new HSSFWorkbook(inputStream);
+		for (int sheetNum = 0; sheetNum < workbook.getNumberOfSheets(); sheetNum++) {
+			org.apache.poi.ss.usermodel.Sheet poiSheet = workbook
+					.getSheetAt(sheetNum);
+			// ingrid sheet
 			Sheet sheet = new Sheet();
-			sheet.setSheetIndex(i);
+			sheet.setSheetIndex(sheetNum);
 			sheets.addSheet(sheet);
 			Values values = new Values();
 			sheet.setValues(values);
-
-			Iterator<HSSFRow> rowIterator = hssfSheet.rowIterator();
-			int rowCounter = 0;
-			while (rowIterator.hasNext()) {
-				HSSFRow hssfRow = (HSSFRow) rowIterator.next();
-
-				// create excel row
-				Row row = new Row(rowCounter);
-				row.setIndex(rowCounter);
-
-				// add row
+			for (org.apache.poi.ss.usermodel.Row poiRow : poiSheet) {
+				// ingrid row
+				Row row = new Row(poiRow.getRowNum());
 				sheet.addRow(row);
-
-				// create values
-				Iterator<HSSFCell> cellIterator = hssfRow.cellIterator();
-				int columnCount = 0;
-				while (cellIterator.hasNext()) {
-					HSSFCell cell = cellIterator.next();
-
-					// create column
-					if (rowCounter == 0) {
-						Column column = new Column(columnCount);
+				for (Cell poiCell : poiRow) {
+					// ingrid column
+					if (poiRow.getRowNum() == 0) {
+						Column column = new Column(poiCell.getColumnIndex());
 						sheet.addColumn(column);
 					}
 
-					de.ingrid.iplug.excel.model.Point point = new de.ingrid.iplug.excel.model.Point(
-							columnCount, rowCounter);
-					// TODO handle different values for example: formula, number
-					// TODO set filename
-					// etc
-					values.addValue(point, cell.toString());
-					columnCount++;
-				}
-				rowCounter++;
-			}
+					Serializable value = "";
+					switch (poiCell.getCellType()) {
+					case Cell.CELL_TYPE_BOOLEAN:
+						value = poiCell.getBooleanCellValue();
+						break;
+					case Cell.CELL_TYPE_NUMERIC:
+						value = poiCell.getNumericCellValue();
+						break;
+					case Cell.CELL_TYPE_STRING:
+						value = poiCell.getStringCellValue();
+						break;
+					default:
+						value = "";
+						break;
+					}
 
+					// ingrid point and value
+					Point point = new Point(poiCell.getColumnIndex(), poiCell
+							.getRowIndex());
+					values.addValue(point, value);
+
+				}
+			}
 		}
 
 		return sheets;

@@ -28,42 +28,40 @@ public class ExcludeDocumentController {
 	public ExcludeDocumentController(SheetService sheetService) {
 		_sheetService = sheetService;
 	}
-	
+
 	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.GET)
 	public String selectArea(@ModelAttribute("sheets") Sheets sheets) {
 		return "/iplug/excludeDocument";
 	}
-	
+
 	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.POST)
-	public String subitSelectArea(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=true) final int index) {
+	public String subitSelectArea(@ModelAttribute("sheets") Sheets sheets,
+			@RequestParam(required = true) final int index) {
 		Sheet sheet = sheets.getSheets().get(0);
 		DocumentType documentType = sheet.getDocumentType();
-		if(documentType.equals(DocumentType.COLUMN)){
+		if (documentType.equals(DocumentType.COLUMN)) {
 			List<Column> columns = sheet.getColumns();
 			Iterator<Column> iterator = columns.iterator();
 			while (iterator.hasNext()) {
 				Column column = (Column) iterator.next();
-				if(index == column.getIndex()){
-					_sheetService.excludeColumn(sheet, column.getIndex());
+				if (index == column.getIndex()) {
+					column.setExcluded(true);
 					break;
 				}
 			}
-		}else if(documentType.equals(DocumentType.ROW)){
+		} else if (documentType.equals(DocumentType.ROW)) {
 			List<Row> rows = sheet.getRows();
 			Iterator<Row> iterator = rows.iterator();
 			while (iterator.hasNext()) {
 				Row row = (Row) iterator.next();
-				if(index == row.getIndex()){
-					_sheetService.excludeRow(sheet, row.getIndex());
+				if (index == row.getIndex()) {
+					row.setExcluded(true);
 					break;
 				}
 			}
 		}
-		// TODO can't set Column.isExcluded, because its deleted now
-		
+
 		return "redirect:/iplug/mapping.html";
 	}
-
-	
 
 }

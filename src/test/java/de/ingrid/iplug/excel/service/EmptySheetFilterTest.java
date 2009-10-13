@@ -7,7 +7,7 @@ import de.ingrid.iplug.excel.model.Sheet;
 public class EmptySheetFilterTest extends AbstractSheetTest {
 
 	public void testFilter() throws Exception {
-		ISheetFilter filter = new EmptySheetFilter(new SheetService());
+		ISheetFilter filter = new EmptySheetFilter();
 		Sheet sheet = getTestSheet();
 
 		// now test it

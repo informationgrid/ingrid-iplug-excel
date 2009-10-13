@@ -13,8 +13,7 @@ import de.ingrid.iplug.excel.model.Values;
 public class SheetsServiceTest extends TestCase {
 
 	public void testCreateSheets() throws Exception {
-		SheetsService sheetsService = new SheetsService(new ExcludeFilters(
-				new EmptySheetFilter(new SheetService())));
+		SheetsService sheetsService = new SheetsService();
 		Sheets sheets = sheetsService.createSheets(new File(
 				"src/test/resources/test.xls"));
 		List<Sheet> sheetList = sheets.getSheets();

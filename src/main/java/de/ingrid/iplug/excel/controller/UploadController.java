@@ -18,6 +18,7 @@ import org.springframework.web.multipart.support.ByteArrayMultipartFileEditor;
 import de.ingrid.iplug.excel.UploadBean;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
+import de.ingrid.iplug.excel.service.EmptySheetFilter;
 import de.ingrid.iplug.excel.service.SheetsService;
 
 @Controller
@@ -26,10 +27,13 @@ import de.ingrid.iplug.excel.service.SheetsService;
 public class UploadController {
 
 	private final SheetsService _sheetsService;
+	private final EmptySheetFilter _excludeFilter;
 
 	@Autowired
-	public UploadController(SheetsService sheetsService) {
+	public UploadController(SheetsService sheetsService,
+			EmptySheetFilter excludeFilter) {
 		_sheetsService = sheetsService;
+		_excludeFilter = excludeFilter;
 	}
 
 	@InitBinder
@@ -57,6 +61,7 @@ public class UploadController {
 		Sheets sheets = _sheetsService.createSheets(uploadBytes);
 		List<Sheet> sheetList = sheets.getSheets();
 		for (Sheet sheet : sheetList) {
+			_excludeFilter.excludeEmtpyRowsAndColumns(sheet);
 			sheet.setFileName(multipartFile.getOriginalFilename());
 			sheet.setWorkbook(uploadBytes);
 		}

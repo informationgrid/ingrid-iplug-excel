@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.BitSet;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
@@ -15,9 +15,19 @@ import de.ingrid.iplug.excel.model.Values;
 @Service
 public class EmptySheetFilter extends ExcludeFilter {
 
-	@Autowired
-	public EmptySheetFilter(SheetService sheetService) {
-		super(sheetService);
+	public void excludeEmtpyRowsAndColumns(Sheet sheet) {
+		BitSet columnBitSet = filterColumns(sheet);
+		excludeColumns(sheet, columnBitSet);
+		BitSet rowBitSet = filterRows(sheet);
+		excludeRows(sheet, rowBitSet);
+
+		int fromX = columnBitSet.nextClearBit(0);
+		int fromY = rowBitSet.nextClearBit(0);
+		int toX = columnBitSet.nextSetBit(fromX);
+		int toY = rowBitSet.nextSetBit(fromY) - 1;
+
+		sheet.setSelectFrom(new Point(fromX, fromY));
+		sheet.setSelectTo(new Point(toX, toY));
 	}
 
 	public BitSet filterColumns(Sheet sheet) {

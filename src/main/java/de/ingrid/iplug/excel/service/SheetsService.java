@@ -6,13 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.iplug.excel.model.Column;
@@ -24,13 +22,6 @@ import de.ingrid.iplug.excel.model.Values;
 
 @Service
 public class SheetsService {
-
-	private final ExcludeFilters _excludeFilters;
-
-	@Autowired
-	public SheetsService(ExcludeFilters excludeFilters) {
-		_excludeFilters = excludeFilters;
-	}
 
 	public Sheets createSheets(File file) throws IOException {
 		return createSheets(new FileInputStream(file));
@@ -94,12 +85,6 @@ public class SheetsService {
 			Point toPoint = new Point(sheet.getColumns().size() - 1, sheet
 					.getRows().size() - 1);
 			sheet.setSelectTo(toPoint);
-		}
-
-		// filter
-		List<Sheet> sheetList = sheets.getSheets();
-		for (Sheet sheet : sheetList) {
-			_excludeFilters.filter(sheet);
 		}
 
 		return sheets;

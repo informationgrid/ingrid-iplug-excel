@@ -46,7 +46,13 @@ public abstract class AbstractSheetTest extends TestCase {
 	protected Sheet getTestSheet() {
 		Sheet sheet = new Sheet();
 		List<Row> rows = getTestRows();
+		for (Row row : rows) {
+			sheet.addRow(row);
+		}
 		List<Column> columns = getTestColumns();
+		for (Column column : columns) {
+			sheet.addColumn(column);
+		}
 		Values values = new Values();
 		for (Row row : rows) {
 			for (Column column : columns) {
@@ -55,9 +61,7 @@ public abstract class AbstractSheetTest extends TestCase {
 						: column.getLabel();
 				values.addValue(new Point(column.getIndex(), row.getIndex()),
 						value);
-				sheet.addColumn(column);
 			}
-			sheet.addRow(row);
 		}
 		sheet.setValues(values);
 		return sheet;

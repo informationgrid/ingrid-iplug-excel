@@ -1,33 +1,27 @@
 package de.ingrid.iplug.excel.service;
 
 import java.util.BitSet;
+import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
+import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 
 public abstract class ExcludeFilter implements ISheetFilter {
 
-	private final SheetService _sheetService;
-
-	@Autowired
-	public ExcludeFilter(SheetService sheetService) {
-		_sheetService = sheetService;
-	}
-
-	public void filter(Sheet sheet) {
-		BitSet bitSet = filterRows(sheet);
-		for (int i = 0; i < bitSet.size(); i++) {
-			if (bitSet.get(i)) {
-				_sheetService.excludeRow(sheet, i);
-			}
-		}
-		bitSet = filterColumns(sheet);
-		for (int i = 0; i < bitSet.size(); i++) {
-			if (bitSet.get(i)) {
-				_sheetService.excludeColumn(sheet, i);
-			}
+	public void excludeRows(Sheet sheet, BitSet bitSet) {
+		List<Row> rows = sheet.getRows();
+		for (int i = 0; i < rows.size(); i++) {
+			boolean exclude = bitSet.get(i);
+			rows.get(i).setExcluded(exclude);
 		}
 	}
 
+	public void excludeColumns(Sheet sheet, BitSet bitSet) {
+		List<Column> columns = sheet.getColumns();
+		for (int i = 0; i < columns.size(); i++) {
+			boolean exclude = bitSet.get(i);
+			columns.get(i).setExcluded(exclude);
+		}
+	}
 }

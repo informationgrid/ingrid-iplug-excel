@@ -18,7 +18,7 @@ public class Sheet implements Externalizable {
 	private int _sheetIndex;
 	private List<Column> _columns = new ArrayList<Column>();
 	private List<Row> _rows = new ArrayList<Row>();
-	private DocumentType _documentType = DocumentType.COLUMN;
+	private DocumentType _documentType = DocumentType.ROW;
 	private boolean _firstIsLabel;
 	private Point _selectFrom = new Point();
 	private Point _selectTo = new Point();

@@ -27,6 +27,7 @@
 		<h1 id="head">Daten Mappings</h1>
 		<div id="content">
 			<h2>Folgende Excel Sheets sind bereits gemappt</h2>
+			
 			<table class="data">
 				<tr>
 					<th>Datei</th>
@@ -35,11 +36,12 @@
 					<th>Beschreibung</th>
 					<th>&nbsp;</th>
 				</tr>
+				<c:forEach var="sheet" items="${plugDescription.sheets.sheets }">
 				<tr>
-					<td>safghsghj.xls</td>
-					<td>Sheet1</td>
-					<td>A1:D19 / alles</td>
-					<td>Meßwerte 2009, Schwermetalle Elbe </td>
+					<td>${sheet.fileName}</td>
+					<td>Sheet${sheet.sheetIndex +1}</td>
+					<td>${sheet.columns[sheet.selectFrom.x].label}/${sheet.rows[sheet.selectFrom.y].label} : ${sheet.columns[sheet.selectTo.x].label}/${sheet.rows[sheet.selectTo.y].label}</td>
+					<td>${sheet.description}&nbsp;</td>
 					<td>
 						<form>
 							<button>Löschen</button>
@@ -49,6 +51,7 @@
 						</form>
 					</td>
 				</tr>
+				</c:forEach>
 			</table>
 			
 			<br/>

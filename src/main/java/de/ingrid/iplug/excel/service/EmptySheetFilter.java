@@ -44,7 +44,7 @@ public class EmptySheetFilter extends ExcludeFilter {
 			for (Row row : rows) {
 				Comparable<? extends Object> value = values.getValue(column
 						.getIndex(), row.getIndex());
-				if (value != null && !value.toString().equals("")) {
+				if (value != null && !value.toString().trim().equals("")) {
 					empty = false;
 				}
 			}

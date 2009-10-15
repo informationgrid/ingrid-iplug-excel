@@ -56,11 +56,12 @@ public abstract class AbstractSheetTest extends TestCase {
 		Values values = new Values();
 		for (Row row : rows) {
 			for (Column column : columns) {
-				String value = row.getIndex() == 3 ? "" : row.getLabel();
-				value = value.equals("") ? "" : column.getIndex() == 3 ? ""
-						: column.getLabel();
+				String label = "" + column.getLabel() + row.getLabel();
+				if (row.getIndex() == 2 || column.getIndex() == 2) {
+					label = "";
+				}
 				values.addValue(new Point(column.getIndex(), row.getIndex()),
-						value);
+						label);
 			}
 		}
 		sheet.setValues(values);

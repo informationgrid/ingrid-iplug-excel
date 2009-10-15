@@ -4,27 +4,29 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.io.Serializable;
 
 public class Filter implements Externalizable {
 
 	public static enum FilterType {
-		All, GREATER_THAN, LOWER_THAN, CONTAINS, NOT_CONTAINS, EQUAL, NOT_EQUAL
+		GREATER_THAN, LOWER_THAN, CONTAINS, NOT_CONTAINS, EQUAL, NOT_EQUAL
 	}
 
-	private String _expression;
+	private Comparable<? extends Serializable> _expression;
 
-	private FilterType _filterType = FilterType.All;
+	private FilterType _filterType = FilterType.GREATER_THAN;
 
 	public Filter() {
 		// externalizable
 	}
 
-	public Filter(String expression, FilterType filterType) {
+	public Filter(Comparable<? extends Serializable> expression,
+			FilterType filterType) {
 		_expression = expression;
 		_filterType = filterType;
 	}
 
-	public String getExpression() {
+	public Comparable<? extends Serializable> getExpression() {
 		return _expression;
 	}
 
@@ -35,12 +37,12 @@ public class Filter implements Externalizable {
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_filterType = FilterType.valueOf(in.readUTF());
-		_expression = in.readUTF();
+		_expression = (Comparable<? extends Serializable>) in.readObject();
 	}
 
 	public void writeExternal(ObjectOutput out) throws IOException {
 		out.writeUTF(_filterType.name());
-		out.writeUTF(_expression);
+		out.writeObject(_expression);
 	}
 
 }

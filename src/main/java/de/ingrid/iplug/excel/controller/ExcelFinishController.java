@@ -48,9 +48,10 @@ public class ExcelFinishController {
 		File workinDirectory = plugdescriptionCommandObject
 				.getWorkinDirectory();
 		workinDirectory.mkdirs();
+		int length = workinDirectory.listFiles().length;
 		byte[] workBookBytes = sheet.getWorkbook();
 		FileOutputStream outputStream = new FileOutputStream(new File(
-				workinDirectory, sheet.getFileName()));
+				workinDirectory, sheet.getFileName() + "_" + length));
 		outputStream.write(workBookBytes);
 		outputStream.close();
 		return "redirect:/base/save.html";

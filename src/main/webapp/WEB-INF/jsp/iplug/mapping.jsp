@@ -145,7 +145,7 @@
 						<td class="rowCountLabel">${row.label}</td>
 						<c:forEach items="${sheet.columns}" var="col">
 							<c:if test="${!col.excluded}">
-							<td <c:if test="${col.isMapped || row.isMapped}">class="mapped"</c:if>>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
+							<td <c:if test="${(row.isMapped && col.matchFilter) || (col.isMapped  && row.matchFilter)}">class="mapped"</c:if>>${sheet.valuesAsMap[row.index][col.index]}&nbsp;</td>
 							</c:if>
 						</c:forEach>
 					</tr>

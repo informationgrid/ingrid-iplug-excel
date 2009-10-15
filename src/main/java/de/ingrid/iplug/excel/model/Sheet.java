@@ -4,7 +4,6 @@ import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -113,17 +112,17 @@ public class Sheet implements Externalizable {
 		return _values;
 	}
 
-	public Map<Integer, List<Serializable>> getValuesAsMap() {
-		HashMap<Integer, List<Serializable>> map = new LinkedHashMap<Integer, List<Serializable>>();
+	public Map<Integer, List<Comparable<?>>> getValuesAsMap() {
+		HashMap<Integer, List<Comparable<?>>> map = new LinkedHashMap<Integer, List<Comparable<?>>>();
 		List<Row> rows = getRows();
 		int columnSize = getColumns().size();
 		for (Row row : rows) {
 			int rowIndex = row.getIndex();
-			List<Serializable> rowValues = new ArrayList<Serializable>();
+			List<Comparable<?>> rowValues = new ArrayList<Comparable<?>>();
 			map.put(rowIndex, rowValues);
 			for (int i = 0; i < columnSize; i++) {
 				Point point = new Point(i, rowIndex);
-				Serializable value = _values.getValue(point);
+				Comparable<?> value = _values.getValue(point);
 				rowValues.add(value);
 			}
 

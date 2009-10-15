@@ -1,15 +1,14 @@
 package de.ingrid.iplug.excel.service;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import de.ingrid.iplug.excel.model.Column;
-import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Values;
 
 @Service
 public class SheetService {
@@ -42,21 +41,21 @@ public class SheetService {
 		while (columnsIterator.hasNext()) {
 			Column column = (Column) columnsIterator.next();
 			if (column.getIndex() == colIndex) {
-				//columnsIterator.remove();
+				// columnsIterator.remove();
 				column.setExcluded(true);
 			}
 		}
 
-//		// handle the values
-//		Values values = sheet.getValues();
-//		Iterator<Point> pointIterator = values.getPointIterator();
-//
-//		while (pointIterator.hasNext()) {
-//			Point point = (Point) pointIterator.next();
-//			if (point.getX() == colIndex) {
-//				pointIterator.remove();
-//			}
-//		}
+		// // handle the values
+		// Values values = sheet.getValues();
+		// Iterator<Point> pointIterator = values.getPointIterator();
+		//
+		// while (pointIterator.hasNext()) {
+		// Point point = (Point) pointIterator.next();
+		// if (point.getX() == colIndex) {
+		// pointIterator.remove();
+		// }
+		// }
 	}
 
 	public void excludeRow(Sheet sheet, int rowIndex) {
@@ -67,21 +66,26 @@ public class SheetService {
 		while (rowIterator.hasNext()) {
 			Row row = (Row) rowIterator.next();
 			if (row.getIndex() == rowIndex) {
-				//rowIterator.remove();
+				// rowIterator.remove();
 				row.setExcluded(true);
 			}
 		}
 
-//		// handle the values
-//		Values values = sheet.getValues();
-//		Iterator<Point> pointIterator = values.getPointIterator();
-//
-//		while (pointIterator.hasNext()) {
-//			Point point = (Point) pointIterator.next();
-//			if (point.getY() == rowIndex) {
-//				pointIterator.remove();
-//			}
-//		}
+		// // handle the values
+		// Values values = sheet.getValues();
+		// Iterator<Point> pointIterator = values.getPointIterator();
+		//
+		// while (pointIterator.hasNext()) {
+		// Point point = (Point) pointIterator.next();
+		// if (point.getY() == rowIndex) {
+		// pointIterator.remove();
+		// }
+		// }
 	}
 
+	public static void main(String[] args) {
+		Comparable<Serializable> s = null;
+		Comparable<Serializable> c = s;
+		c.compareTo(1);
+	}
 }

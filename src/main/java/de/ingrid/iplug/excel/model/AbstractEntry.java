@@ -15,6 +15,7 @@ public abstract class AbstractEntry implements Externalizable {
 	private float _rank;
 	private boolean _mapped;
 	private boolean _excluded;
+	private boolean _matchFilter = false;
 
 	private int _index;
 
@@ -54,6 +55,10 @@ public abstract class AbstractEntry implements Externalizable {
 		_filters.remove(filter);
 	}
 
+	public void removeFilter(int index) {
+		_filters.remove(index);
+	}
+
 	public FieldType getFieldType() {
 		return _fieldType;
 	}
@@ -90,11 +95,30 @@ public abstract class AbstractEntry implements Externalizable {
 		_excluded = excluded;
 	}
 
+	/**
+	 * if true then the entry will be indexed
+	 * 
+	 * @param addToIndex
+	 */
+	public void setMatchFilter(boolean addToIndex) {
+		_matchFilter = addToIndex;
+	}
+
+	/**
+	 * if true then the entry will be indexed
+	 * 
+	 * @param filtered
+	 */
+	public boolean isMatchFilter() {
+		return _matchFilter;
+	}
+
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_label = in.readUTF();
 		_excluded = in.readBoolean();
 		_mapped = in.readBoolean();
+		_matchFilter = in.readBoolean();
 		_rank = in.readFloat();
 		_index = in.readInt();
 		_fieldType = FieldType.valueOf(in.readUTF());
@@ -111,6 +135,7 @@ public abstract class AbstractEntry implements Externalizable {
 		out.writeUTF(_label);
 		out.writeBoolean(_excluded);
 		out.writeBoolean(_mapped);
+		out.writeBoolean(_matchFilter);
 		out.writeFloat(_rank);
 		out.writeInt(_index);
 		out.writeUTF(_fieldType.name());

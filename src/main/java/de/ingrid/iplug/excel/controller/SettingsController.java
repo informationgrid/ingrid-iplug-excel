@@ -1,6 +1,5 @@
 package de.ingrid.iplug.excel.controller;
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,19 +44,19 @@ public class SettingsController {
 		Sheet sheet = sheets.getSheets().get(0);
 		List<Column> columns = sheet.getColumns();
 		List<Row> rows = sheet.getRows();
-		Map<Integer, List<Serializable>> valuesAsMap = sheet.getValuesAsMap();
+		Map<Integer, List<Comparable<?>>> valuesAsMap = sheet.getValuesAsMap();
 		Iterator<Integer> valuesAsMapIterator = valuesAsMap.keySet().iterator();
 
 		// handle firstIsLabel
 		if (sheet.isFirstIsLabel()) {
 			// we map columns to index fields, a row is a doc
 			if (sheet.getDocumentType().equals(DocumentType.ROW)) {
-				List<Serializable> firstRowValues = valuesAsMap.get(0);
+				List<Comparable<?>> firstRowValues = valuesAsMap.get(0);
 
 				// set the label
 				for (int i = 0; i < columns.size(); i++) {
 					Column column = columns.get(i);
-					Serializable value = firstRowValues.get(i);
+					Comparable<?> value = firstRowValues.get(i);
 					column.setLabel(value.toString());
 				}
 
@@ -72,7 +71,7 @@ public class SettingsController {
 
 					while (valuesAsMapIterator.hasNext()) {
 						valuesAsMapIterator.next();
-						Serializable firstColValue = valuesAsMap.get(rowIndex)
+						Comparable<?> firstColValue = valuesAsMap.get(rowIndex)
 								.get(0);
 						row.setLabel(firstColValue + "");
 					}

@@ -54,13 +54,13 @@ public class SheetsService {
 						sheet.addColumn(column);
 					}
 
-					Serializable value = "";
+					Comparable<? extends Object> value = null;
 					switch (poiCell.getCellType()) {
 					case Cell.CELL_TYPE_BOOLEAN:
-						value = poiCell.getBooleanCellValue();
+						value = new Boolean(poiCell.getBooleanCellValue());
 						break;
 					case Cell.CELL_TYPE_NUMERIC:
-						value = poiCell.getNumericCellValue();
+						value = new Double(poiCell.getNumericCellValue());
 						break;
 					case Cell.CELL_TYPE_STRING:
 						value = poiCell.getStringCellValue();
@@ -82,4 +82,10 @@ public class SheetsService {
 		return sheets;
 	}
 
+	public static void main(String[] args) {
+		Comparable<? extends Serializable> c = 1;
+		Comparable<Object> c1 = null;
+		c1.compareTo(c);
+
+	}
 }

@@ -17,7 +17,7 @@ public class SheetsServiceTest extends TestCase {
 		Sheets sheets = sheetsService.createSheets(new File(
 				"src/test/resources/test.xls"));
 		List<Sheet> sheetList = sheets.getSheets();
-		assertEquals(2, sheetList.size());
+		assertEquals(3, sheetList.size());
 		Sheet sheet = sheetList.get(0);
 
 		List<Row> rows = sheet.getRows();

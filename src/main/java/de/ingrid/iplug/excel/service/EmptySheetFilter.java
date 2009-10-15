@@ -1,6 +1,5 @@
 package de.ingrid.iplug.excel.service;
 
-import java.io.Serializable;
 import java.util.BitSet;
 import java.util.List;
 
@@ -43,8 +42,8 @@ public class EmptySheetFilter extends ExcludeFilter {
 		for (Column column : columns) {
 			boolean empty = true;
 			for (Row row : rows) {
-				Serializable value = values.getValue(column.getIndex(), row
-						.getIndex());
+				Comparable<? extends Object> value = values.getValue(column
+						.getIndex(), row.getIndex());
 				if (value != null && !value.toString().equals("")) {
 					empty = false;
 				}
@@ -64,8 +63,8 @@ public class EmptySheetFilter extends ExcludeFilter {
 		for (Row row : rows) {
 			boolean empty = true;
 			for (Column column : columns) {
-				Serializable value = values.getValue(column.getIndex(), row
-						.getIndex());
+				Comparable<? extends Object> value = values.getValue(column
+						.getIndex(), row.getIndex());
 				if (value != null && !value.toString().equals("")) {
 					empty = false;
 				}

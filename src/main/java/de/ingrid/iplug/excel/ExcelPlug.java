@@ -3,7 +3,7 @@ package de.ingrid.iplug.excel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.ingrid.admin.service.IngridIndexSearcher;
+import de.ingrid.admin.search.IngridIndexSearcher;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
@@ -23,31 +23,34 @@ public class ExcelPlug extends HeartBeatPlug {
 	}
 
 	@Override
-    public void close() throws Exception {
+	public void close() throws Exception {
 		_indexSearcher.close();
 	}
 
 	@Override
-    public void configure(final PlugDescription plugDescription) throws Exception {
+	public void configure(final PlugDescription plugDescription)
+			throws Exception {
 		_indexSearcher.configure(plugDescription);
 	}
 
-	public IngridHits search(final IngridQuery query, final int start, final int length)
-			throws Exception {
-		final IngridHits ingridHits = _indexSearcher.search(query, start, length);
+	public IngridHits search(final IngridQuery query, final int start,
+			final int length) throws Exception {
+		final IngridHits ingridHits = _indexSearcher.search(query, start,
+				length);
 		return ingridHits;
 	}
 
-	public IngridHitDetail getDetail(final IngridHit hit, final IngridQuery query,
-			final String[] fields) throws Exception {
-		final IngridHitDetail detail = _indexSearcher.getDetail(hit, query, fields);
+	public IngridHitDetail getDetail(final IngridHit hit,
+			final IngridQuery query, final String[] fields) throws Exception {
+		final IngridHitDetail detail = _indexSearcher.getDetail(hit, query,
+				fields);
 		return detail;
 	}
 
 	public IngridHitDetail[] getDetails(final IngridHit[] hitArray,
 			final IngridQuery query, final String[] fields) throws Exception {
-		final IngridHitDetail[] details = _indexSearcher.getDetails(hitArray, query,
-				fields);
+		final IngridHitDetail[] details = _indexSearcher.getDetails(hitArray,
+				query, fields);
 		return details;
 	}
 }

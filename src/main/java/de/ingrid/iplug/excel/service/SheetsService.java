@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -82,10 +81,4 @@ public class SheetsService {
 		return sheets;
 	}
 
-	public static void main(String[] args) {
-		Comparable<? extends Serializable> c = 1;
-		Comparable<Object> c1 = null;
-		c1.compareTo(c);
-
-	}
 }

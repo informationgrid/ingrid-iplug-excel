@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Row;
@@ -33,27 +34,34 @@ public class AddToIndexFilter implements ISheetFilter {
 	}
 
 	public BitSet filterColumns(Sheet sheet) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public BitSet filterRows(Sheet sheet) {
-		BitSet bitSet = new BitSet();
 		List<Row> rows = sheet.getRows();
 		List<Column> columns = sheet.getColumns();
 		Values values = sheet.getValues();
-		for (Row row : rows) {
-			if (row.isExcluded()) {
+		return filter(columns, rows, values);
+	}
+
+	public BitSet filterRows(Sheet sheet) {
+		List<Row> rows = sheet.getRows();
+		List<Column> columns = sheet.getColumns();
+		Values values = sheet.getValues();
+		return filter(rows, columns, values);
+	}
+
+	private BitSet filter(List<? extends AbstractEntry> documentEntries,
+			List<? extends AbstractEntry> mappedEntries, Values values) {
+		BitSet bitSet = new BitSet();
+		for (AbstractEntry documentEntry : documentEntries) {
+			if (documentEntry.isExcluded()) {
 				continue;
 			}
 			boolean exclude = false;
-			for (Column column : columns) {
-				if (!column.isMapped() || column.isExcluded()) {
+			for (AbstractEntry mappedEntry : mappedEntries) {
+				if (!mappedEntry.isMapped() || mappedEntry.isExcluded()) {
 					continue;
 				}
-				Comparable<? extends Object> value = values.getValue(column
-						.getIndex(), row.getIndex());
-				List<Filter> filters = column.getFilters();
+				Comparable<? extends Object> value = values.getValue(
+						mappedEntry.getIndex(), documentEntry.getIndex());
+				List<Filter> filters = mappedEntry.getFilters();
 				for (Filter filter : filters) {
 					FilterType filterType = filter.getFilterType();
 					Comparable<? extends Serializable> expression = filter
@@ -95,7 +103,7 @@ public class AddToIndexFilter implements ISheetFilter {
 					break;
 				}
 			}
-			bitSet.set(row.getIndex(), exclude);
+			bitSet.set(documentEntry.getIndex(), exclude);
 		}
 		return bitSet;
 	}

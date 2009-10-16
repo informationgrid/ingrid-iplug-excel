@@ -50,8 +50,10 @@ public class ExcelFinishController {
 		workinDirectory.mkdirs();
 		int length = workinDirectory.listFiles().length;
 		byte[] workBookBytes = sheet.getWorkbook();
-		FileOutputStream outputStream = new FileOutputStream(new File(
-				workinDirectory, sheet.getFileName() + "_" + length));
+		File newXlsFile = new File(workinDirectory, sheet.getFileName() + "_"
+				+ length);
+		sheet.setFileName(newXlsFile.getName());
+		FileOutputStream outputStream = new FileOutputStream(newXlsFile);
 		outputStream.write(workBookBytes);
 		outputStream.close();
 		return "redirect:/base/save.html";

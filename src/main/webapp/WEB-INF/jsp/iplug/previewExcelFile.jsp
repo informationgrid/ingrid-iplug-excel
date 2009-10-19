@@ -39,9 +39,9 @@
 		<div id="content">
 			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
 			<form:form method="post" action="" modelAttribute="sheets"> 
-			<c:forEach items="${sheets.sheets}" var="sheet" varStatus="i">
+			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>
-				<input type="radio" name="sheetIndex" value="${i.index}"/> Sheet${i.index+1}
+				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet${sheet.sheetIndex+1}
 			</h2>
 			<div style="overflow:auto">
 			<table class="sheet" cellpadding="0" cellspacing="0">

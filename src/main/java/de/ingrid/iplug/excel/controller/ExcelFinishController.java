@@ -58,13 +58,13 @@ public class ExcelFinishController {
 		}
 		savedSheets.addSheet(sheet);
 		plugdescriptionCommandObject.setRecordLoader(false);
-		File workinDirectory = plugdescriptionCommandObject
-				.getWorkinDirectory();
-		workinDirectory.mkdirs();
-		int length = workinDirectory.listFiles().length;
 		byte[] workBookBytes = sheet.getWorkbook();
 		if (workBookBytes != null && workBookBytes.length > 0) {
-			File newXlsFile = new File(workinDirectory, sheet.getFileName()
+			File mappingDir = new File(plugdescriptionCommandObject
+					.getWorkinDirectory(), "mapping");
+			mappingDir.mkdirs();
+			int length = mappingDir.listFiles().length;
+			File newXlsFile = new File(mappingDir, sheet.getFileName()
 					+ "_" + length);
 			sheet.setFileName(newXlsFile.getName());
 			FileOutputStream outputStream = new FileOutputStream(newXlsFile);

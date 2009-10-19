@@ -43,10 +43,20 @@
 					<td>${sheet.columns[sheet.selectFrom.x].label}/${sheet.rows[sheet.selectFrom.y].label} : ${sheet.columns[sheet.selectTo.x].label}/${sheet.rows[sheet.selectTo.y].label}</td>
 					<td>${sheet.description}&nbsp;</td>
 					<td>
+						<form action="/iplug/deleteMapping.html" method="POST">
+							<input type="submit" value="Löschen"/>
+							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+						</form>
+						<form action="/iplug/editMapping.html" method="GET">
+							<input type="submit" value="Bearbeiten"/>
+							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+						</form>
+						<form action="/iplug/addMapping.html" method="GET">
+							<input type="submit" value="Weiteres Sheet"/>
+							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+						</form>
+						
 						<form>
-							<button>Löschen</button>
-							<button>Bearbeiten</button>
-							<button>Weiteres Sheet</button>
 							<button>Datei aktualisieren</button>
 						</form>
 					</td>

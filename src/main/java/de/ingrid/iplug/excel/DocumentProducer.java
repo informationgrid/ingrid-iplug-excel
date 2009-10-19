@@ -159,7 +159,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		_sheetDocumentIterator = null;
 		for (Sheet sheet : sheetsList) {
 			String fileName = sheet.getFileName();
-			File xls = new File(workinDirectory, fileName);
+			File xls = new File(workinDirectory, "mapping" + File.separator
+					+ fileName);
 			try {
 				Sheets tmpSheets = _sheetsService.createSheets(xls);
 				List<Sheet> tmpSheetList = tmpSheets.getSheets();

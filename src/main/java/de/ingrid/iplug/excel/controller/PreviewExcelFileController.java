@@ -28,15 +28,12 @@ public class PreviewExcelFileController {
 	public String postSettings(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=true) final int sheetIndex){
 		
 		Iterator<Sheet> iterator = sheets.getSheets().iterator();
-		int i = 0;
 		while (iterator.hasNext()) {
-			iterator.next();
-			if(i != sheetIndex){
+			Sheet next = iterator.next();
+			if (next.getSheetIndex() != sheetIndex) {
 				iterator.remove();
 			}
-			i++;	
 		}
-		sheets.getSheets().get(0).setSheetIndex(sheetIndex);
 		return "redirect:/iplug/settings.html";
 	}
 

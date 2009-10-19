@@ -16,21 +16,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.model.Values;
+import de.ingrid.iplug.excel.service.EmptySheetFilter;
 import de.ingrid.iplug.excel.service.SheetsService;
 
 @Controller
 @SessionAttributes( { "plugDescription", "sheets" })
-public class EditMappingController {
+public class AddMappingController {
 
 	private final SheetsService _sheetsService;
+	private final EmptySheetFilter _excludeFilter;
 
 	@Autowired
-	public EditMappingController(SheetsService sheetsService) {
+	public AddMappingController(SheetsService sheetsService,
+			EmptySheetFilter excludeFilter) {
 		_sheetsService = sheetsService;
+		_excludeFilter = excludeFilter;
 	}
 
-	@RequestMapping(value = "/iplug/editMapping.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/iplug/addMapping.html", method = RequestMethod.GET)
 	public String editSheet(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
 			@RequestParam(value = "sheetIndex", required = true) int sheetIndex,
@@ -38,30 +41,32 @@ public class EditMappingController {
 		Sheets sheets = new Sheets();
 		Sheets savedSheets = (Sheets) plugdescriptionCommandObject
 				.get("sheets");
+		File mappingFile = null;
 		Iterator<Sheet> iterator = savedSheets.getSheets().iterator();
 		while (iterator.hasNext()) {
 			Sheet sheet = iterator.next();
 			if (sheet.getSheetIndex() == sheetIndex) {
 				String fileName = sheet.getFileName();
-				Values values = loadValues(sheetIndex, fileName,
-						plugdescriptionCommandObject);
-				sheet.setValues(values);
-				sheets.addSheet(sheet);
+				File workinDirectory = plugdescriptionCommandObject
+						.getWorkinDirectory();
+				mappingFile = new File(new File(workinDirectory, "mapping"),
+						fileName);
 				break;
 			}
 		}
+		Sheets sheetsFromHdd = _sheetsService.createSheets(mappingFile);
+		iterator = sheetsFromHdd.getSheets().iterator();
+		while (iterator.hasNext()) {
+			Sheet sheetFromHdd = (Sheet) iterator.next();
+			if (sheetFromHdd.getSheetIndex() != sheetIndex) {
+				_excludeFilter.excludeEmtpyRowsAndColumns(sheetFromHdd);
+				sheetFromHdd.setFileName(mappingFile.getName());
+				sheets.addSheet(sheetFromHdd);
+			}
+		}
+
 		model.addAttribute("sheets", sheets);
-		return "redirect:/iplug/settings.html";
+		return "redirect:/iplug/previewExcelFile.html";
 	}
 
-	private Values loadValues(int sheetIndex, String fileName,
-			PlugdescriptionCommandObject plugdescriptionCommandObject)
-			throws IOException {
-		File workinDirectory = plugdescriptionCommandObject
-				.getWorkinDirectory();
-		File mappingDir = new File(workinDirectory, "mapping");
-		File file = new File(mappingDir, fileName);
-		Sheets sheets = _sheetsService.createSheets(file);
-		return sheets.getSheets().get(sheetIndex).getValues();
-	}
 }

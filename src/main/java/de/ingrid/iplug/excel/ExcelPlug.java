@@ -5,10 +5,11 @@ import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.search.IngridIndexSearcher;
 import de.ingrid.iplug.HeartBeatPlug;
+import de.ingrid.iplug.IPlugdescriptionFieldFilter;
+import de.ingrid.iplug.PlugDescriptionFieldFilters;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
-import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.query.IngridQuery;
 
 @Service
@@ -17,20 +18,15 @@ public class ExcelPlug extends HeartBeatPlug {
 	private final IngridIndexSearcher _indexSearcher;
 
 	@Autowired
-	public ExcelPlug(final IngridIndexSearcher indexSearcher) {
-		super(10000);
+	public ExcelPlug(final IngridIndexSearcher indexSearcher,
+			IPlugdescriptionFieldFilter[] fieldFilters) {
+		super(10000, new PlugDescriptionFieldFilters(fieldFilters));
 		_indexSearcher = indexSearcher;
 	}
 
 	@Override
 	public void close() throws Exception {
 		_indexSearcher.close();
-	}
-
-	@Override
-	public void configure(final PlugDescription plugDescription)
-			throws Exception {
-		_indexSearcher.configure(plugDescription);
 	}
 
 	public IngridHits search(final IngridQuery query, final int start,

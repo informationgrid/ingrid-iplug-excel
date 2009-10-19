@@ -19,6 +19,14 @@ public class Sheets implements Externalizable {
 		_sheets.add(sheet);
 	}
 
+	public boolean existsSheet(Sheet sheet) {
+		return _sheets.contains(sheet);
+	}
+
+	public void removeSheet(Sheet sheet) {
+		_sheets.remove(sheet);
+	}
+
 	public void readExternal(ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_sheets.clear();

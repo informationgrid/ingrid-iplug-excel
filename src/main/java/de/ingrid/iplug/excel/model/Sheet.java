@@ -154,6 +154,9 @@ public class Sheet implements Externalizable {
 			_columns.add(column);
 		}
 
+		_selectFrom.readExternal(in);
+		_selectTo.readExternal(in);
+
 		// values does not need to deserialize
 	}
 
@@ -176,6 +179,9 @@ public class Sheet implements Externalizable {
 			column.writeExternal(out);
 		}
 
+		_selectFrom.writeExternal(out);
+		_selectTo.writeExternal(out);
+
 		// values does not need to serialize
 
 	}
@@ -186,6 +192,17 @@ public class Sheet implements Externalizable {
 
 	public byte[] getWorkbook() {
 		return _workBook;
+	}
+
+	@Override
+	public int hashCode() {
+		return _sheetIndex;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		Sheet other = (Sheet) obj;
+		return other.getSheetIndex() == _sheetIndex;
 	}
 
 }

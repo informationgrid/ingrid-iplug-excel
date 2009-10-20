@@ -57,7 +57,7 @@
 							<select name="fieldName">
 								<option value="">-- bitte wählen --</option>
 								<option value="title">title</option>
-								<option value="description">description</option>
+								<option value="summary">summary</option>
 							</select>
 						</td>
 					</tr>

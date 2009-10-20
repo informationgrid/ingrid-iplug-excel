@@ -18,8 +18,8 @@ import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 
 @Controller
-@SessionAttributes(value = { "plugDescription", "sheets", })
 @RequestMapping("/iplug/finish.html")
+@SessionAttributes(value = { "plugDescription", "sheets" })
 public class ExcelFinishController {
 
 	@SuppressWarnings("unchecked")

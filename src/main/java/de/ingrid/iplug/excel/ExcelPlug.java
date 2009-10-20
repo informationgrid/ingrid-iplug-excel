@@ -31,6 +31,7 @@ public class ExcelPlug extends HeartBeatPlug {
 
 	public IngridHits search(final IngridQuery query, final int start,
 			final int length) throws Exception {
+		System.out.println("ExcelPlug.search(): " + query);
 		final IngridHits ingridHits = _indexSearcher.search(query, start,
 				length);
 		return ingridHits;

@@ -15,7 +15,7 @@ public class SheetsServiceTest extends TestCase {
 	public void testCreateSheets() throws Exception {
 		SheetsService sheetsService = new SheetsService();
 		Sheets sheets = sheetsService.createSheets(new File(
-				"src/test/resources/test.xls"));
+				"src/test/resources/mapping/test.xls"));
 		List<Sheet> sheetList = sheets.getSheets();
 		assertEquals(3, sheetList.size());
 		Sheet sheet = sheetList.get(0);

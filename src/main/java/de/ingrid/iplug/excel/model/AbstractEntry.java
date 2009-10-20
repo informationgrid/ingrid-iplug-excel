@@ -15,7 +15,7 @@ public abstract class AbstractEntry implements Externalizable {
 	private float _rank;
 	private boolean _mapped;
 	private boolean _excluded;
-	private boolean _matchFilter = false;
+	private boolean _matchFilter = true;
 
 	private int _index;
 
@@ -144,5 +144,10 @@ public abstract class AbstractEntry implements Externalizable {
 			filter.writeExternal(out);
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return _label + "#" + _excluded + "#" + _mapped + "#" + _matchFilter;
 	}
 }

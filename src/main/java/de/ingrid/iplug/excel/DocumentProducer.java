@@ -62,6 +62,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 					_mappedEntries = _sheet.getColumns();
 					break;
 				case COLUMN:
+					_documentEntries = _sheet.getColumns();
+					_mappedEntries = _sheet.getRows();
 					break;
 
 				default:
@@ -112,23 +114,30 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				AbstractEntry entry = _mappedEntries.get(i);
 				FieldType fieldType = entry.getFieldType();
 				String label = entry.getLabel();
+				Store store = Store.NO;
+				if (label.toString().equals("title")
+						|| label.toString().equals("summary")) {
+					store = Store.YES;
+				}
 				switch (fieldType) {
 				case TEXT:
-					document.add(new Field(label, value.toString(), Store.NO,
+					document.add(new Field(label, value.toString(), store,
 							Index.ANALYZED));
 					break;
 				case KEYWORD:
 				case BOOLEAN:
-					document.add(new Field(label, value.toString(), Store.NO,
+					document.add(new Field(label, value.toString(), store,
 							Index.NOT_ANALYZED));
 					break;
 				case NUMBER:
 					document.add(new Field(label, StringUtils.padding(Double
-							.parseDouble(value.toString())), Store.NO,
+							.parseDouble(value.toString())), store,
 							Index.ANALYZED));
 				default:
 					break;
 				}
+				document.add(new Field("content", value.toString(), Store.NO,
+						Index.ANALYZED));
 
 			}
 			remove();

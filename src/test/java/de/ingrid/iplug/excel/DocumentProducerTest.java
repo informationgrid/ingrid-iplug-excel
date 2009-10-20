@@ -26,8 +26,8 @@ public class DocumentProducerTest extends TestCase {
 
 		// setup plugdescription
 		PlugDescription plugDescription = new PlugDescription();
-		File xls = new File("src/test/resources/test.xls");
-		plugDescription.setWorkinDirectory(xls.getParentFile());
+		File xls = new File("src/test/resources/mapping/test.xls");
+		plugDescription.setWorkinDirectory(xls.getParentFile().getParentFile());
 		Sheets sheets = new SheetsService().createSheets(xls);
 		// setup 0te sheet
 		Sheet sheet = sheets.getSheets().get(0);
@@ -39,10 +39,14 @@ public class DocumentProducerTest extends TestCase {
 		column = sheet.getColumns().get(2);
 		column.setFieldType(FieldType.NUMBER);
 		column.setMapped(true);
-		Row row = sheet.getRows().get(2);
-		row.setMatchFilter(true);
-		row = sheet.getRows().get(3);
-		row.setMatchFilter(true);
+		List<Row> rows = sheet.getRows();
+		for (Row row1 : rows) {
+			if (row1.getIndex() >= 2 && row1.getIndex() <= 3) {
+				row1.setMatchFilter(true);
+			} else {
+				row1.setMatchFilter(false);
+			}
+		}
 
 		// setup 1te sheet
 		sheet = sheets.getSheets().get(1);
@@ -54,12 +58,14 @@ public class DocumentProducerTest extends TestCase {
 		column = sheet.getColumns().get(2);
 		column.setFieldType(FieldType.TEXT);
 		column.setMapped(true);
-		row = sheet.getRows().get(2);
-		row.setMatchFilter(true);
-		row = sheet.getRows().get(3);
-		row.setMatchFilter(true);
-		row = sheet.getRows().get(4);
-		row.setMatchFilter(true);
+		rows = sheet.getRows();
+		for (Row row1 : rows) {
+			if (row1.getIndex() >= 2 && row1.getIndex() <= 4) {
+				row1.setMatchFilter(true);
+			} else {
+				row1.setMatchFilter(false);
+			}
+		}
 
 		sheets.getSheets().remove(2);
 
@@ -92,7 +98,6 @@ public class DocumentProducerTest extends TestCase {
 		document = documents.get(4);
 		assertEquals(StringUtils.padding(189), document.get("B"));
 		assertEquals("150", document.get("C"));
-
 
 	}
 }

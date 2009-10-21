@@ -1,5 +1,6 @@
 package de.ingrid.iplug.excel.controller;
 
+import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
@@ -12,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
+import de.ingrid.iplug.excel.model.FieldType;
 import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Filter.FilterType;
 import de.ingrid.iplug.excel.service.AddToIndexFilter;
+import de.ingrid.iplug.excel.service.SheetService;
 
 @Controller
 @SessionAttributes("sheets")
@@ -40,7 +44,51 @@ public class AddFilterController {
 		model.addAttribute("type", type);
 		model.addAttribute("index", index);
 		model.addAttribute("label", label);
-		model.addAttribute("filterTypes", FilterType.values());
+		List<FilterType> filterTypes = new ArrayList<FilterType>();
+		Sheet sheet = sheets.getSheets().get(0);
+		SheetService sheetService = new SheetService();
+		DocumentType documentType = sheet.getDocumentType();
+		AbstractEntry doc = null;
+		switch (documentType) {
+		case ROW:
+			 doc = sheetService.getColumnByIndex(sheet, index);
+			break;
+		case COLUMN:
+			doc = sheetService.getRowByIndex(sheet, index);
+			break;
+		default:
+			break;
+		}
+		
+		FieldType fieldType = doc.getFieldType();
+		switch (fieldType) {
+		case BOOLEAN:
+			filterTypes.add(FilterType.EQUAL);
+			filterTypes.add(FilterType.NOT_EQUAL);
+			break;
+		case DATE:
+			filterTypes.add(FilterType.BEFORE);
+			filterTypes.add(FilterType.AFTER);
+			break;
+		case KEYWORD:
+		case TEXT:	
+			filterTypes.add(FilterType.EQUAL);
+			filterTypes.add(FilterType.NOT_EQUAL);
+			filterTypes.add(FilterType.CONTAINS);
+			filterTypes.add(FilterType.NOT_CONTAINS);
+			break;
+		case NUMBER:
+			filterTypes.add(FilterType.GREATER_THAN);
+			filterTypes.add(FilterType.LOWER_THAN);
+			filterTypes.add(FilterType.EQUAL);
+			filterTypes.add(FilterType.NOT_EQUAL);
+			break;	
+		default:
+			break;
+		}
+		
+		
+		model.addAttribute("filterTypes", filterTypes);
 		return "/iplug/addFilter";
 	}
 
@@ -62,6 +110,8 @@ public class AddFilterController {
 		case NOT_CONTAINS:
 		case EQUAL:
 		case NOT_EQUAL:
+		case BEFORE:
+		case AFTER:	
 			filter = new Filter(expression, filterType);
 			break;
 

@@ -51,7 +51,7 @@ public class EditMappingController {
 			}
 		}
 		model.addAttribute("sheets", sheets);
-		return "redirect:/iplug/settings.html";
+		return "redirect:/iplug/mapping.html";
 	}
 
 	private Values loadValues(int sheetIndex, String fileName,

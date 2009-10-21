@@ -5,9 +5,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +41,7 @@ public class SheetsService {
 		Sheets sheets = new Sheets();
 
 		Workbook workbook = new HSSFWorkbook(inputStream);
+		FormulaEvaluator eval = new HSSFFormulaEvaluator((HSSFWorkbook) workbook);
 		for (int sheetNum = 0; sheetNum < workbook.getNumberOfSheets(); sheetNum++) {
 			org.apache.poi.ss.usermodel.Sheet poiSheet = workbook
 					.getSheetAt(sheetNum);
@@ -59,10 +68,17 @@ public class SheetsService {
 						value = new Boolean(poiCell.getBooleanCellValue());
 						break;
 					case Cell.CELL_TYPE_NUMERIC:
-						value = new Double(poiCell.getNumericCellValue());
+						if (DateUtil.isCellDateFormatted(poiCell)) {
+							value = getFormattedDateString(poiCell);
+						}else{
+							value = new Double(poiCell.getNumericCellValue());
+						}
 						break;
 					case Cell.CELL_TYPE_STRING:
 						value = poiCell.getStringCellValue();
+						break;
+					case Cell.CELL_TYPE_FORMULA:
+						value = calculateFormula(poiCell, eval);
 						break;
 					default:
 						value = "";
@@ -80,5 +96,36 @@ public class SheetsService {
 
 		return sheets;
 	}
+	
+	private Comparable<? extends Object> calculateFormula(Cell poiCell, FormulaEvaluator eval){
+		Comparable<? extends Object> ret = null;
+		int type = eval.evaluateFormulaCell(poiCell);
+		switch (type) {
+			case Cell.CELL_TYPE_NUMERIC :
+				if (DateUtil.isCellDateFormatted(poiCell)) {
+					ret = getFormattedDateString(poiCell);
+				}else{
+					ret = poiCell.getNumericCellValue();
+				}
+				break;
+			case Cell.CELL_TYPE_BOOLEAN :
+				ret =  poiCell.getBooleanCellValue();
+				break;
+			case Cell.CELL_TYPE_BLANK :
+			case Cell.CELL_TYPE_ERROR:
+			case Cell.CELL_TYPE_FORMULA:
+			case Cell.CELL_TYPE_STRING :
+			default:
+				ret = poiCell.getStringCellValue();
+		} 
+		return ret;
+	}
+	
+	private String getFormattedDateString(Cell cell) {
+		Date date = cell.getDateCellValue();
+		SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );
+		String formatedDate = formatter.format(date);
+		return formatedDate;
+	} 
 
 }

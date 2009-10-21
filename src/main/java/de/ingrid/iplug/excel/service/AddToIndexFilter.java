@@ -68,10 +68,12 @@ public class AddToIndexFilter implements ISheetFilter {
 							.getExpression();
 					switch (filterType) {
 					case GREATER_THAN:
+					case AFTER:	
 						exclude = ((Comparable) value)
 								.compareTo((Comparable) expression) <= 0;
 						break;
 					case LOWER_THAN:
+					case BEFORE:	
 						exclude = ((Comparable) value)
 								.compareTo((Comparable) expression) >= 0;
 						break;
@@ -91,7 +93,6 @@ public class AddToIndexFilter implements ISheetFilter {
 						exclude = value.toString().indexOf(
 								expression.toString()) != -1;
 						break;
-
 					default:
 						break;
 					}

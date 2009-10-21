@@ -118,7 +118,7 @@
 						</c:if>
 	            	</c:forEach>
 				</tr>
-	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9">
+	    	   	<c:forEach items="${sheet.rows}" var="row" begin="${start}" end="${start + hitsPerPage -1}">
 	    	   		<c:if test="${!row.excluded}">
 	    	   		<tr>
 		    	   		<c:if test="${sheet.documentType == 'COLUMN'}">
@@ -152,7 +152,19 @@
 					</c:if>
 		        </c:forEach>
 	      	</table>
+	      	
 	      	</div>      	   
+	      	
+	      	<c:if test="${start > 0}">
+	      		<input type="button" value="&laquo; ${prevStart+1} - ${prevStart+hitsPerPage } anzeigen" onclick="document.location = 'mapping.html?start=${prevStart}'" />
+	      	</c:if>
+	      	<c:set var="to" value="${nextStart+hitsPerPage }"/>
+	      	<c:if test="${to > maxHits}">
+	      		<c:set var="to" value="${maxHits}"/>
+	      	</c:if>
+	      	<c:if test="${nextStart <= maxHits}">
+	      		<input type="button" value="${nextStart+1} - ${to} anzeigen &raquo;" onclick="document.location = 'mapping.html?start=${nextStart}'" />
+	      	</c:if>
         </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>

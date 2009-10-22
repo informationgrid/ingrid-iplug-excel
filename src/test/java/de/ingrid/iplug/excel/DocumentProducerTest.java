@@ -9,9 +9,10 @@ import junit.framework.TestCase;
 import org.apache.lucene.document.Document;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.mapping.FieldType;
+import de.ingrid.admin.search.GermanStemmer;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.FieldType;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
@@ -22,7 +23,7 @@ public class DocumentProducerTest extends TestCase {
 
 	public void testProduce() throws Exception {
 		DocumentProducer documentProducer = new DocumentProducer(
-				new SheetsService());
+				new SheetsService(), new GermanStemmer());
 
 		// setup plugdescription
 		PlugDescription plugDescription = new PlugDescription();

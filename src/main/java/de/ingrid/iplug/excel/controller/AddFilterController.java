@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.ingrid.admin.mapping.FieldType;
+import de.ingrid.admin.mapping.Filter;
+import de.ingrid.admin.mapping.Filter.FilterType;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.FieldType;
-import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.model.Filter.FilterType;
 import de.ingrid.iplug.excel.service.AddToIndexFilter;
 import de.ingrid.iplug.excel.service.SheetService;
 

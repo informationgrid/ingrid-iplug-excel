@@ -3,10 +3,10 @@ package de.ingrid.iplug.excel.service;
 import java.util.BitSet;
 import java.util.List;
 
+import de.ingrid.admin.mapping.Filter;
+import de.ingrid.admin.mapping.Filter.FilterType;
 import de.ingrid.iplug.excel.model.Column;
-import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Filter.FilterType;
 
 public class AddToIndexFilterTest extends AbstractSheetTest {
 

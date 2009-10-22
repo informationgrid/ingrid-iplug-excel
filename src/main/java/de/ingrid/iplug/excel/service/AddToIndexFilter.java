@@ -6,13 +6,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import de.ingrid.admin.mapping.Filter;
+import de.ingrid.admin.mapping.Filter.FilterType;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
-import de.ingrid.iplug.excel.model.Filter;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
-import de.ingrid.iplug.excel.model.Filter.FilterType;
 
 @Service
 public class AddToIndexFilter implements ISheetFilter {

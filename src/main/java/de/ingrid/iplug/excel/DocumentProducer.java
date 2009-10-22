@@ -7,6 +7,7 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Index;
@@ -15,10 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
+import de.ingrid.admin.search.Stemmer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.FieldType;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
@@ -31,8 +33,12 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 	private final SheetsService _sheetsService;
 	private SheetDocumentIterator _sheetDocumentIterator;
+	private final Stemmer _stemmer;
 
-	class SheetDocumentIterator implements Iterator<Document> {
+	static class SheetDocumentIterator implements Iterator<Document> {
+
+		private static final Logger LOG = Logger
+				.getLogger(SheetDocumentIterator.class);
 
 		private SheetDocumentIterator _prev;
 
@@ -48,11 +54,14 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 		private final String _name;
 
+		private final Stemmer _stemmer;
+
 		public SheetDocumentIterator(String name, SheetDocumentIterator prev,
-				Sheet sheet) {
+				Sheet sheet, Stemmer stemmer) {
 			_name = name;
 			_prev = prev;
 			_sheet = sheet;
+			_stemmer = stemmer;
 
 			if (_sheet != null) {
 				DocumentType documentType = _sheet.getDocumentType();
@@ -126,6 +135,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 					break;
 				case KEYWORD:
 				case BOOLEAN:
+				case DATE:
 					document.add(new Field(label, value.toString(), store,
 							Index.NOT_ANALYZED));
 					break;
@@ -133,8 +143,17 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 					document.add(new Field(label, StringUtils.padding(Double
 							.parseDouble(value.toString())), store,
 							Index.ANALYZED));
+					break;
+
 				default:
 					break;
+				}
+				try {
+					document.add(new Field("content", _stemmer.stem(value
+							.toString()), Store.NO, Index.ANALYZED));
+				} catch (IOException e) {
+					LOG.warn(_name + ": can not stem content: "
+							+ value.toString(), e);
 				}
 				document.add(new Field("content", value.toString(), Store.NO,
 						Index.ANALYZED));
@@ -146,8 +165,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	}
 
 	@Autowired
-	public DocumentProducer(SheetsService sheetsService) {
+	public DocumentProducer(SheetsService sheetsService, Stemmer stemmer) {
 		_sheetsService = sheetsService;
+		_stemmer = stemmer;
 	}
 
 	public boolean hasNext() {
@@ -180,7 +200,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 						_sheetDocumentIterator = new SheetDocumentIterator(
 								sheet.getFileName() + ".sheet."
 										+ sheet.getSheetIndex(),
-								_sheetDocumentIterator, sheet);
+								_sheetDocumentIterator, sheet, _stemmer);
 					}
 				}
 			} catch (IOException e) {

@@ -7,6 +7,9 @@ import java.io.ObjectOutput;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.ingrid.admin.mapping.FieldType;
+import de.ingrid.admin.mapping.Filter;
+
 public abstract class AbstractEntry implements Externalizable {
 
 	private String _label;

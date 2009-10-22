@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.FieldType;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;

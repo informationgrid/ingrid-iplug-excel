@@ -10,6 +10,9 @@ import de.ingrid.iplug.PlugDescriptionFieldFilters;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.metadata.IMetadataInjector;
+import de.ingrid.utils.processor.IPostProcessor;
+import de.ingrid.utils.processor.IPreProcessor;
 import de.ingrid.utils.query.IngridQuery;
 
 @Service
@@ -19,8 +22,11 @@ public class ExcelPlug extends HeartBeatPlug {
 
 	@Autowired
 	public ExcelPlug(final IngridIndexSearcher indexSearcher,
-			IPlugdescriptionFieldFilter[] fieldFilters) {
-		super(10000, new PlugDescriptionFieldFilters(fieldFilters));
+			IPlugdescriptionFieldFilter[] fieldFilters,
+			IMetadataInjector[] metadataInjectors,
+			IPreProcessor[] preProcessors, IPostProcessor[] postProcessors) {
+		super(10000, new PlugDescriptionFieldFilters(fieldFilters),
+				metadataInjectors, preProcessors, postProcessors);
 		_indexSearcher = indexSearcher;
 	}
 

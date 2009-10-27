@@ -55,9 +55,9 @@
 							<input type="submit" value="Weiteres Sheet"/>
 							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
 						</form>
-						
-						<form style="float:left">
-							<button>Datei aktualisieren</button>
+						<form action="/iplug/switchXls.html" method="GET" style="float:left">
+							<input type="submit" value="Datei aktualisieren"/>
+							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
 						</form>
 					</td>
 				</tr>

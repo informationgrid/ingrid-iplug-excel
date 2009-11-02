@@ -123,26 +123,21 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				AbstractEntry entry = _mappedEntries.get(i);
 				FieldType fieldType = entry.getFieldType();
 				String label = entry.getLabel();
-				Store store = Store.NO;
-				if (label.toString().equals("title")
-						|| label.toString().equals("summary")) {
-					store = Store.YES;
-				}
 				switch (fieldType) {
 				case TEXT:
-					document.add(new Field(label, value.toString(), store,
+					document.add(new Field(label, value.toString(), Store.YES,
 							Index.ANALYZED));
 					break;
 				case KEYWORD:
 				case BOOLEAN:
 				case DATE:
-					document.add(new Field(label, value.toString(), store,
+					document.add(new Field(label, value.toString(), Store.YES,
 							Index.NOT_ANALYZED));
 					break;
 				case NUMBER:
 					document.add(new Field(label, StringUtils.padding(Double
-							.parseDouble(value.toString())), store,
-							Index.ANALYZED));
+							.parseDouble(value.toString())), Store.YES,
+							Index.NOT_ANALYZED));
 					break;
 
 				default:

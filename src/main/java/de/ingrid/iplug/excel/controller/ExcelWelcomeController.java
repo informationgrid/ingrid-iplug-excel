@@ -17,7 +17,7 @@ public class ExcelWelcomeController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome(
 			@ModelAttribute("plugDescription") PlugdescriptionCommandObject commandObject) {
-		return "redirect:/iplug/upload.html";
+		return "redirect:/iplug/listMappings.html";
 	}
 
 }

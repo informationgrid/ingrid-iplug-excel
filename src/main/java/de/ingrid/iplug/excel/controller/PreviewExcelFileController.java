@@ -25,12 +25,15 @@ public class PreviewExcelFileController {
 	}
 
 	@RequestMapping(value = "/iplug/previewExcelFile.html", method = RequestMethod.POST)
-	public String postSettings(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=true) final int sheetIndex){
+	public String postSettings(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=false) final Integer sheetIndex){
+		if (null == sheetIndex) {
+			return "/iplug/previewExcelFile";
+		}
 		
 		Iterator<Sheet> iterator = sheets.getSheets().iterator();
 		while (iterator.hasNext()) {
 			Sheet next = iterator.next();
-			if (next.getSheetIndex() != sheetIndex) {
+			if (next.getSheetIndex() != sheetIndex.intValue()) {
 				iterator.remove();
 			}
 		}

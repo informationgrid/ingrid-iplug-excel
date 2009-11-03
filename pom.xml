@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<parent>
 		<groupId>de.ingrid</groupId>
-		<artifactId>ingrid-base-pom</artifactId>
+		<artifactId>ingrid-releases-pom</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
@@ -199,7 +199,78 @@
 					</archive>
 				</configuration>
 			</plugin>
-
+      <!-- UNPACK admin webapps in target and copy when assembling. Avoid direct dependency to webapps because of circular dependency -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+                    <!-- unzip jetty -->
+                    <execution>
+                        <id>unzip-jetty</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>jetty</groupId>
+                                    <artifactId>jetty</artifactId>
+                                    <version>6.1.14</version>
+                                    <type>zip</type>
+                                    <outputDirectory>
+                                        ${project.build.directory}/
+                                    </outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <configuration>
+                            <tasks>
+								<delete includeemptydirs="true">
+                                    <fileset
+                                        dir="${project.build.directory}/jetty-6.1.14/webapps/"
+                                        includes="**/*" excludes="ROOT/**/*"
+                                    />
+                                </delete>
+                                <delete dir="${project.build.directory}/jetty-6.1.14/contrib" />
+                                <delete
+                                    dir="${project.build.directory}/jetty-6.1.14/examples"
+                                />
+                                <delete
+                                    dir="${project.build.directory}/jetty-6.1.14/project-website"
+                                />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/patches" />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/modules" />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/javadoc" />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/extras" />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/jxr" />
+                                <delete dir="${project.build.directory}/jetty-6.1.14/distribution" />
+                                <delete file="${project.build.directory}/jetty-6.1.14/pom.xml" />
+								<delete includeemptydirs="true">
+                                    <fileset
+                                        dir="${project.build.directory}/jetty-6.1.14/contexts"
+                                        includes="**/*"
+                                    />
+                                </delete>
+								<unzip dest="${project.build.directory}/jetty-6.1.14/webapps/ROOT"
+									src="${project.build.directory}/${project.build.finalName}.war">
+								</unzip>
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                	</execution>        
+				</executions>
+      		</plugin>
 		</plugins>
 	</build>
 </project>

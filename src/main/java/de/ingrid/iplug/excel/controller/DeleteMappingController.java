@@ -23,14 +23,12 @@ public class DeleteMappingController {
 			@RequestParam(value = "sheetIndex", required = true) int sheetIndex) {
 		Sheets sheets = (Sheets) plugdescriptionCommandObject.get("sheets");
 		Iterator<Sheet> iterator = sheets.getSheets().iterator();
-		int i=0;
 		while (iterator.hasNext()) {
 			Sheet sheet = iterator.next();
-			if (i == sheetIndex) {
+			if (sheet.getSheetIndex() == sheetIndex) {
 				iterator.remove();
 				break;
 			}
-			i++;
 		}
 		return "redirect:/base/save.html";
 	}

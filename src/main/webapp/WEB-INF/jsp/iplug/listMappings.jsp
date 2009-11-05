@@ -36,7 +36,8 @@
 					<th>Beschreibung</th>
 					<th>&nbsp;</th>
 				</tr>
-				<c:forEach var="sheet" items="${plugDescription.sheets.sheets }">
+				<c:set var="i" value="0"/>
+				<c:forEach var="sheet" items="${plugDescription.sheets.sheets}">
 				<tr>
 					<td>${sheet.fileName}</td>
 					<td>Sheet${sheet.sheetIndex +1}</td>
@@ -45,7 +46,7 @@
 					<td>
 						<form action="/iplug/deleteMapping.html" method="POST" style="float:left">
 							<input type="submit" value="Löschen"/>
-							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+							<input type="hidden" name="sheetIndex" value="${i}"/> 
 						</form>
 						<form action="/iplug/editMapping.html" method="GET" style="float:left">
 							<input type="submit" value="Bearbeiten"/>
@@ -61,6 +62,7 @@
 						</form>
 					</td>
 				</tr>
+				<c:set var="i" value="${i + 1}" />
 				</c:forEach>
 			</table>
 			

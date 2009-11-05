@@ -14,10 +14,9 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 public class ListMappingsController {
 
 	@RequestMapping(value = "/iplug/listMappings.html", method = RequestMethod.GET)
-	public String listMappings(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject, ModelMap model) {
+	public String listMappings(
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject,
+			ModelMap model) {
 		return "/iplug/listMappings";
 	}
-
-	
-
 }

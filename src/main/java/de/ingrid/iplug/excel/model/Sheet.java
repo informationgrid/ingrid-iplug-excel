@@ -196,13 +196,14 @@ public class Sheet implements Externalizable {
 
 	@Override
 	public int hashCode() {
-		return _sheetIndex;
+		return _fileName.hashCode() + _sheetIndex;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		Sheet other = (Sheet) obj;
-		return other.getSheetIndex() == _sheetIndex;
+		return other.getSheetIndex() == _sheetIndex
+				&& other.getFileName().equals(_fileName);
 	}
 
 }

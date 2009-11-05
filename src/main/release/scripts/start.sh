@@ -16,7 +16,7 @@ THIS="$0"
 THIS_DIR=`dirname "$THIS"`
 INGRID_HOME=`cd "$THIS_DIR" ; pwd`
 PID=$INGRID_HOME/ingrid.pid
-INGRID_OPTS="-Djetty.port=8088"
+INGRID_OPTS="-Djetty.port=8082"
 
 # functions
 stopIplug()

@@ -118,9 +118,7 @@ startIplug()
 
 # make sure the current user has the privilege to execute that script
 if [ "$INGRID_USER" = "" ]; then
-# TODO switch back after testing
   INGRID_USER="ingrid"
-  INGRID_USER="ak"
 fi
 
 STARTING_USER=`whoami`

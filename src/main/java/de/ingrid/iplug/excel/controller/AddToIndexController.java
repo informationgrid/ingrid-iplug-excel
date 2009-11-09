@@ -86,7 +86,7 @@ public class AddToIndexController {
 		entry.getFilters().clear();
 		entry.setMapped(false);
 		entry.setRank(0);
-		entry.setFieldType(null);
+		entry.setFieldType(FieldType.TEXT);
 		entry.setLabel(label);
 
 		return "redirect:/iplug/mapping.html";

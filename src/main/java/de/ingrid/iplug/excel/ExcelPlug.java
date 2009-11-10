@@ -22,10 +22,10 @@ public class ExcelPlug extends HeartBeatPlug {
 
 	@Autowired
 	public ExcelPlug(final IngridIndexSearcher indexSearcher,
-			IPlugdescriptionFieldFilter[] fieldFilters,
-			IMetadataInjector[] metadataInjectors,
-			IPreProcessor[] preProcessors, IPostProcessor[] postProcessors) {
-		super(10000, new PlugDescriptionFieldFilters(fieldFilters),
+			final IPlugdescriptionFieldFilter[] fieldFilters,
+			final IMetadataInjector[] metadataInjectors,
+			final IPreProcessor[] preProcessors, final IPostProcessor[] postProcessors) {
+        super(60000, new PlugDescriptionFieldFilters(fieldFilters),
 				metadataInjectors, preProcessors, postProcessors);
 		_indexSearcher = indexSearcher;
 	}

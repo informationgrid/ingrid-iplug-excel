@@ -18,7 +18,6 @@
 		<property name="basenames">
 			<list>
 				<value>classpath:messages_base</value>
-				<value>classpath:messages</value>
 			</list>
 		</property>
 		<property name="cacheSeconds" value="0" />

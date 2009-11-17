@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import de.ingrid.admin.object.AbstractDataType;
 
 @Service
-public class ExcelDatatype extends AbstractDataType {
+public class DefaultDataType extends AbstractDataType {
 
-	public ExcelDatatype() {
-        super(EXCEL);
-	}
-
+    public DefaultDataType() {
+        super(DEFAULT);
+    }
 }

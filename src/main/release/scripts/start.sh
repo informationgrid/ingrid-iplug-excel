@@ -25,6 +25,9 @@ if [ -f $INGRID_HOME/conf/plugDescription.xml ]; then
 		eval ${tag}=`echo -ne \""${OUT}"\"`
 		done
 		P_ARRAY=( `echo ${IPLUG_ADMIN_GUI_PORT}` )
+		if [ ${P_ARRAY[0]} = $'\r' ]; then
+            P_ARRAY=( ${P_ARRAY[1]} )
+        fi
 		INGRID_OPTS="-Djetty.port="${P_ARRAY[0]}
 fi
 

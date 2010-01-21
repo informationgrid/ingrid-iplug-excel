@@ -27,37 +27,37 @@ public class AddMappingController {
 	private final EmptySheetFilter _excludeFilter;
 
 	@Autowired
-	public AddMappingController(SheetsService sheetsService,
-			EmptySheetFilter excludeFilter) {
+	public AddMappingController(final SheetsService sheetsService,
+			final EmptySheetFilter excludeFilter) {
 		_sheetsService = sheetsService;
 		_excludeFilter = excludeFilter;
 	}
 
-	@RequestMapping(value = "/iplug/addMapping.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/addMapping.html", method = RequestMethod.GET)
 	public String editSheet(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "sheetIndex", required = true) int sheetIndex,
-			Model model) throws IOException {
-		Sheets sheets = new Sheets();
-		Sheets savedSheets = (Sheets) plugdescriptionCommandObject
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex,
+			final Model model) throws IOException {
+		final Sheets sheets = new Sheets();
+		final Sheets savedSheets = (Sheets) plugdescriptionCommandObject
 				.get("sheets");
 		File mappingFile = null;
 		Iterator<Sheet> iterator = savedSheets.getSheets().iterator();
 		while (iterator.hasNext()) {
-			Sheet sheet = iterator.next();
+			final Sheet sheet = iterator.next();
 			if (sheet.getSheetIndex() == sheetIndex) {
-				String fileName = sheet.getFileName();
-				File workinDirectory = plugdescriptionCommandObject
+				final String fileName = sheet.getFileName();
+				final File workinDirectory = plugdescriptionCommandObject
 						.getWorkinDirectory();
 				mappingFile = new File(new File(workinDirectory, "mapping"),
 						fileName);
 				break;
 			}
 		}
-		Sheets sheetsFromHdd = _sheetsService.createSheets(mappingFile);
+		final Sheets sheetsFromHdd = _sheetsService.createSheets(mappingFile);
 		iterator = sheetsFromHdd.getSheets().iterator();
 		while (iterator.hasNext()) {
-			Sheet sheetFromHdd = (Sheet) iterator.next();
+			final Sheet sheetFromHdd = iterator.next();
 			if (sheetFromHdd.getSheetIndex() != sheetIndex) {
 				_excludeFilter.excludeEmtpyRowsAndColumns(sheetFromHdd);
 				sheetFromHdd.setFileName(mappingFile.getName());
@@ -66,7 +66,7 @@ public class AddMappingController {
 		}
 
 		model.addAttribute("sheets", sheets);
-		return "redirect:/iplug/previewExcelFile.html";
+        return "redirect:/iplug-pages/previewExcelFile.html";
 	}
 
 }

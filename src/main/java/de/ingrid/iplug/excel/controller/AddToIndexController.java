@@ -20,29 +20,29 @@ import de.ingrid.iplug.excel.model.Sheets;
 @SessionAttributes("sheets")
 public class AddToIndexController {
 
-	@RequestMapping(value = "/iplug/addToIndex.html", method = RequestMethod.GET)
-	public String addToIndex(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.GET)
+	public String addToIndex(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final String type,
 			@RequestParam(required = true) final int index,
-			@RequestParam(required = true) final String label, ModelMap model) {
+			@RequestParam(required = true) final String label, final ModelMap model) {
 
 		model.addAttribute("type", type);
 		model.addAttribute("index", index);
 		model.addAttribute("label", label);
 		model.addAttribute("fieldTypes", FieldType.values());
-		return "/iplug/addToIndex";
+        return "/iplug-pages/addToIndex";
 	}
 
-	@RequestMapping(value = "/iplug/addToIndex.html", method = RequestMethod.POST)
-	public String addToIndexPost(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.POST)
+	public String addToIndexPost(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int index,
 			@RequestParam(required = false) final String fieldName,
 			@RequestParam(required = false) final String ownFieldName,
 			@RequestParam(required = true) final String fieldType,
 			@RequestParam(required = true) final float rank) {
 
-		Sheet sheet = sheets.getSheets().get(0);
-		DocumentType documentType = sheet.getDocumentType();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final DocumentType documentType = sheet.getDocumentType();
 		AbstractEntry entry = null;
 		switch (documentType) {
 		case ROW:
@@ -54,21 +54,21 @@ public class AddToIndexController {
 		default:
 			break;
 		}
-		String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
+		final String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
 		entry.setLabel(label);
 		entry.setMapped(true);
 		entry.setRank(rank);
 		entry.setFieldType(FieldType.valueOf(fieldType));
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
-	@RequestMapping(value = "/iplug/removeFromIndex.html", method = RequestMethod.GET)
-	public String removeFromIndex(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/removeFromIndex.html", method = RequestMethod.GET)
+	public String removeFromIndex(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int index) {
 
-		Sheet sheet = sheets.getSheets().get(0);
-		DocumentType documentType = sheet.getDocumentType();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final DocumentType documentType = sheet.getDocumentType();
 		AbstractEntry entry = null;
 		String label = null;
 		switch (documentType) {
@@ -89,6 +89,6 @@ public class AddToIndexController {
 		entry.setFieldType(FieldType.TEXT);
 		entry.setLabel(label);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 }

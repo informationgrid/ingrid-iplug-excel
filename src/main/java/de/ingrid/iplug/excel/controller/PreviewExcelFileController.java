@@ -17,27 +17,27 @@ import de.ingrid.iplug.excel.model.Sheets;
 @SessionAttributes("sheets")
 public class PreviewExcelFileController {
 
-	@RequestMapping(value = "/iplug/previewExcelFile.html", method = RequestMethod.GET)
-	public String settings(ModelMap model,
-			@ModelAttribute("sheets") Sheets sheets) {
-		
-		return "/iplug/previewExcelFile";
+    @RequestMapping(value = "/iplug-pages/previewExcelFile.html", method = RequestMethod.GET)
+	public String settings(final ModelMap model,
+			@ModelAttribute("sheets") final Sheets sheets) {
+
+        return "/iplug-pages/previewExcelFile";
 	}
 
-	@RequestMapping(value = "/iplug/previewExcelFile.html", method = RequestMethod.POST)
-	public String postSettings(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=false) final Integer sheetIndex){
+    @RequestMapping(value = "/iplug-pages/previewExcelFile.html", method = RequestMethod.POST)
+	public String postSettings(@ModelAttribute("sheets") final Sheets sheets, @RequestParam(required=false) final Integer sheetIndex){
 		if (null == sheetIndex) {
-			return "/iplug/previewExcelFile";
+            return "/iplug-pages/previewExcelFile";
 		}
-		
-		Iterator<Sheet> iterator = sheets.getSheets().iterator();
+
+		final Iterator<Sheet> iterator = sheets.getSheets().iterator();
 		while (iterator.hasNext()) {
-			Sheet next = iterator.next();
+			final Sheet next = iterator.next();
 			if (next.getSheetIndex() != sheetIndex.intValue()) {
 				iterator.remove();
 			}
 		}
-		return "redirect:/iplug/settings.html";
+        return "redirect:/iplug-pages/settings.html";
 	}
 
 }

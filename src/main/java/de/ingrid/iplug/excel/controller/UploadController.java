@@ -22,7 +22,7 @@ import de.ingrid.iplug.excel.service.EmptySheetFilter;
 import de.ingrid.iplug.excel.service.SheetsService;
 
 @Controller
-@RequestMapping(value = "/iplug/upload.html")
+@RequestMapping(value = "/iplug-pages/upload.html")
 @SessionAttributes(value = { "uploadBean", "sheets" })
 public class UploadController {
 
@@ -30,21 +30,21 @@ public class UploadController {
 	private final EmptySheetFilter _excludeFilter;
 
 	@Autowired
-	public UploadController(SheetsService sheetsService,
-			EmptySheetFilter excludeFilter) {
+	public UploadController(final SheetsService sheetsService,
+			final EmptySheetFilter excludeFilter) {
 		_sheetsService = sheetsService;
 		_excludeFilter = excludeFilter;
 	}
 
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(byte[].class,
 				new ByteArrayMultipartFileEditor());
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String firstRow() {
-		return "/iplug/upload";
+        return "/iplug-pages/upload";
 	}
 
 	@ModelAttribute("uploadBean")
@@ -53,14 +53,14 @@ public class UploadController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public String upload(@ModelAttribute("uploadBean") UploadBean uploadBean,
-			Model model) throws IOException {
-		MultipartFile multipartFile = uploadBean.getFile();
-		byte[] uploadBytes = multipartFile.getBytes();
+	public String upload(@ModelAttribute("uploadBean") final UploadBean uploadBean,
+			final Model model) throws IOException {
+		final MultipartFile multipartFile = uploadBean.getFile();
+		final byte[] uploadBytes = multipartFile.getBytes();
 
-		Sheets sheets = _sheetsService.createSheets(uploadBytes);
-		List<Sheet> sheetList = sheets.getSheets();
-		for (Sheet sheet : sheetList) {
+		final Sheets sheets = _sheetsService.createSheets(uploadBytes);
+		final List<Sheet> sheetList = sheets.getSheets();
+		for (final Sheet sheet : sheetList) {
 			_excludeFilter.excludeEmtpyRowsAndColumns(sheet);
 			sheet.setFileName(multipartFile.getOriginalFilename());
 			sheet.setWorkbook(uploadBytes);
@@ -68,10 +68,10 @@ public class UploadController {
 		model.addAttribute("sheets", sheets);
 
 		if (sheets.getSheets().size() == 1) {
-			return "redirect:/iplug/settings.html";
+            return "redirect:/iplug-pages/settings.html";
 		}
 
-		return "redirect:/iplug/previewExcelFile.html";
+        return "redirect:/iplug-pages/previewExcelFile.html";
 
 	}
 

@@ -24,43 +24,43 @@ public class ExcludeDocumentController {
 		//
 	}
 
-	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.GET)
-	public String excludeDocument(@ModelAttribute("sheets") Sheets sheets) {
-		return "/iplug/excludeDocument";
+    @RequestMapping(value = "/iplug-pages/excludeDocument.html", method = RequestMethod.GET)
+	public String excludeDocument(@ModelAttribute("sheets") final Sheets sheets) {
+        return "/iplug-pages/excludeDocument";
 	}
 
-	@RequestMapping(value = "/iplug/excludeDocument.html", method = RequestMethod.POST)
-	public String submitExcludeDocument(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/excludeDocument.html", method = RequestMethod.POST)
+	public String submitExcludeDocument(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int index) {
 		handleExclusion(sheets, index, true);
-		return "redirect:/iplug/mapping.html";
-	}
-	
-	@RequestMapping(value = "/iplug/removeExclusion.html", method = RequestMethod.GET)
-	public String removeExclusion(@ModelAttribute("sheets") Sheets sheets,
-			@RequestParam(required = true) final int index){
-		handleExclusion(sheets, index, false);
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
-	private void handleExclusion(Sheets sheets, final int index, boolean exclude) {
-		Sheet sheet = sheets.getSheets().get(0);
-		DocumentType documentType = sheet.getDocumentType();
+    @RequestMapping(value = "/iplug-pages/removeExclusion.html", method = RequestMethod.GET)
+	public String removeExclusion(@ModelAttribute("sheets") final Sheets sheets,
+			@RequestParam(required = true) final int index){
+		handleExclusion(sheets, index, false);
+        return "redirect:/iplug-pages/mapping.html";
+	}
+
+	private void handleExclusion(final Sheets sheets, final int index, final boolean exclude) {
+		final Sheet sheet = sheets.getSheets().get(0);
+		final DocumentType documentType = sheet.getDocumentType();
 		if (documentType.equals(DocumentType.COLUMN)) {
-			List<Column> columns = sheet.getColumns();
-			Iterator<Column> iterator = columns.iterator();
+			final List<Column> columns = sheet.getColumns();
+			final Iterator<Column> iterator = columns.iterator();
 			while (iterator.hasNext()) {
-				Column column = (Column) iterator.next();
+				final Column column = iterator.next();
 				if (index == column.getIndex()) {
 					column.setExcluded(exclude);
 					break;
 				}
 			}
 		} else if (documentType.equals(DocumentType.ROW)) {
-			List<Row> rows = sheet.getRows();
-			Iterator<Row> iterator = rows.iterator();
+			final List<Row> rows = sheet.getRows();
+			final Iterator<Row> iterator = rows.iterator();
 			while (iterator.hasNext()) {
-				Row row = (Row) iterator.next();
+				final Row row = iterator.next();
 				if (index == row.getIndex()) {
 					row.setExcluded(exclude);
 					break;
@@ -68,6 +68,6 @@ public class ExcludeDocumentController {
 			}
 		}
 	}
-	
+
 
 }

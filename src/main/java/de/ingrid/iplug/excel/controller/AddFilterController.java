@@ -32,22 +32,22 @@ public class AddFilterController {
 	private final AddToIndexFilter _filter;
 
 	@Autowired
-	public AddFilterController(AddToIndexFilter filter) {
+	public AddFilterController(final AddToIndexFilter filter) {
 		_filter = filter;
 	}
 
-	@RequestMapping(value = "/iplug/addFilter.html", method = RequestMethod.GET)
-	public String addFilter(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.GET)
+	public String addFilter(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final String type,
 			@RequestParam(required = true) final int index,
-			@RequestParam(required = true) final String label, ModelMap model) {
+			@RequestParam(required = true) final String label, final ModelMap model) {
 		model.addAttribute("type", type);
 		model.addAttribute("index", index);
 		model.addAttribute("label", label);
-		List<FilterType> filterTypes = new ArrayList<FilterType>();
-		Sheet sheet = sheets.getSheets().get(0);
-		SheetService sheetService = new SheetService();
-		DocumentType documentType = sheet.getDocumentType();
+		final List<FilterType> filterTypes = new ArrayList<FilterType>();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final SheetService sheetService = new SheetService();
+		final DocumentType documentType = sheet.getDocumentType();
 		AbstractEntry doc = null;
 		switch (documentType) {
 		case ROW:
@@ -59,8 +59,8 @@ public class AddFilterController {
 		default:
 			break;
 		}
-		
-		FieldType fieldType = doc.getFieldType();
+
+		final FieldType fieldType = doc.getFieldType();
 		switch (fieldType) {
 		case BOOLEAN:
 			filterTypes.add(FilterType.EQUAL);
@@ -71,7 +71,7 @@ public class AddFilterController {
 			filterTypes.add(FilterType.AFTER);
 			break;
 		case KEYWORD:
-		case TEXT:	
+		case TEXT:
 			filterTypes.add(FilterType.EQUAL);
 			filterTypes.add(FilterType.NOT_EQUAL);
 			filterTypes.add(FilterType.CONTAINS);
@@ -82,24 +82,24 @@ public class AddFilterController {
 			filterTypes.add(FilterType.LOWER_THAN);
 			filterTypes.add(FilterType.EQUAL);
 			filterTypes.add(FilterType.NOT_EQUAL);
-			break;	
+			break;
 		default:
 			break;
 		}
-		
-		
+
+
 		model.addAttribute("filterTypes", filterTypes);
-		return "/iplug/addFilter";
+        return "/iplug-pages/addFilter";
 	}
 
-	@RequestMapping(value = "/iplug/addFilter.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.POST)
 	public String addFilterPost(
-			@ModelAttribute("sheets") Sheets sheets,
+			@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int index,
 			@RequestParam(value = "filterType", required = true) final String filterTypeString,
 			@RequestParam(required = true) final String expression) {
 
-		FilterType filterType = FilterType.valueOf(filterTypeString);
+		final FilterType filterType = FilterType.valueOf(filterTypeString);
 		Filter filter = null;
 		switch (filterType) {
 		case GREATER_THAN:
@@ -111,7 +111,7 @@ public class AddFilterController {
 		case EQUAL:
 		case NOT_EQUAL:
 		case BEFORE:
-		case AFTER:	
+		case AFTER:
 			filter = new Filter(expression, filterType);
 			break;
 
@@ -119,24 +119,24 @@ public class AddFilterController {
 			break;
 		}
 
-		Sheet sheet = sheets.getSheets().get(0);
-		DocumentType documentType = sheet.getDocumentType();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final DocumentType documentType = sheet.getDocumentType();
 		switch (documentType) {
 		case ROW:
-			Column col = sheet.getColumns().get(index);
+			final Column col = sheet.getColumns().get(index);
 			col.addFilter(filter);
-			BitSet bitSet = _filter.filterRows(sheet);
-			List<Row> rows = sheet.getRows();
-			for (Row row : rows) {
+			final BitSet bitSet = _filter.filterRows(sheet);
+			final List<Row> rows = sheet.getRows();
+			for (final Row row : rows) {
 				row.setMatchFilter(!bitSet.get(row.getIndex()));
 			}
 			break;
 		case COLUMN:
-			Row row = sheet.getRows().get(index);
+			final Row row = sheet.getRows().get(index);
 			row.addFilter(filter);
-			BitSet columnSet = _filter.filterColumns(sheet);
-			List<Column> columns = sheet.getColumns();
-			for (Column column : columns) {
+			final BitSet columnSet = _filter.filterColumns(sheet);
+			final List<Column> columns = sheet.getColumns();
+			for (final Column column : columns) {
 				column.setMatchFilter(!columnSet.get(column.getIndex()));
 			}
 			break;
@@ -144,32 +144,32 @@ public class AddFilterController {
 			break;
 		}
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
-	@RequestMapping(value = "/iplug/removeFilter.html", method = RequestMethod.GET)
-	public String removeFilter(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/removeFilter.html", method = RequestMethod.GET)
+	public String removeFilter(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int index,
 			@RequestParam(required = true) final int filterIndex) {
 
-		Sheet sheet = sheets.getSheets().get(0);
-		DocumentType documentType = sheet.getDocumentType();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final DocumentType documentType = sheet.getDocumentType();
 		switch (documentType) {
 		case ROW:
-			Column col = sheet.getColumns().get(index);
+			final Column col = sheet.getColumns().get(index);
 			col.removeFilter(filterIndex);
-			BitSet bitSet = _filter.filterRows(sheet);
-			List<Row> rows = sheet.getRows();
-			for (Row row : rows) {
+			final BitSet bitSet = _filter.filterRows(sheet);
+			final List<Row> rows = sheet.getRows();
+			for (final Row row : rows) {
 				row.setMatchFilter(!bitSet.get(row.getIndex()));
 			}
 			break;
 		case COLUMN:
-			Row row = sheet.getRows().get(index);
+			final Row row = sheet.getRows().get(index);
 			row.removeFilter(filterIndex);
-			BitSet columnSet = _filter.filterColumns(sheet);
-			List<Column> columns = sheet.getColumns();
-			for (Column column : columns) {
+			final BitSet columnSet = _filter.filterColumns(sheet);
+			final List<Column> columns = sheet.getColumns();
+			for (final Column column : columns) {
 				column.setMatchFilter(!columnSet.get(column.getIndex()));
 			}
 			break;
@@ -178,6 +178,6 @@ public class AddFilterController {
 		}
 
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 }

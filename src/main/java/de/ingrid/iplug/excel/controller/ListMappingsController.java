@@ -13,10 +13,10 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 @SessionAttributes("plugDescription")
 public class ListMappingsController {
 
-	@RequestMapping(value = "/iplug/listMappings.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/listMappings.html", method = RequestMethod.GET)
 	public String listMappings(
 			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject,
-			ModelMap model) {
-		return "/iplug/listMappings";
+			final ModelMap model) {
+        return "/iplug-pages/listMappings";
 	}
 }

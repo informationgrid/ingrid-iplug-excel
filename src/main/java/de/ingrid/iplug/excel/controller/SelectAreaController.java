@@ -20,32 +20,32 @@ public class SelectAreaController {
 	private final SelectAreaExcludeFilter _selectAreaExcludeFilter;
 
 	@Autowired
-	public SelectAreaController(SelectAreaExcludeFilter selectAreaExcludeFilter) {
+	public SelectAreaController(final SelectAreaExcludeFilter selectAreaExcludeFilter) {
 		_selectAreaExcludeFilter = selectAreaExcludeFilter;
 	}
 
-	@RequestMapping(value = "/iplug/selectArea.html", method = RequestMethod.GET)
-	public String selectArea(@ModelAttribute("sheets") Sheets sheets,
-			ModelMap model) {
-		Sheet sheet = sheets.getSheets().get(0);
+    @RequestMapping(value = "/iplug-pages/selectArea.html", method = RequestMethod.GET)
+	public String selectArea(@ModelAttribute("sheets") final Sheets sheets,
+			final ModelMap model) {
+		final Sheet sheet = sheets.getSheets().get(0);
 		model.addAttribute("columns", sheet.getColumns());
 		model.addAttribute("rows", sheet.getRows());
-		return "/iplug/selectArea";
+        return "/iplug-pages/selectArea";
 	}
 
-	@RequestMapping(value = "/iplug/selectArea.html", method = RequestMethod.POST)
-	public String subitSelectArea(@ModelAttribute("sheets") Sheets sheets,
+    @RequestMapping(value = "/iplug-pages/selectArea.html", method = RequestMethod.POST)
+	public String subitSelectArea(@ModelAttribute("sheets") final Sheets sheets,
 			@RequestParam(required = true) final int fromCol,
 			@RequestParam(required = true) final int toCol,
 			@RequestParam(required = true) final int fromRow,
 			@RequestParam(required = true) final int toRow) {
 
-		Sheet sheet = sheets.getSheets().get(0);
+		final Sheet sheet = sheets.getSheets().get(0);
 
 		_selectAreaExcludeFilter.excludeNonSelectedArea(sheet, fromCol, toCol,
 				fromRow, toRow);
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
 }

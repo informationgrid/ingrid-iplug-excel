@@ -26,37 +26,37 @@ public class SettingsController {
 	private final SheetService _sheetService;
 
 	@Autowired
-	public SettingsController(SheetService sheetService) {
+	public SettingsController(final SheetService sheetService) {
 		_sheetService = sheetService;
 	}
 
-	@RequestMapping(value = "/iplug/settings.html", method = RequestMethod.GET)
-	public String settings(ModelMap model,
-			@ModelAttribute("sheets") Sheets sheets) {
+    @RequestMapping(value = "/iplug-pages/settings.html", method = RequestMethod.GET)
+	public String settings(final ModelMap model,
+			@ModelAttribute("sheets") final Sheets sheets) {
 
 		model.addAttribute("documentTypes", DocumentType.values());
-		return "/iplug/settings";
+        return "/iplug-pages/settings";
 	}
 
-	@RequestMapping(value = "/iplug/settings.html", method = RequestMethod.POST)
-	public String postSettings(@ModelAttribute("sheets") Sheets sheets) {
+    @RequestMapping(value = "/iplug-pages/settings.html", method = RequestMethod.POST)
+	public String postSettings(@ModelAttribute("sheets") final Sheets sheets) {
 
-		Sheet sheet = sheets.getSheets().get(0);
-		List<Column> columns = sheet.getColumns();
-		List<Row> rows = sheet.getRows();
-		Map<Integer, List<Comparable<?>>> valuesAsMap = sheet.getValuesAsMap();
-		Iterator<Integer> valuesAsMapIterator = valuesAsMap.keySet().iterator();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final List<Column> columns = sheet.getColumns();
+		final List<Row> rows = sheet.getRows();
+		final Map<Integer, List<Comparable<?>>> valuesAsMap = sheet.getValuesAsMap();
+		final Iterator<Integer> valuesAsMapIterator = valuesAsMap.keySet().iterator();
 
 		// handle firstIsLabel
 		if (sheet.isFirstIsLabel()) {
 			// we map columns to index fields, a row is a doc
 			if (sheet.getDocumentType().equals(DocumentType.ROW)) {
-				List<Comparable<?>> firstRowValues = valuesAsMap.get(0);
+				final List<Comparable<?>> firstRowValues = valuesAsMap.get(0);
 
 				// set the label
 				for (int i = 0; i < columns.size(); i++) {
-					Column column = columns.get(i);
-					Comparable<?> value = firstRowValues.get(i);
+					final Column column = columns.get(i);
+					final Comparable<?> value = firstRowValues.get(i);
 					column.setLabel(value.toString());
 				}
 
@@ -66,12 +66,12 @@ public class SettingsController {
 
 				// set the label
 				for (int i = 0; i < rows.size(); i++) {
-					Row row = rows.get(i);
-					int rowIndex = row.getIndex();
+					final Row row = rows.get(i);
+					final int rowIndex = row.getIndex();
 
 					while (valuesAsMapIterator.hasNext()) {
 						valuesAsMapIterator.next();
-						Comparable<?> firstColValue = valuesAsMap.get(rowIndex)
+						final Comparable<?> firstColValue = valuesAsMap.get(rowIndex)
 								.get(0);
 						row.setLabel(firstColValue + "");
 					}
@@ -81,7 +81,7 @@ public class SettingsController {
 			}
 		}
 
-		return "redirect:/iplug/mapping.html";
+        return "redirect:/iplug-pages/mapping.html";
 	}
 
 }

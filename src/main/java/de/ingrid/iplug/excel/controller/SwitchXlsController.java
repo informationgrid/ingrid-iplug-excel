@@ -25,7 +25,7 @@ import de.ingrid.iplug.excel.model.Sheets;
 public class SwitchXlsController {
 
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	public void initBinder(final WebDataBinder binder) {
 		binder.registerCustomEditor(byte[].class,
 				new ByteArrayMultipartFileEditor());
 	}
@@ -35,32 +35,32 @@ public class SwitchXlsController {
 		return new UploadBean();
 	}
 
-	@RequestMapping(value = "/iplug/switchXls.html", method = RequestMethod.GET)
+    @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.GET)
 	public String switchXls(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "sheetIndex", required = true) int sheetIndex,
-			Model model) throws IOException {
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex,
+			final Model model) throws IOException {
 		model.addAttribute("sheetIndex", sheetIndex);
-		return "/iplug/switchXls";
+        return "/iplug-pages/switchXls";
 	}
 
-	@RequestMapping(value = "/iplug/switchXls.html", method = RequestMethod.POST)
+    @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.POST)
 	public String upload(
-			@RequestParam(value = "sheetIndex", required = true) int sheetIndex,
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("uploadBean") UploadBean uploadBean, Model model)
+			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex,
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@ModelAttribute("uploadBean") final UploadBean uploadBean, final Model model)
 			throws IOException {
-		MultipartFile multipartFile = uploadBean.getFile();
-		byte[] uploadBytes = multipartFile.getBytes();
-		Sheets sheets = (Sheets) plugdescriptionCommandObject.get("sheets");
-		String fileName = sheets.getSheets().get(sheetIndex).getFileName();
-		File mappingDir = new File(plugdescriptionCommandObject
+		final MultipartFile multipartFile = uploadBean.getFile();
+		final byte[] uploadBytes = multipartFile.getBytes();
+		final Sheets sheets = (Sheets) plugdescriptionCommandObject.get("sheets");
+		final String fileName = sheets.getSheets().get(sheetIndex).getFileName();
+		final File mappingDir = new File(plugdescriptionCommandObject
 				.getWorkinDirectory(), "mapping");
-		File newXlsFile = new File(mappingDir, fileName);
-		FileOutputStream outputStream = new FileOutputStream(newXlsFile);
+		final File newXlsFile = new File(mappingDir, fileName);
+		final FileOutputStream outputStream = new FileOutputStream(newXlsFile);
 		outputStream.write(uploadBytes);
 		outputStream.close();
-		return "redirect:/iplug/listMappings.html";
+        return "redirect:/iplug-pages/listMappings.html";
 
 	}
 }

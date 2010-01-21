@@ -10,14 +10,14 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 
 
 @Controller
-@RequestMapping(value = "/iplug/welcome.html")
+@RequestMapping(value = "/iplug-pages/welcome.html")
 @SessionAttributes("plugDescription")
 public class ExcelWelcomeController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String welcome(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject commandObject) {
-		return "redirect:/iplug/listMappings.html";
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject commandObject) {
+        return "redirect:/iplug-pages/listMappings.html";
 	}
 
 }

@@ -18,27 +18,27 @@ import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 
 @Controller
-@RequestMapping("/iplug/finish.html")
+@RequestMapping("/iplug-pages/finish.html")
 @SessionAttributes(value = { "plugDescription", "sheets" })
 public class ExcelFinishController {
 
 	@SuppressWarnings("unchecked")
 	@RequestMapping(method = RequestMethod.POST)
 	public String postFinish(
-			@ModelAttribute("plugDescription") PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("sheets") de.ingrid.iplug.excel.model.Sheets sheets)
+			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
+			@ModelAttribute("sheets") final de.ingrid.iplug.excel.model.Sheets sheets)
 			throws IOException {
 
 		if (!plugdescriptionCommandObject.containsKey("fields")) {
 			plugdescriptionCommandObject.put("fields", new ArrayList<String>());
 		}
-		List<String> fields = (List<String>) plugdescriptionCommandObject
+		final List<String> fields = (List<String>) plugdescriptionCommandObject
 				.get("fields");
 
-		Sheet sheet = sheets.getSheets().get(0);
-		List<Column> columns = sheet.getColumns();
-		for (Column column : columns) {
-			String label = column.getLabel();
+		final Sheet sheet = sheets.getSheets().get(0);
+		final List<Column> columns = sheet.getColumns();
+		for (final Column column : columns) {
+			final String label = column.getLabel();
 			if (!"".equals(label.trim()) && !fields.contains(label)) {
 				fields.add(label);
 			}
@@ -46,28 +46,28 @@ public class ExcelFinishController {
 		if (!plugdescriptionCommandObject.containsKey("sheets")) {
 			plugdescriptionCommandObject.put("sheets", new Sheets());
 		}
-		Sheets savedSheets = (Sheets) plugdescriptionCommandObject
+		final Sheets savedSheets = (Sheets) plugdescriptionCommandObject
 				.get("sheets");
 		if (savedSheets.existsSheet(sheet)) {
 			savedSheets.removeSheet(sheet);
-			List<Column> columns2 = sheet.getColumns();
-			for (Column column : columns2) {
-				String label = column.getLabel();
+			final List<Column> columns2 = sheet.getColumns();
+			for (final Column column : columns2) {
+				final String label = column.getLabel();
 				fields.remove(label);
 			}
 		}
 		savedSheets.addSheet(sheet);
 		plugdescriptionCommandObject.setRecordLoader(false);
-		byte[] workBookBytes = sheet.getWorkbook();
+		final byte[] workBookBytes = sheet.getWorkbook();
 		if (workBookBytes != null && workBookBytes.length > 0) {
-			File mappingDir = new File(plugdescriptionCommandObject
+			final File mappingDir = new File(plugdescriptionCommandObject
 					.getWorkinDirectory(), "mapping");
 			mappingDir.mkdirs();
-			int length = mappingDir.listFiles().length;
-			File newXlsFile = new File(mappingDir, sheet.getFileName()
+			final int length = mappingDir.listFiles().length;
+			final File newXlsFile = new File(mappingDir, sheet.getFileName()
 					+ "_" + length);
 			sheet.setFileName(newXlsFile.getName());
-			FileOutputStream outputStream = new FileOutputStream(newXlsFile);
+			final FileOutputStream outputStream = new FileOutputStream(newXlsFile);
 			outputStream.write(workBookBytes);
 			outputStream.close();
 		}

@@ -15,40 +15,40 @@ import de.ingrid.iplug.excel.model.Sheets;
 @SessionAttributes("sheets")
 public class MappingController {
 
-	@RequestMapping(value = "/iplug/mapping.html", method = RequestMethod.GET)
-	public String mapping(@ModelAttribute("sheets") Sheets sheets, @RequestParam(required=false) Integer start,
-			@RequestParam(required=false) Integer hitsPerPage, ModelMap model) {
-		
-		Sheet sheet = sheets.getSheets().get(0);
-		int maxHits = sheet.getRows().size();
+    @RequestMapping(value = "/iplug-pages/mapping.html", method = RequestMethod.GET)
+	public String mapping(@ModelAttribute("sheets") final Sheets sheets, @RequestParam(required=false) Integer start,
+			@RequestParam(required=false) Integer hitsPerPage, final ModelMap model) {
+
+		final Sheet sheet = sheets.getSheets().get(0);
+		final int maxHits = sheet.getRows().size();
 		if(start == null || start < 0){
 			start = 0;
 		}
-		
+
 		if(hitsPerPage == null){
 			hitsPerPage = 10;
 		}
-		
+
 		if (start > maxHits) {
 			start = maxHits;
 		}
-		
-		int pageStart = (start / hitsPerPage) * hitsPerPage;
-		
+
+		final int pageStart = (start / hitsPerPage) * hitsPerPage;
+
 		int prevStart = pageStart - hitsPerPage;
 		if(prevStart < 0){
 			prevStart = 0;
 		}
-		
-		int nextStart = pageStart + hitsPerPage;
-		
+
+		final int nextStart = pageStart + hitsPerPage;
+
 		model.addAttribute("start", pageStart);
 		model.addAttribute("maxHits", maxHits);
 		model.addAttribute("hitsPerPage", hitsPerPage);
 		model.addAttribute("prevStart", prevStart);
 		model.addAttribute("nextStart", nextStart);
-		
-		return "/iplug/mapping";
+
+        return "/iplug-pages/mapping";
 	}
 
 }

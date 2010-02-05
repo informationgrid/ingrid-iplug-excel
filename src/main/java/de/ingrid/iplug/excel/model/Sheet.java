@@ -5,22 +5,26 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 public class Sheet implements Externalizable {
 
 	private String _fileName;
 	private String _description;
 	private int _sheetIndex;
-	private List<Column> _columns = new ArrayList<Column>();
-	private List<Row> _rows = new ArrayList<Row>();
-	private DocumentType _documentType = DocumentType.ROW;
-	private boolean _firstIsLabel;
-	private Point _selectFrom = new Point();
-	private Point _selectTo = new Point();
+    private boolean _firstIsLabel = false;
+    private boolean _existing = false;
+    private DocumentType _documentType = DocumentType.ROW;
+	private SortedMap<Integer, Column> _columns = new TreeMap<Integer, Column>();
+	private SortedMap<Integer, Row> _rows = new TreeMap<Integer, Row>();
+    private Point _selectedFrom = new Point();
+    private Point _selectedTo = new Point();
 	private transient Values _values = new Values();
 	private transient byte[] _workBook;
 
@@ -28,7 +32,7 @@ public class Sheet implements Externalizable {
 		return _fileName;
 	}
 
-	public void setFileName(String fileName) {
+	public void setFileName(final String fileName) {
 		_fileName = fileName;
 	}
 
@@ -36,7 +40,7 @@ public class Sheet implements Externalizable {
 		return _description;
 	}
 
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		_description = description;
 	}
 
@@ -44,31 +48,103 @@ public class Sheet implements Externalizable {
 		return _sheetIndex;
 	}
 
-	public void setSheetIndex(int sheetIndex) {
+	public void setSheetIndex(final int sheetIndex) {
 		_sheetIndex = sheetIndex;
 	}
 
-	public List<Column> getColumns() {
-		return _columns;
+    public Collection<Column> getColumns() {
+        return _columns.values();
 	}
 
-	public void setColumns(List<Column> columns) {
+    public Collection<Column> getVisibleColumns() {
+        final List<Column> list = new ArrayList<Column>();
+        for (final Column column : _columns.values()) {
+            if (!column.isExcluded()) {
+                list.add(column);
+            }
+        }
+        return list;
+    }
+
+    public Collection<Column> getExcludedColumns() {
+        final List<Column> list = new ArrayList<Column>();
+        for (final Column column : _columns.values()) {
+            if (column.isExcluded()) {
+                list.add(column);
+            }
+        }
+        return list;
+    }
+
+    public SortedMap<Integer, Column> getColumnsMap() {
+        return _columns;
+    }
+
+    public void setColumns(final SortedMap<Integer, Column> columns) {
 		_columns = columns;
 	}
 
-	public List<Row> getRows() {
-		return _rows;
+    public Column getColumn(final int index) {
+        return _columns.get(index);
+    }
+
+    public int getLastColumnIndex() {
+        return _columns.lastKey();
+    }
+
+    public Column removeColumn(final int index) {
+        return _columns.remove(index);
+    }
+
+    public Collection<Row> getRows() {
+        return _rows.values();
 	}
 
-	public void setRows(List<Row> rows) {
+    public Collection<Row> getVisibleRows() {
+        final List<Row> list = new ArrayList<Row>();
+        for (final Row row : _rows.values()) {
+            if (!row.isExcluded()) {
+                list.add(row);
+            }
+        }
+        return list;
+    }
+
+    public Collection<Row> getExcludedRows() {
+        final List<Row> list = new ArrayList<Row>();
+        for (final Row row : _rows.values()) {
+            if (row.isExcluded()) {
+                list.add(row);
+            }
+        }
+        return list;
+    }
+
+    public SortedMap<Integer, Row> getRowsMap() {
+        return _rows;
+    }
+
+    public void setRows(final SortedMap<Integer, Row> rows) {
 		_rows = rows;
 	}
+
+    public Row getRow(final int index) {
+        return _rows.get(index);
+    }
+
+    public int getLastRowIndex() {
+        return _rows.lastKey();
+    }
+
+    public Row removeRow(final int index) {
+        return _rows.remove(index);
+    }
 
 	public DocumentType getDocumentType() {
 		return _documentType;
 	}
 
-	public void setDocumentType(DocumentType documentType) {
+	public void setDocumentType(final DocumentType documentType) {
 		_documentType = documentType;
 	}
 
@@ -76,35 +152,51 @@ public class Sheet implements Externalizable {
 		return _firstIsLabel;
 	}
 
-	public void setFirstIsLabel(boolean firstIsLabel) {
-		_firstIsLabel = firstIsLabel;
+	public void setFirstIsLabel(final boolean firstIsLabel) {
+        if (_firstIsLabel != firstIsLabel) {
+            // handle firstIsLabel
+            if (_documentType.equals(DocumentType.ROW)) {
+                // we map columns to index fields, a row is a doc
+                final Row firstRow = _rows.get(_rows.firstKey());
+                firstRow.setExcluded(firstIsLabel);
+
+                // set the label
+                for (final Column column : _columns.values()) {
+                    if (firstIsLabel) {
+                        final Comparable<? extends Object> value = getValue(column.getIndex(), firstRow.getIndex());
+                        column.setLabel(value.toString());
+                    } else {
+                        column.setLabel(Column.getDefaultLabel(column.getIndex()));
+                    }
+                }
+            } else if (_documentType.equals(DocumentType.COLUMN)) {
+                // we map rows to index fields, a column is a doc
+                final Column firstColumn = _columns.get(_columns.firstKey());
+                firstColumn.setExcluded(firstIsLabel);
+
+                // set the label
+                for (final Row row : _rows.values()) {
+                    if (firstIsLabel) {
+                        final Comparable<? extends Object> value = getValue(firstColumn.getIndex(), row.getIndex());
+                        row.setLabel(value.toString());
+                    } else {
+                        row.setLabel("" + row.getIndex());
+                    }
+                }
+            }
+            _firstIsLabel = firstIsLabel;
+        }
 	}
 
-	public Point getSelectFrom() {
-		return _selectFrom;
+	public void addRow(final Row row) {
+        _rows.put(row.getIndex(), row);
 	}
 
-	public void setSelectFrom(Point selectFrom) {
-		_selectFrom = selectFrom;
+	public void addColumn(final Column column) {
+        _columns.put(column.getIndex(), column);
 	}
 
-	public Point getSelectTo() {
-		return _selectTo;
-	}
-
-	public void setSelectTo(Point selectTo) {
-		_selectTo = selectTo;
-	}
-
-	public void addRow(Row row) {
-		_rows.add(row);
-	}
-
-	public void addColumn(Column column) {
-		_columns.add(column);
-	}
-
-	public void setValues(Values values) {
+	public void setValues(final Values values) {
 		_values = values;
 	}
 
@@ -112,81 +204,104 @@ public class Sheet implements Externalizable {
 		return _values;
 	}
 
-	public Map<Integer, List<Comparable<?>>> getValuesAsMap() {
-		HashMap<Integer, List<Comparable<?>>> map = new LinkedHashMap<Integer, List<Comparable<?>>>();
-		List<Row> rows = getRows();
-		int columnSize = getColumns().size();
-		for (Row row : rows) {
-			int rowIndex = row.getIndex();
-			List<Comparable<?>> rowValues = new ArrayList<Comparable<?>>();
-			map.put(rowIndex, rowValues);
-			for (int i = 0; i < columnSize; i++) {
-				Point point = new Point(i, rowIndex);
-				Comparable<?> value = _values.getValue(point);
-				rowValues.add(value);
-			}
+    public Comparable<? extends Object> getValue(final Point point) {
+        return _values.getValue(point);
+    }
 
+    public Comparable<? extends Object> getValue(final int x, final int y) {
+        return _values.getValue(x, y);
+    }
+
+	public Map<Integer, List<Comparable<?>>> getValuesAsMap() {
+		final HashMap<Integer, List<Comparable<?>>> map = new LinkedHashMap<Integer, List<Comparable<?>>>();
+		int rowIndex = 0;
+        for (final Row row : getRows()) {
+			final List<Comparable<?>> rowValues = new ArrayList<Comparable<?>>();
+			map.put(rowIndex, rowValues);
+            for (final Column col : getColumns()) {
+			    final Point point = new Point(col.getIndex(), row.getIndex());
+			    final Comparable<?> value = _values.getValue(point);
+                rowValues.add(value);
+			}
+			rowIndex++;
 		}
 		return map;
 	}
 
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+    public List<List<Comparable<?>>> getVisibleValues() {
+        final List<List<Comparable<?>>> map = new ArrayList<List<Comparable<?>>>();
+        for (final Row row : getVisibleRows()) {
+            final List<Comparable<?>> rowValues = new ArrayList<Comparable<?>>();
+            for (final Column column : getVisibleColumns()) {
+                final Comparable<?> value = _values.getValue(column.getIndex(), row.getIndex());
+                rowValues.add(value);
+            }
+            map.add(rowValues);
+        }
+        return map;
+    }
+
+    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+        // flat types
 		_fileName = in.readUTF();
 		_description = in.readUTF();
 		_sheetIndex = in.readInt();
 		_firstIsLabel = in.readBoolean();
+        _existing = in.readBoolean();
 
+        // objects
 		_documentType = DocumentType.valueOf(in.readUTF());
+        _columns.clear();
 		int size = in.readInt();
-		_rows.clear();
 		for (int i = 0; i < size; i++) {
-			Row row = new Row();
-			row.readExternal(in);
-			_rows.add(row);
+            final int index = in.readInt();
+            final Column column = (Column) in.readObject();
+            _columns.put(index, column);
 		}
-
 		size = in.readInt();
-		_columns.clear();
+        _rows.clear();
 		for (int i = 0; i < size; i++) {
-			Column column = new Column();
-			column.readExternal(in);
-			_columns.add(column);
+            final int index = in.readInt();
+            final Row row = (Row) in.readObject();
+            _rows.put(index, row);
 		}
 
-		_selectFrom.readExternal(in);
-		_selectTo.readExternal(in);
+        // select area
+        _selectedFrom = (Point) in.readObject();
+        _selectedTo = (Point) in.readObject();
 
 		// values does not need to deserialize
 	}
 
-	public void writeExternal(ObjectOutput out) throws IOException {
-
+	public void writeExternal(final ObjectOutput out) throws IOException {
 		// flat types
 		out.writeUTF(_fileName);
 		out.writeUTF(_description);
 		out.writeInt(_sheetIndex);
 		out.writeBoolean(_firstIsLabel);
+        out.writeBoolean(_existing);
 
 		// objects
 		out.writeUTF(_documentType.name());
+        out.writeInt(_columns.size());
+        for (final Column column : _columns.values()) {
+            out.writeInt(column.getIndex());
+            out.writeObject(column);
+        }
 		out.writeInt(_rows.size());
-		for (Row row : _rows) {
-			row.writeExternal(out);
-		}
-		out.writeInt(_columns.size());
-		for (Column column : _columns) {
-			column.writeExternal(out);
+        for (final Row row : _rows.values()) {
+            out.writeInt(row.getIndex());
+            out.writeObject(row);
 		}
 
-		_selectFrom.writeExternal(out);
-		_selectTo.writeExternal(out);
+        // select area
+        out.writeObject(_selectedFrom);
+        out.writeObject(_selectedTo);
 
 		// values does not need to serialize
-
 	}
 
-	public void setWorkbook(byte[] workBook) {
+	public void setWorkbook(final byte[] workBook) {
 		_workBook = workBook;
 	}
 
@@ -200,10 +315,75 @@ public class Sheet implements Externalizable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		Sheet other = (Sheet) obj;
-		return other.getSheetIndex() == _sheetIndex
-				&& other.getFileName().equals(_fileName);
+	public boolean equals(final Object obj) {
+		final Sheet other = (Sheet) obj;
+        return other.getSheetIndex() == _sheetIndex && other.getFileName().equals(_fileName);
 	}
 
+    public void setFrom(final int x, final int y) {
+        _selectedFrom.setX(x);
+        _selectedFrom.setY(y);
+    }
+
+    public Point getSelectedFrom() {
+        return _selectedFrom;
+    }
+
+    public Column getFromColumn() {
+        return getColumn(_selectedFrom.getX());
+    }
+
+    public Row getFromRow() {
+        return getRow(_selectedFrom.getY());
+    }
+
+    public void setTo(final int x, final int y) {
+        _selectedTo.setX(x);
+        _selectedTo.setY(y);
+    }
+
+    public Point getSelectedTo() {
+        return _selectedTo;
+    }
+
+    public Column getToColumn() {
+        return getColumn(_selectedTo.getX());
+    }
+
+    public Row getToRow() {
+        return getRow(_selectedTo.getY());
+    }
+
+    public boolean getSelected() {
+        return _selectedFrom.getX() > -1 && _selectedFrom.getY() > -1 && _selectedTo.getX() > -1
+                && _selectedTo.getY() > -1;
+    }
+
+    public List<Comparable<? extends Object>> getValuesOfColumn(final int index) {
+        final List<Comparable<? extends Object>> list = new ArrayList<Comparable<? extends Object>>();
+        for (final Point point : _values) {
+            if (point.getX() == index) {
+                list.add(_values.getValue(point));
+            }
+        }
+        return list;
+    }
+
+    public List<Comparable<? extends Object>> getValuesOfRow(final int index) {
+        final List<Comparable<? extends Object>> list = new ArrayList<Comparable<? extends Object>>();
+        for (final Point point : _values) {
+            if (point.getY() == index) {
+                list.add(_values.getValue(point));
+            }
+        }
+        return list;
+    }
+
+    public void setExisting(final boolean existing) {
+        _existing = existing;
+    }
+
+    public boolean isExisting() {
+        return _existing;
+    }
 }

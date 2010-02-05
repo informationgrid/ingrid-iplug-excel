@@ -26,18 +26,19 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Datei auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div id="content">
 			<h2>Wählen Sie eine Excel Datei aus, die Sie indizieren möchten</h2>
 			<form:form  enctype="multipart/form-data" modelAttribute="uploadBean"> 
+			    <input type="hidden" name="sheetIndex" value="${sheetIndex}" />
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Excel Datei:</td>

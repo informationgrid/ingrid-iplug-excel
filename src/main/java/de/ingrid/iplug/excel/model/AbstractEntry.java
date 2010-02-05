@@ -12,21 +12,24 @@ import de.ingrid.admin.mapping.Filter;
 
 public abstract class AbstractEntry implements Externalizable {
 
+    private int _index;
 	private String _label;
-	private List<Filter> _filters = new ArrayList<Filter>();
-	private FieldType _fieldType = FieldType.TEXT;
+
+    private boolean _excluded;
+
+    private boolean _mapped;
 	private float _rank;
-	private boolean _mapped;
-	private boolean _excluded;
 	private boolean _matchFilter = true;
 
-	private int _index;
+    private FieldType _fieldType = FieldType.TEXT;
+
+    private final List<Filter> _filters = new ArrayList<Filter>();
 
 	public AbstractEntry() {
 		// externalizable
 	}
 
-	public AbstractEntry(int index) {
+	public AbstractEntry(final int index) {
 		_index = index;
 	}
 
@@ -34,7 +37,7 @@ public abstract class AbstractEntry implements Externalizable {
 		return _index;
 	}
 
-	public void setIndex(int index) {
+	public void setIndex(final int index) {
 		_index = index;
 	}
 
@@ -42,7 +45,7 @@ public abstract class AbstractEntry implements Externalizable {
 		return _label;
 	}
 
-	public void setLabel(String label) {
+	public void setLabel(final String label) {
 		_label = label;
 	}
 
@@ -50,15 +53,15 @@ public abstract class AbstractEntry implements Externalizable {
 		return _filters;
 	}
 
-	public void addFilter(Filter filter) {
+	public void addFilter(final Filter filter) {
 		_filters.add(filter);
 	}
 
-	public void removeFilter(Filter filter) {
+	public void removeFilter(final Filter filter) {
 		_filters.remove(filter);
 	}
 
-	public void removeFilter(int index) {
+	public void removeFilter(final int index) {
 		_filters.remove(index);
 	}
 
@@ -66,7 +69,7 @@ public abstract class AbstractEntry implements Externalizable {
 		return _fieldType;
 	}
 
-	public void setFieldType(FieldType fieldType) {
+	public void setFieldType(final FieldType fieldType) {
 		_fieldType = fieldType;
 	}
 
@@ -74,7 +77,7 @@ public abstract class AbstractEntry implements Externalizable {
 		return _rank;
 	}
 
-	public void setRank(float rank) {
+	public void setRank(final float rank) {
 		_rank = rank;
 	}
 
@@ -86,7 +89,7 @@ public abstract class AbstractEntry implements Externalizable {
 		return _mapped;
 	}
 
-	public void setMapped(boolean mapped) {
+	public void setMapped(final boolean mapped) {
 		_mapped = mapped;
 	}
 
@@ -94,59 +97,62 @@ public abstract class AbstractEntry implements Externalizable {
 		return _excluded;
 	}
 
-	public void setExcluded(boolean excluded) {
+	public void setExcluded(final boolean excluded) {
 		_excluded = excluded;
 	}
 
 	/**
 	 * if true then the entry will be indexed
-	 * 
+	 *
 	 * @param addToIndex
 	 */
-	public void setMatchFilter(boolean addToIndex) {
+	public void setMatchFilter(final boolean addToIndex) {
 		_matchFilter = addToIndex;
 	}
 
 	/**
 	 * if true then the entry will be indexed
-	 * 
+	 *
 	 * @param filtered
 	 */
 	public boolean isMatchFilter() {
 		return _matchFilter;
 	}
 
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+        // flat types
+        _index = in.readInt();
 		_label = in.readUTF();
 		_excluded = in.readBoolean();
 		_mapped = in.readBoolean();
+        _rank = in.readFloat();
 		_matchFilter = in.readBoolean();
-		_rank = in.readFloat();
-		_index = in.readInt();
+
+        // objects
 		_fieldType = FieldType.valueOf(in.readUTF());
-		int size = in.readInt();
-		_filters.clear();
+        _filters.clear();
+		final int size = in.readInt();
 		for (int i = 0; i < size; i++) {
-			Filter filter = new Filter();
-			filter.readExternal(in);
+            final Filter filter = (Filter) in.readObject();
 			_filters.add(filter);
 		}
 	}
 
-	public void writeExternal(ObjectOutput out) throws IOException {
+	public void writeExternal(final ObjectOutput out) throws IOException {
+        // flat types
+        out.writeInt(_index);
 		out.writeUTF(_label);
 		out.writeBoolean(_excluded);
 		out.writeBoolean(_mapped);
+        out.writeFloat(_rank);
 		out.writeBoolean(_matchFilter);
-		out.writeFloat(_rank);
-		out.writeInt(_index);
+
+        // objects
 		out.writeUTF(_fieldType.name());
 		out.writeInt(_filters.size());
-		for (Filter filter : _filters) {
-			filter.writeExternal(out);
+		for (final Filter filter : _filters) {
+            out.writeObject(filter);
 		}
-
 	}
 
 	@Override

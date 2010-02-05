@@ -5,6 +5,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import de.ingrid.iplug.excel.model.Column;
+import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
@@ -13,14 +14,14 @@ import de.ingrid.iplug.excel.model.Values;
 public abstract class AbstractSheetTest extends TestCase {
 
 	protected List<Column> getTestColumns() {
-		List<Column> columns = new ArrayList<Column>();
-		Column column1 = new Column(0);
+		final List<Column> columns = new ArrayList<Column>();
+		final Column column1 = new Column(0);
 		column1.setLabel("one");
 
-		Column column2 = new Column(1);
+		final Column column2 = new Column(1);
 		column2.setLabel("two");
 
-		Column column3 = new Column(2);
+		final Column column3 = new Column(2);
 		column3.setLabel("");
 
 		columns.add(column1);
@@ -30,13 +31,13 @@ public abstract class AbstractSheetTest extends TestCase {
 	}
 
 	protected List<Row> getTestRows() {
-		List<Row> rows = new ArrayList<Row>();
-		Row row1 = new Row(0);
+		final List<Row> rows = new ArrayList<Row>();
+		final Row row1 = new Row(0);
 		row1.setLabel("1");
-		Row row2 = new Row(1);
+		final Row row2 = new Row(1);
 		row2.setLabel("2");
-		Row row3 = new Row(2);
-		row3.setLabel("");
+		final Row row3 = new Row(2);
+        row3.setLabel(" ");
 		rows.add(row1);
 		rows.add(row2);
 		rows.add(row3);
@@ -44,18 +45,19 @@ public abstract class AbstractSheetTest extends TestCase {
 	}
 
 	protected Sheet getTestSheet() {
-		Sheet sheet = new Sheet();
-		List<Row> rows = getTestRows();
-		for (Row row : rows) {
+		final Sheet sheet = new Sheet();
+        sheet.setDocumentType(DocumentType.ROW);
+		final List<Row> rows = getTestRows();
+		for (final Row row : rows) {
 			sheet.addRow(row);
 		}
-		List<Column> columns = getTestColumns();
-		for (Column column : columns) {
+		final List<Column> columns = getTestColumns();
+		for (final Column column : columns) {
 			sheet.addColumn(column);
 		}
-		Values values = new Values();
-		for (Row row : rows) {
-			for (Column column : columns) {
+		final Values values = new Values();
+		for (final Row row : rows) {
+			for (final Column column : columns) {
 				String label = "" + column.getLabel() + row.getLabel();
 				if (row.getIndex() == 2 || column.getIndex() == 2) {
 					label = "";

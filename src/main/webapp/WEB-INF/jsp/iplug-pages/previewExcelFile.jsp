@@ -27,13 +27,13 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Sheet auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
@@ -41,25 +41,10 @@
 			<form:form method="post" action="" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>
-				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet${sheet.sheetIndex+1}
+				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet ${sheet.sheetIndex+1}
 			</h2>
 			<div style="overflow:auto">
-			<table class="sheet" cellpadding="0" cellspacing="0">
-				<tr>
-					<th>&nbsp;</th>
-					<c:forEach items="${sheet.columns}" var="column" >
-    					<th>${column.label}</th>       	   		
-	            	</c:forEach>
-				</tr>
-	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9" varStatus="j">
-	    	   		<tr>
-						<td class="rowCountLabel">${row.label}</td>
-						<c:forEach items="${sheet.columns}" var="col" varStatus="k">
-							<td>${sheet.valuesAsMap[j.index][k.index]}&nbsp;</td>
-						</c:forEach>
-					</tr>
-		        </c:forEach>
-	      	</table>
+			    <%@ include file="renderSheet.jsp" %>
 	      	</div>      	   
 	      	<br/><br/>
 	      	</c:forEach>

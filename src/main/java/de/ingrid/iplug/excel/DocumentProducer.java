@@ -2,8 +2,8 @@ package de.ingrid.iplug.excel;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -31,7 +31,6 @@ import de.ingrid.utils.PlugDescription;
 @Service
 public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
-	private final SheetsService _sheetsService;
 	private SheetDocumentIterator _sheetDocumentIterator;
 	private final Stemmer _stemmer;
 
@@ -40,15 +39,15 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		private static final Logger LOG = Logger
 				.getLogger(SheetDocumentIterator.class);
 
-		private SheetDocumentIterator _prev;
+		private final SheetDocumentIterator _prev;
 
-		private BitSet _documentBitSet = new BitSet();
+		private final BitSet _documentBitSet = new BitSet();
 
-		private BitSet _mappedBitSet = new BitSet();
+		private final BitSet _mappedBitSet = new BitSet();
 
-		private List<? extends AbstractEntry> _documentEntries = new ArrayList<AbstractEntry>();
+        private Collection<? extends AbstractEntry> _documentEntries;
 
-		private List<? extends AbstractEntry> _mappedEntries = new ArrayList<AbstractEntry>();
+		private Collection<? extends AbstractEntry> _mappedEntries;
 
 		private final Sheet _sheet;
 
@@ -56,39 +55,39 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 		private final Stemmer _stemmer;
 
-		public SheetDocumentIterator(String name, SheetDocumentIterator prev,
-				Sheet sheet, Stemmer stemmer) {
+        private Values _values;
+
+        public SheetDocumentIterator(final String name, final SheetDocumentIterator prev, final Sheet sheet,
+                final Stemmer stemmer) {
 			_name = name;
 			_prev = prev;
 			_sheet = sheet;
 			_stemmer = stemmer;
 
 			if (_sheet != null) {
-				DocumentType documentType = _sheet.getDocumentType();
+				final DocumentType documentType = _sheet.getDocumentType();
 				switch (documentType) {
 				case ROW:
-					_documentEntries = _sheet.getRows();
-					_mappedEntries = _sheet.getColumns();
+                    _documentEntries = _sheet.getVisibleRows();
+                    _mappedEntries = _sheet.getVisibleColumns();
 					break;
 				case COLUMN:
-					_documentEntries = _sheet.getColumns();
-					_mappedEntries = _sheet.getRows();
+                    _documentEntries = _sheet.getVisibleColumns();
+                    _mappedEntries = _sheet.getVisibleRows();
 					break;
 
 				default:
 					break;
 				}
 
-				for (AbstractEntry entry : _documentEntries) {
-					_documentBitSet.set(entry.getIndex(), !entry.isExcluded()
-							&& entry.isMatchFilter());
-					for (AbstractEntry entry2 : _mappedEntries) {
-						_mappedBitSet.set(entry2.getIndex(), !entry2
-								.isExcluded()
-								&& entry2.isMapped());
+                for (final AbstractEntry doc : _documentEntries) {
+                    _documentBitSet.set(doc.getIndex(), doc.isMatchFilter());
+                    for (final AbstractEntry entry : _mappedEntries) {
+                        _mappedBitSet.set(entry.getIndex(), entry.isMapped());
 					}
 				}
 
+				_values = _sheet.getValues();
 			}
 		}
 
@@ -100,7 +99,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		}
 
 		public Document next() {
-			Document document = _prev != null && _prev.hasNext() ? _prev.next()
+			final Document document = _prev != null && _prev.hasNext() ? _prev.next()
 					: createDocument(_documentBitSet.nextSetBit(0));
 			return document;
 		}
@@ -109,20 +108,33 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 			if (_prev != null && _prev.hasNext()) {
 				_prev.remove();
 			} else {
-				int nextBit = _documentBitSet.nextSetBit(0);
+				final int nextBit = _documentBitSet.nextSetBit(0);
 				_documentBitSet.flip(nextBit);
 			}
 		}
 
-		private Document createDocument(int nextBit) {
-			Document document = new Document();
+		private Document createDocument(final int nextBit) {
+			final Document document = new Document();
 			for (int i = _mappedBitSet.nextSetBit(0); i >= 0; i = _mappedBitSet
 					.nextSetBit(i + 1)) {
-				Comparable<? extends Object> value = _sheet.getValues()
-						.getValue(i, nextBit);
-				AbstractEntry entry = _mappedEntries.get(i);
-				FieldType fieldType = entry.getFieldType();
-				String label = entry.getLabel();
+
+				Comparable<? extends Object> value = null;
+				switch(_sheet.getDocumentType()) {
+				case ROW:
+				    value = _values.getValue(i, nextBit);
+				    break;
+				case COLUMN:
+				    value = _values.getValue(nextBit, i);
+				    break;
+				default:
+				    break;
+				}
+				if (value == null ) {
+				    continue;
+				}
+				final AbstractEntry entry = getEntry(i);
+				final FieldType fieldType = entry.getFieldType();
+				final String label = entry.getLabel();
 				switch (fieldType) {
 				case TEXT:
 					document.add(new Field(label, value.toString(), Store.YES,
@@ -146,24 +158,32 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				try {
 					document.add(new Field("content", _stemmer.stem(value
 							.toString()), Store.NO, Index.ANALYZED));
-				} catch (IOException e) {
+				} catch (final IOException e) {
 					LOG.warn(_name + ": can not stem content: "
 							+ value.toString(), e);
 				}
-				document.add(new Field("content", value.toString(), Store.NO,
+                document.add(new Field("content", value.toString(), Store.NO,
 						Index.ANALYZED));
 
 			}
 			remove();
 			return document;
 		}
+
+		private AbstractEntry getEntry(final int index) {
+		    for (final AbstractEntry entry : _mappedEntries) {
+		        if (entry.getIndex() == index) {
+		            return entry;
+		        }
+		    }
+		    return null;
+		}
 	}
 
-	@Autowired
-	public DocumentProducer(SheetsService sheetsService, Stemmer stemmer) {
-		_sheetsService = sheetsService;
-		_stemmer = stemmer;
-	}
+    @Autowired
+    public DocumentProducer(final Stemmer stemmer) {
+        _stemmer = stemmer;
+    }
 
 	public boolean hasNext() {
 		return _sheetDocumentIterator.hasNext();
@@ -176,32 +196,30 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	public void initialize() throws Exception {
 	}
 
-	public void configure(PlugDescription plugDescription) {
-		File workinDirectory = plugDescription.getWorkinDirectory();
-		Sheets sheets = (Sheets) plugDescription.get("sheets");
-		List<Sheet> sheetsList = sheets.getSheets();
-		_sheetDocumentIterator = null;
-		for (Sheet sheet : sheetsList) {
-			String fileName = sheet.getFileName();
-			File xls = new File(workinDirectory, "mapping" + File.separator
-					+ fileName);
-			try {
-				Sheets tmpSheets = _sheetsService.createSheets(xls);
-				List<Sheet> tmpSheetList = tmpSheets.getSheets();
-				for (Sheet tmpSheet : tmpSheetList) {
-					if (tmpSheet.getSheetIndex() == sheet.getSheetIndex()) {
-						Values values = tmpSheet.getValues();
-						sheet.setValues(values);
-						_sheetDocumentIterator = new SheetDocumentIterator(
-								sheet.getFileName() + ".sheet."
-										+ sheet.getSheetIndex(),
-								_sheetDocumentIterator, sheet, _stemmer);
-					}
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	public void configure(final PlugDescription plugDescription) {
+		final File workinDirectory = plugDescription.getWorkinDirectory();
+		final Sheets sheets = (Sheets) plugDescription.get("sheets");
+        if (sheets != null) {
+            final List<Sheet> sheetsList = sheets.getSheets();
+            _sheetDocumentIterator = null;
+            for (final Sheet sheet : sheetsList) {
+                final String fileName = sheet.getFileName();
+                final File xls = new File(workinDirectory, "mapping" + File.separator + fileName);
+                try {
+                    final Sheets tmpSheets = SheetsService.createSheets(xls);
+                    final List<Sheet> tmpSheetList = tmpSheets.getSheets();
+                    for (final Sheet tmpSheet : tmpSheetList) {
+                        if (tmpSheet.getSheetIndex() == sheet.getSheetIndex()) {
+                            final Values values = tmpSheet.getValues();
+                            sheet.setValues(values);
+                            _sheetDocumentIterator = new SheetDocumentIterator(sheet.getFileName() + ".sheet."
+                                    + sheet.getSheetIndex(), _sheetDocumentIterator, sheet, _stemmer);
+                        }
+                    }
+                } catch (final IOException e) {
+                    e.printStackTrace();
+                }
+            }
 		}
-
 	}
 }

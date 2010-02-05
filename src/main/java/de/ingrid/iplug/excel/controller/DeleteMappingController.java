@@ -1,7 +1,5 @@
 package de.ingrid.iplug.excel.controller;
 
-import java.util.Iterator;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,18 +16,11 @@ import de.ingrid.iplug.excel.model.Sheets;
 public class DeleteMappingController {
 
     @RequestMapping(value = "/iplug-pages/deleteMapping.html", method = RequestMethod.POST)
-	public String deleteMapping(
-			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex) {
-		final Sheets sheets = (Sheets) plugdescriptionCommandObject.get("sheets");
-		final Iterator<Sheet> iterator = sheets.getSheets().iterator();
-		while (iterator.hasNext()) {
-			final Sheet sheet = iterator.next();
-			if (sheet.getSheetIndex() == sheetIndex) {
-				iterator.remove();
-				break;
-			}
-		}
-		return "redirect:/base/save.html";
+    public String deleteMapping(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
+            @RequestParam(value = "sheetIndex", required = true) final int sheetIndex) {
+        final Sheets sheets = (Sheets) plugDescription.get("sheets");
+        final Sheet sheet = sheets.getSheets().get(sheetIndex);
+        sheets.removeSheet(sheet);
+        return "redirect:/iplug-pages/listMappings.html";
 	}
 }

@@ -1,10 +1,8 @@
 package de.ingrid.iplug.excel.controller;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,45 +19,33 @@ import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.service.AddToIndexFilter;
-import de.ingrid.iplug.excel.service.SheetService;
+import de.ingrid.iplug.excel.service.SheetFilter;
 
 @Controller
-@SessionAttributes("sheets")
+@SessionAttributes("sheet")
 public class AddFilterController {
 
-	private final AddToIndexFilter _filter;
-
-	@Autowired
-	public AddFilterController(final AddToIndexFilter filter) {
-		_filter = filter;
-	}
-
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.GET)
-	public String addFilter(@ModelAttribute("sheets") final Sheets sheets,
-			@RequestParam(required = true) final String type,
-			@RequestParam(required = true) final int index,
-			@RequestParam(required = true) final String label, final ModelMap model) {
-		model.addAttribute("type", type);
-		model.addAttribute("index", index);
-		model.addAttribute("label", label);
-		final List<FilterType> filterTypes = new ArrayList<FilterType>();
-		final Sheet sheet = sheets.getSheets().get(0);
-		final SheetService sheetService = new SheetService();
-		final DocumentType documentType = sheet.getDocumentType();
+    public String addFilter(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
+            final ModelMap modelMap) {
+        final DocumentType documentType = sheet.getDocumentType();
+        modelMap.addAttribute("type", documentType);
+        modelMap.addAttribute("index", index);
+
 		AbstractEntry doc = null;
 		switch (documentType) {
 		case ROW:
-			 doc = sheetService.getColumnByIndex(sheet, index);
+            doc = sheet.getColumn(index);
 			break;
 		case COLUMN:
-			doc = sheetService.getRowByIndex(sheet, index);
+            doc = sheet.getRow(index);
 			break;
 		default:
 			break;
 		}
+        modelMap.addAttribute("label", doc.getLabel());
 
+        final List<FilterType> filterTypes = new ArrayList<FilterType>();
 		final FieldType fieldType = doc.getFieldType();
 		switch (fieldType) {
 		case BOOLEAN:
@@ -67,6 +53,7 @@ public class AddFilterController {
 			filterTypes.add(FilterType.NOT_EQUAL);
 			break;
 		case DATE:
+            filterTypes.add(FilterType.EQUAL);
 			filterTypes.add(FilterType.BEFORE);
 			filterTypes.add(FilterType.AFTER);
 			break;
@@ -87,58 +74,30 @@ public class AddFilterController {
 			break;
 		}
 
-
-		model.addAttribute("filterTypes", filterTypes);
+        modelMap.addAttribute("filterTypes", filterTypes);
         return "/iplug-pages/addFilter";
 	}
 
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.POST)
-	public String addFilterPost(
-			@ModelAttribute("sheets") final Sheets sheets,
-			@RequestParam(required = true) final int index,
-			@RequestParam(value = "filterType", required = true) final String filterTypeString,
-			@RequestParam(required = true) final String expression) {
-
-		final FilterType filterType = FilterType.valueOf(filterTypeString);
+    public String addFilterPost(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
+            @RequestParam final FilterType filterType, @RequestParam final String expression) {
 		Filter filter = null;
-		switch (filterType) {
-		case GREATER_THAN:
-		case LOWER_THAN:
-			filter = new Filter(Double.parseDouble(expression), filterType);
-			break;
-		case CONTAINS:
-		case NOT_CONTAINS:
-		case EQUAL:
-		case NOT_EQUAL:
-		case BEFORE:
-		case AFTER:
-			filter = new Filter(expression, filterType);
-			break;
-
-		default:
-			break;
+        if (filterType == FilterType.GREATER_THAN || filterType == FilterType.LOWER_THAN) {
+            filter = new Filter(Double.parseDouble(expression), filterType);
+        } else {
+            filter = new Filter(expression, filterType);
 		}
 
-		final Sheet sheet = sheets.getSheets().get(0);
-		final DocumentType documentType = sheet.getDocumentType();
-		switch (documentType) {
+        switch (sheet.getDocumentType()) {
 		case ROW:
-			final Column col = sheet.getColumns().get(index);
+            final Column col = sheet.getColumn(index);
 			col.addFilter(filter);
-			final BitSet bitSet = _filter.filterRows(sheet);
-			final List<Row> rows = sheet.getRows();
-			for (final Row row : rows) {
-				row.setMatchFilter(!bitSet.get(row.getIndex()));
-			}
+            SheetFilter.filter(sheet, col, filter);
 			break;
 		case COLUMN:
-			final Row row = sheet.getRows().get(index);
+            final Row row = sheet.getRow(index);
 			row.addFilter(filter);
-			final BitSet columnSet = _filter.filterColumns(sheet);
-			final List<Column> columns = sheet.getColumns();
-			for (final Column column : columns) {
-				column.setMatchFilter(!columnSet.get(column.getIndex()));
-			}
+            SheetFilter.filter(sheet, row, filter);
 			break;
 		default:
 			break;
@@ -148,35 +107,22 @@ public class AddFilterController {
 	}
 
     @RequestMapping(value = "/iplug-pages/removeFilter.html", method = RequestMethod.GET)
-	public String removeFilter(@ModelAttribute("sheets") final Sheets sheets,
-			@RequestParam(required = true) final int index,
-			@RequestParam(required = true) final int filterIndex) {
-
-		final Sheet sheet = sheets.getSheets().get(0);
+    public String removeFilter(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
+            @RequestParam final int filterIndex) {
 		final DocumentType documentType = sheet.getDocumentType();
 		switch (documentType) {
 		case ROW:
-			final Column col = sheet.getColumns().get(index);
+            final Column col = sheet.getColumn(index);
 			col.removeFilter(filterIndex);
-			final BitSet bitSet = _filter.filterRows(sheet);
-			final List<Row> rows = sheet.getRows();
-			for (final Row row : rows) {
-				row.setMatchFilter(!bitSet.get(row.getIndex()));
-			}
 			break;
 		case COLUMN:
-			final Row row = sheet.getRows().get(index);
+            final Row row = sheet.getRow(index);
 			row.removeFilter(filterIndex);
-			final BitSet columnSet = _filter.filterColumns(sheet);
-			final List<Column> columns = sheet.getColumns();
-			for (final Column column : columns) {
-				column.setMatchFilter(!columnSet.get(column.getIndex()));
-			}
 			break;
 		default:
 			break;
 		}
-
+        SheetFilter.filter(sheet);
 
         return "redirect:/iplug-pages/mapping.html";
 	}

@@ -10,18 +10,19 @@ public class Column extends AbstractEntry {
 		super();
 	}
 
-	public Column(int columnIndex) {
+	public Column(final int columnIndex) {
 		super(columnIndex);
-		setLabel(getDefaultLabel());
+        setLabel(getDefaultLabel(getIndex()));
 	}
 
-	public String getDefaultLabel() {
-		if (getIndex() < 26) {
-			return LABELS[getIndex()];
-		}
-		String firstChar = LABELS[(int) (Math.floor(getIndex() / 26)) - 1];
-		String secondChar = LABELS[getIndex() % 26];
-		return firstChar + secondChar;
+    public static String getDefaultLabel(int index) {
+	    String label = "";
+        while (index >= 0) {
+	        final int pos = index % 26;
+	        label = LABELS[pos] + label;
+	        index = index/26 - 1;
+	    }
+	    return label;
 	}
 
 }

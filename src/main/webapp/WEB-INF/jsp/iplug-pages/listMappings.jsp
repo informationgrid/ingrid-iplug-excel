@@ -25,6 +25,16 @@
 	
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Daten Mappings</h1>
+		<div class="controls">
+            <a href="#" onclick="document.location='/base/fieldQuery.html';">Zurück</a>
+            <a href="#" onclick="document.location='/iplug-pages/welcome.html';">Abbrechen</a>
+            <a href="#" onclick="document.location='/base/save.html';">Mapping beenden und speichern</a>
+        </div>
+        <div class="controls cBottom">
+            <a href="#" onclick="document.location='/base/fieldQuery.html';">Zurück</a>
+            <a href="#" onclick="document.location='/iplug-pages/welcome.html';">Abbrechen</a>
+            <a href="#" onclick="ddocument.location='/base/save.html';">Mapping beenden und speichern</a>
+        </div>
 		<div id="content">
 			<h2>Folgende Excel Sheets sind bereits gemappt</h2>
 			
@@ -36,28 +46,28 @@
 					<th>Beschreibung</th>
 					<th>&nbsp;</th>
 				</tr>
-				<c:forEach var="sheet" items="${plugDescription.sheets.sheets}">
+				<c:forEach var="sheet" items="${plugDescription.sheets.sheets}" varStatus="status">
 				<tr>
 					<td>${sheet.fileName}</td>
-					<td>Sheet${sheet.sheetIndex +1}</td>
-					<td>${sheet.columns[sheet.selectFrom.x].label}/${sheet.rows[sheet.selectFrom.y].label} : ${sheet.columns[sheet.selectTo.x].label}/${sheet.rows[sheet.selectTo.y].label}</td>
+					<td>Sheet ${sheet.sheetIndex + 1}</td>
+					<td><c:if test="${sheet.selected}">von ${sheet.fromColumn.label}/${sheet.fromRow.label} bis ${sheet.toColumn.label}/${sheet.toRow.label}</c:if></td>
 					<td>${sheet.description}&nbsp;</td>
 					<td>
 						<form action="/iplug-pages/deleteMapping.html" method="POST" style="float:left">
 							<input type="submit" value="Löschen"/>
-							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/> 
 						</form>
 						<form action="/iplug-pages/editMapping.html" method="GET" style="float:left">
 							<input type="submit" value="Bearbeiten"/>
-							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/>
 						</form>
 						<form action="/iplug-pages/addMapping.html" method="GET" style="float:left">
 							<input type="submit" value="Weiteres Sheet"/>
-							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/> 
 						</form>
 						<form action="/iplug-pages/switchXls.html" method="GET" style="float:left">
 							<input type="submit" value="Datei aktualisieren"/>
-							<input type="hidden" name="sheetIndex" value="${sheet.sheetIndex}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/> 
 						</form>
 					</td>
 				</tr>

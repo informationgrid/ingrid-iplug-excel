@@ -5,57 +5,52 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
-public class Values implements Externalizable {
+public class Values implements Externalizable, Iterable<Point> {
 
-	private Map<Point, Comparable<? extends Object>> _values = new LinkedHashMap<Point, Comparable<? extends Object>>();
+    private final SortedMap<Point, Comparable<? extends Object>> _values = new TreeMap<Point, Comparable<? extends Object>>();
 
-	public void addValue(Point point, Comparable<? extends Object> value) {
+	public void addValue(final Point point, final Comparable<? extends Object> value) {
 		_values.put(point, value);
 	}
 
-	public Comparable<? extends Object> getValue(Point point) {
+	public Comparable<? extends Object> getValue(final Point point) {
 		return _values.get(point);
 	}
 
-	public Comparable<? extends Object> getValue(int x, int y) {
+	public Comparable<? extends Object> getValue(final int x, final int y) {
 		return _values.get(new Point(x, y));
 	}
 
-	public Iterator<Point> getPointIterator() {
-		return _values.keySet().iterator();
-	}
+    @Override
+    public Iterator<Point> iterator() {
+        return _values.keySet().iterator();
+    }
+
+    public int getSize() {
+        return _values.size();
+    }
 
 	@SuppressWarnings("unchecked")
-	public void readExternal(ObjectInput in) throws IOException,
-			ClassNotFoundException {
+    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
 		_values.clear();
-		int size = in.readInt();
+		final int size = in.readInt();
 		for (int i = 0; i < size; i++) {
-			Point point = new Point();
-			point.readExternal(in);
-			Comparable<? extends Object> serializable = (Comparable<Object>) in
-					.readObject();
+            final Point point = (Point) in.readObject();
+            final Comparable<? extends Object> serializable = (Comparable<Object>) in.readObject();
 			_values.put(point, serializable);
 		}
 	}
 
-	public int getSize() {
-		return _values.size();
-	}
-
-	public void writeExternal(ObjectOutput out) throws IOException {
+	public void writeExternal(final ObjectOutput out) throws IOException {
 		out.writeInt(_values.size());
-		Set<Point> keySet = _values.keySet();
-		for (Point point : keySet) {
-			point.writeExternal(out);
-			Comparable<? extends Object> serializable = _values.get(point);
-			out.writeObject(serializable);
+        final Set<Point> set = _values.keySet();
+        for (final Point point : set) {
+            out.writeObject(point);
+            out.writeObject(_values.get(point));
 		}
-
 	}
-
 }

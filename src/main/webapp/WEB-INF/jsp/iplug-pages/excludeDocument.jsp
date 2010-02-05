@@ -25,15 +25,14 @@
 	
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Einzelnen Datensatz ausschließen</h1>
-		<c:set var="sheet" value="${sheets.sheets[0]}"/>
 		<div class="controls">
-			<a href="#" onclick="document.location='mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div id="content">
@@ -52,16 +51,15 @@
 							<select name="index">
 								<c:choose>
 									<c:when test="${sheet.documentType == 'COLUMN'}">
-										<c:forEach var="doc" items="${sheet.columns}">
-											<option value="${doc.index}">${doc.label}</option>
-										</c:forEach>
+										<c:set var="docs" value="${sheet.visibleColumns}" />
 									</c:when>
 									<c:when test="${sheet.documentType == 'ROW'}">
-										<c:forEach var="doc" items="${sheet.rows}">
-											<option value="${doc.index}">${doc.label}</option>
-										</c:forEach>
+										<c:set var="docs" value="${sheet.visibleRows}" />
 									</c:when>
 								</c:choose>
+								<c:forEach var="doc" items="${docs}">
+                                    <option value="${doc.index}">${doc.label}</option>
+                                </c:forEach>
 							</select>
 						</td>
 					</tr>

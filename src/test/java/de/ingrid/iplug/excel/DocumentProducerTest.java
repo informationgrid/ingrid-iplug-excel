@@ -22,30 +22,28 @@ import de.ingrid.utils.PlugDescription;
 public class DocumentProducerTest extends TestCase {
 
 	public void testProduce() throws Exception {
-		DocumentProducer documentProducer = new DocumentProducer(
-				new SheetsService(), new GermanStemmer());
+        final DocumentProducer documentProducer = new DocumentProducer(new GermanStemmer());
 
 		// setup plugdescription
-		PlugDescription plugDescription = new PlugDescription();
-		File xls = new File("src/test/resources/mapping/test.xls");
+		final PlugDescription plugDescription = new PlugDescription();
+		final File xls = new File("src/test/resources/mapping/test.xls");
 		plugDescription.setWorkinDirectory(xls.getParentFile().getParentFile());
-		Sheets sheets = new SheetsService().createSheets(xls);
+        final Sheets sheets = SheetsService.createSheets(xls);
 		// setup 0te sheet
 		Sheet sheet = sheets.getSheets().get(0);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
-		Column column = sheet.getColumns().get(1);
+        Column column = sheet.getColumn(1);
 		column.setFieldType(FieldType.TEXT);
 		column.setMapped(true);
-		column = sheet.getColumns().get(2);
+        column = sheet.getColumn(2);
 		column.setFieldType(FieldType.NUMBER);
 		column.setMapped(true);
-		List<Row> rows = sheet.getRows();
-		for (Row row1 : rows) {
-			if (row1.getIndex() >= 2 && row1.getIndex() <= 3) {
-				row1.setMatchFilter(true);
+        for (final Row row : sheet.getRows()) {
+            if (row.getIndex() >= 2 && row.getIndex() <= 3) {
+                row.setMatchFilter(true);
 			} else {
-				row1.setMatchFilter(false);
+                row.setMatchFilter(false);
 			}
 		}
 
@@ -53,18 +51,17 @@ public class DocumentProducerTest extends TestCase {
 		sheet = sheets.getSheets().get(1);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
-		column = sheet.getColumns().get(1);
+        column = sheet.getColumn(1);
 		column.setFieldType(FieldType.NUMBER);
 		column.setMapped(true);
-		column = sheet.getColumns().get(2);
-		column.setFieldType(FieldType.TEXT);
+        column = sheet.getColumn(2);
+        column.setFieldType(FieldType.TEXT);
 		column.setMapped(true);
-		rows = sheet.getRows();
-		for (Row row1 : rows) {
-			if (row1.getIndex() >= 2 && row1.getIndex() <= 4) {
-				row1.setMatchFilter(true);
+        for (final Row row : sheet.getRows()) {
+            if (row.getIndex() >= 2 && row.getIndex() <= 4) {
+                row.setMatchFilter(true);
 			} else {
-				row1.setMatchFilter(false);
+                row.setMatchFilter(false);
 			}
 		}
 
@@ -73,9 +70,9 @@ public class DocumentProducerTest extends TestCase {
 		plugDescription.put("sheets", sheets);
 
 		documentProducer.configure(plugDescription);
-		List<Document> documents = new ArrayList<Document>();
+		final List<Document> documents = new ArrayList<Document>();
 		while (documentProducer.hasNext()) {
-			Document next = documentProducer.next();
+			final Document next = documentProducer.next();
 			assertNotNull(next);
 			documents.add(next);
 		}

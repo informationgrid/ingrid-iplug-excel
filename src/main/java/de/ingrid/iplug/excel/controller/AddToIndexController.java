@@ -12,73 +12,78 @@ import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Sheets;
 
 @Controller
-@SessionAttributes("sheets")
+@SessionAttributes("sheet")
 public class AddToIndexController {
 
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.GET)
-	public String addToIndex(@ModelAttribute("sheets") final Sheets sheets,
-			@RequestParam(required = true) final String type,
-			@RequestParam(required = true) final int index,
-			@RequestParam(required = true) final String label, final ModelMap model) {
+    public String addToIndex(@ModelAttribute("sheet") final Sheet sheet,
+            @RequestParam(required = true) final int index, final ModelMap modelMap) {
+        modelMap.addAttribute("index", index);
+        modelMap.addAttribute("type", sheet.getDocumentType());
+        modelMap.addAttribute("fieldTypes", FieldType.values());
 
-		model.addAttribute("type", type);
-		model.addAttribute("index", index);
-		model.addAttribute("label", label);
-		model.addAttribute("fieldTypes", FieldType.values());
+        AbstractEntry entry = null;
+        switch (sheet.getDocumentType()) {
+        case COLUMN:
+            entry = sheet.getRow(index);
+            break;
+        case ROW:
+            entry = sheet.getColumn(index);
+            break;
+        default:
+            break;
+        }
+        modelMap.addAttribute("label", entry.getLabel());
+
         return "/iplug-pages/addToIndex";
 	}
 
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.POST)
-	public String addToIndexPost(@ModelAttribute("sheets") final Sheets sheets,
+    public String addToIndexPost(@ModelAttribute("sheet") final Sheet sheet,
 			@RequestParam(required = true) final int index,
 			@RequestParam(required = false) final String fieldName,
 			@RequestParam(required = false) final String ownFieldName,
-			@RequestParam(required = true) final String fieldType,
+            @RequestParam(required = true) final FieldType fieldType,
 			@RequestParam(required = true) final float rank) {
-
-		final Sheet sheet = sheets.getSheets().get(0);
 		final DocumentType documentType = sheet.getDocumentType();
 		AbstractEntry entry = null;
 		switch (documentType) {
 		case ROW:
-			entry = sheet.getColumns().get(index);
+            entry = sheet.getColumn(index);
 			break;
 		case COLUMN:
-			entry = sheet.getRows().get(index);
+            entry = sheet.getRow(index);
 			break;
 		default:
 			break;
 		}
-		final String label = !"".equals(ownFieldName) ? ownFieldName : fieldName;
+        final String label = !"".equals(ownFieldName) ? ownFieldName : !"".equals(fieldName) ? fieldName : entry
+                .getLabel();
 		entry.setLabel(label);
 		entry.setMapped(true);
 		entry.setRank(rank);
-		entry.setFieldType(FieldType.valueOf(fieldType));
+        entry.setFieldType(fieldType);
 
         return "redirect:/iplug-pages/mapping.html";
 	}
 
     @RequestMapping(value = "/iplug-pages/removeFromIndex.html", method = RequestMethod.GET)
-	public String removeFromIndex(@ModelAttribute("sheets") final Sheets sheets,
+    public String removeFromIndex(@ModelAttribute("sheet") final Sheet sheet,
 			@RequestParam(required = true) final int index) {
-
-		final Sheet sheet = sheets.getSheets().get(0);
 		final DocumentType documentType = sheet.getDocumentType();
 		AbstractEntry entry = null;
 		String label = null;
 		switch (documentType) {
 		case ROW:
-			entry = sheet.getColumns().get(index);
-			label = ((Column) entry).getDefaultLabel();
+            entry = sheet.getColumn(index);
+            label = Column.getDefaultLabel(index);
 			break;
 		case COLUMN:
-			entry = sheet.getRows().get(index);
-			label = ((Row) entry).getIndex() + "";
+            entry = sheet.getRow(index);
+            label = entry.getIndex() + "";
 			break;
 		default:
 			break;

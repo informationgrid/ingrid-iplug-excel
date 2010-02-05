@@ -27,64 +27,45 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Weitere Angaben</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
+			<a href="#" onclick="document.location='/iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
+			<a href="#" onclick="document.location='/iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div id="content">
 			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
-			<form:form method="post" action="" modelAttribute="sheets"> 
+			<form:form method="post" action="" modelAttribute="sheet"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Ein Datensatz ist:</td>
 						<td>
-							<form:select path="sheets[0].documentType" items="${documentTypes}"></form:select>
+							<form:select path="documentType" items="${documentTypes}"></form:select>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Label:</td>
 						<td>
-							<form:checkbox path="sheets[0].firstIsLabel" value="true"/> Erste Zeile / Spalte enthält Überschriften
+							<form:checkbox path="firstIsLabel" value="true" /> Erste Zeile / Spalte enthält Überschriften
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Beschreibung der Daten:</td>
 						<td>
-							<form:input path="sheets[0].description"/>
+							<form:input path="description"/>
 						</td>
 					</tr>
 				</table>
 			</form:form>
 			
-			
-			<c:set var="tableCounter" value="0" />
-			<c:forEach items="${sheets.sheets}" var="sheet" varStatus="i">
-			<h2>Vorschau Sheet${i.index+1}</h2>
+			<h2>Vorschau Sheet ${sheet.sheetIndex + 1}</h2>
 			<div style="overflow:auto">
-			<table class="sheet" cellpadding="0" cellspacing="0">
-				<tr>
-					<th>&nbsp;</th>
-					<c:forEach items="${sheet.columns}" var="column" >
-    					<th>${column.label}</th>       	   		
-	            	</c:forEach>
-				</tr>
-	    	   	<c:forEach items="${sheet.rows}" var="row" begin="0" end="9" varStatus="j">
-	    	   		<tr>
-						<td class="rowCountLabel">${row.label}</td>
-						<c:forEach items="${sheet.columns}" var="col" varStatus="k">
-							<td>${sheet.valuesAsMap[j.index][k.index]}&nbsp;</td>
-						</c:forEach>
-					</tr>
-		        </c:forEach>
-	      	</table>
+				<%@ include file="renderSheet.jsp" %>
 	      	</div>      	   
 	      	<br/><br/>
-	      	</c:forEach>
 	      </div>	
 	</div>
 	<div id="footer" style="height:100px; width:90%"></div>

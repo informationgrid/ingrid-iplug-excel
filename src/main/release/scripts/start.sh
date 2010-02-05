@@ -19,16 +19,9 @@ PID=$INGRID_HOME/ingrid.pid
 
 INGRID_OPTS="-Djetty.port=8082"
 if [ -f $INGRID_HOME/conf/plugDescription.xml ]; then
-	for tag in IPLUG_ADMIN_GUI_PORT
-	do
-		OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string>'${tag}'</string>\n' | tr -d '\t' | sed 's/^<.*>\([^<].*\)<.*>$/\1/' `
-		eval ${tag}=`echo -ne \""${OUT}"\"`
-		done
-		P_ARRAY=( `echo ${IPLUG_ADMIN_GUI_PORT}` )
-		if [ ${P_ARRAY[0]} = $'\r' ]; then
-            P_ARRAY=( ${P_ARRAY[1]} )
-        fi
-		INGRID_OPTS="-Djetty.port="${P_ARRAY[0]}
+    tag="IPLUG_ADMIN_GUI_PORT"
+    OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string/>\n\t\r '$tag`
+    INGRID_OPTS="-Djetty.port="$OUT
 fi
 
 # functions

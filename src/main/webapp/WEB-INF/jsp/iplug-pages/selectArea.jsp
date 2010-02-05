@@ -26,13 +26,13 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Globalen Bereich auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div id="content">

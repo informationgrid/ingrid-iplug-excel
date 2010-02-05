@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,13 +21,12 @@ import de.ingrid.iplug.excel.UploadBean;
 import de.ingrid.iplug.excel.model.Sheets;
 
 @Controller
-@SessionAttributes( { "plugDescription", "sheets" })
+@SessionAttributes( { "plugDescription" })
 public class SwitchXlsController {
 
 	@InitBinder
 	public void initBinder(final WebDataBinder binder) {
-		binder.registerCustomEditor(byte[].class,
-				new ByteArrayMultipartFileEditor());
+        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
 	}
 
 	@ModelAttribute("uploadBean")
@@ -36,26 +35,20 @@ public class SwitchXlsController {
 	}
 
     @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.GET)
-	public String switchXls(
-			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex,
-			final Model model) throws IOException {
-		model.addAttribute("sheetIndex", sheetIndex);
+    public String switchXls(@RequestParam final Integer sheetIndex, final ModelMap modelMap) throws IOException {
+        modelMap.addAttribute("sheetIndex", sheetIndex);
         return "/iplug-pages/switchXls";
 	}
 
     @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.POST)
-	public String upload(
-			@RequestParam(value = "sheetIndex", required = true) final int sheetIndex,
-			@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugdescriptionCommandObject,
-			@ModelAttribute("uploadBean") final UploadBean uploadBean, final Model model)
-			throws IOException {
+    public String upload(@RequestParam final Integer sheetIndex,
+            @ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
+            @ModelAttribute("uploadBean") final UploadBean uploadBean) throws IOException {
 		final MultipartFile multipartFile = uploadBean.getFile();
 		final byte[] uploadBytes = multipartFile.getBytes();
-		final Sheets sheets = (Sheets) plugdescriptionCommandObject.get("sheets");
-		final String fileName = sheets.getSheets().get(sheetIndex).getFileName();
-		final File mappingDir = new File(plugdescriptionCommandObject
-				.getWorkinDirectory(), "mapping");
+        final Sheets sheets = (Sheets) plugDescription.get("sheets");
+        final String fileName = sheets.getSheets().get(sheetIndex).getFileName();
+        final File mappingDir = new File(plugDescription.getWorkinDirectory(), "mapping");
 		final File newXlsFile = new File(mappingDir, fileName);
 		final FileOutputStream outputStream = new FileOutputStream(newXlsFile);
 		outputStream.write(uploadBytes);

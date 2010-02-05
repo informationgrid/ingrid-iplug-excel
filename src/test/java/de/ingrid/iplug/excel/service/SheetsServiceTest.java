@@ -1,6 +1,7 @@
 package de.ingrid.iplug.excel.service;
 
 import java.io.File;
+import java.util.Collection;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -13,21 +14,19 @@ import de.ingrid.iplug.excel.model.Values;
 public class SheetsServiceTest extends TestCase {
 
 	public void testCreateSheets() throws Exception {
-		SheetsService sheetsService = new SheetsService();
-		Sheets sheets = sheetsService.createSheets(new File(
-				"src/test/resources/mapping/test.xls"));
-		List<Sheet> sheetList = sheets.getSheets();
+        final Sheets sheets = SheetsService.createSheets(new File("src/test/resources/mapping/test.xls"));
+		final List<Sheet> sheetList = sheets.getSheets();
 		assertEquals(3, sheetList.size());
-		Sheet sheet = sheetList.get(0);
+		final Sheet sheet = sheetList.get(0);
 
-		List<Row> rows = sheet.getRows();
-		assertEquals(14, rows.size());
+        final Collection<Row> rows = sheet.getRows();
+        assertEquals(4, rows.size());
 
-		List<Column> columns = sheet.getColumns();
-		assertEquals(8, columns.size());
+        final Collection<Column> columns = sheet.getColumns();
+        assertEquals(3, columns.size());
 
-		Values values = sheet.getValues();
-		assertEquals(112, values.getSize());
+		final Values values = sheet.getValues();
+        assertEquals(12, values.getSize());
 
 		assertEquals("Vorname", values.getValue(0, 0));
 		assertEquals("Name", values.getValue(1, 0));

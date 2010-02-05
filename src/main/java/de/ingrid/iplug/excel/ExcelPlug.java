@@ -7,16 +7,18 @@ import de.ingrid.admin.search.IngridIndexSearcher;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
 import de.ingrid.iplug.PlugDescriptionFieldFilters;
+import de.ingrid.utils.IRecordLoader;
 import de.ingrid.utils.IngridHit;
 import de.ingrid.utils.IngridHitDetail;
 import de.ingrid.utils.IngridHits;
+import de.ingrid.utils.dsc.Record;
 import de.ingrid.utils.metadata.IMetadataInjector;
 import de.ingrid.utils.processor.IPostProcessor;
 import de.ingrid.utils.processor.IPreProcessor;
 import de.ingrid.utils.query.IngridQuery;
 
 @Service
-public class ExcelPlug extends HeartBeatPlug {
+public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
 	private final IngridIndexSearcher _indexSearcher;
 
@@ -53,4 +55,9 @@ public class ExcelPlug extends HeartBeatPlug {
 				query, fields);
 		return details;
 	}
+
+    @Override
+    public Record getRecord(final IngridHit hit) throws Exception {
+        return _indexSearcher.getRecord(hit);
+    }
 }

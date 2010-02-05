@@ -9,44 +9,32 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Sheets;
 
 @Controller
-@SessionAttributes("sheets")
+@SessionAttributes("sheet")
 public class MappingController {
 
+    public static final int HITS_PER_PAGE = 10;
+
     @RequestMapping(value = "/iplug-pages/mapping.html", method = RequestMethod.GET)
-	public String mapping(@ModelAttribute("sheets") final Sheets sheets, @RequestParam(required=false) Integer start,
-			@RequestParam(required=false) Integer hitsPerPage, final ModelMap model) {
-
-		final Sheet sheet = sheets.getSheets().get(0);
-		final int maxHits = sheet.getRows().size();
-		if(start == null || start < 0){
-			start = 0;
+    public String mapping(@ModelAttribute("sheet") final Sheet sheet, @RequestParam(required = false) Integer begin,
+            final ModelMap modelMap) {
+		if (begin == null || begin < 0) {
+            begin = 0;
 		}
 
-		if(hitsPerPage == null){
-			hitsPerPage = 10;
-		}
+        final int last = sheet.getVisibleRows().size() - 1;
+        final int end = Math.min(last, begin + HITS_PER_PAGE - 1);
+        final int prev = Math.max(0, begin - HITS_PER_PAGE);
+        final int nextBegin = Math.min(last, end + 1);
+        final int nextEnd = Math.min(last, end + HITS_PER_PAGE);
 
-		if (start > maxHits) {
-			start = maxHits;
-		}
-
-		final int pageStart = (start / hitsPerPage) * hitsPerPage;
-
-		int prevStart = pageStart - hitsPerPage;
-		if(prevStart < 0){
-			prevStart = 0;
-		}
-
-		final int nextStart = pageStart + hitsPerPage;
-
-		model.addAttribute("start", pageStart);
-		model.addAttribute("maxHits", maxHits);
-		model.addAttribute("hitsPerPage", hitsPerPage);
-		model.addAttribute("prevStart", prevStart);
-		model.addAttribute("nextStart", nextStart);
+        modelMap.addAttribute("begin", begin);
+        modelMap.addAttribute("end", end);
+        modelMap.addAttribute("prev", prev);
+        modelMap.addAttribute("nextBegin", nextBegin);
+        modelMap.addAttribute("nextEnd", nextEnd);
+        modelMap.addAttribute("last", last);
 
         return "/iplug-pages/mapping";
 	}

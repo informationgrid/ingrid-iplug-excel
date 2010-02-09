@@ -76,12 +76,8 @@ startIplug()
       fi
   fi
   
-  # some Java parameters
-  if [ "$INGRID_JAVA_HOME" != "" ]; then
-    #echo "run java in $INGRID_JAVA_HOME"
-    JAVA_HOME=$INGRID_JAVA_HOME
-  fi
-  
+  JAVA_HOME=${INGRID_JAVA_HOME:-"$JAVA_HOME"}
+ 
   if [ "$JAVA_HOME" = "" ]; then
     echo "Error: JAVA_HOME is not set."
     exit 1
@@ -116,7 +112,7 @@ startIplug()
   fi
 
   # run it
-  exec nohup "$INGRID_JAVA_HOME"/bin/java $INGRID_HEAPSIZE $INGRID_OPTS -jar start.jar > console.log &
+  exec nohup "$JAVA" $INGRID_HEAPSIZE $INGRID_OPTS -jar start.jar > console.log &
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID

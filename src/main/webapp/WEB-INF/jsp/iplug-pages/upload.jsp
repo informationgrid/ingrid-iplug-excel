@@ -37,7 +37,7 @@
 		</div>
 		<div id="content">
 			<h2>Wählen Sie eine Excel Datei aus, die Sie indizieren möchten</h2>
-			<form:form  enctype="multipart/form-data" modelAttribute="uploadBean"> 
+			<form:form action="../iplug-pages/upload.html" enctype="multipart/form-data" modelAttribute="uploadBean"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Excel Datei:</td>

@@ -27,18 +27,18 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Weitere Angaben</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/previewExcelFile.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/previewExcelFile.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div id="content">
 			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
-			<form:form method="post" action="" modelAttribute="sheet"> 
+			<form:form method="post" modelAttribute="sheet"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Ein Datensatz ist:</td>

@@ -27,16 +27,16 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/settings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/settings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
 		</div>
-		<form action="finish.html" method="post" style="display:none" id="submit">
+		<form action="../iplug-pages/finish.html" method="post" style="display:none" id="submit">
 			
 		</form>
 		
@@ -55,15 +55,15 @@
 			<br/>
 			<c:choose>
 				<c:when test="${sheet.documentType == 'COLUMN'}">
-					<a href="excludeDocument.html">Einzelne Spalte ausschließen</a>
+					<a href="../iplug-pages/excludeDocument.html">Einzelne Spalte ausschließen</a>
 					<c:forEach var="col" items="${sheet.excludedColumns}">
-					    ${col.label} <a href="removeExclusion.html?index=${col.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
+					    ${col.label} <a href="../iplug-pages/removeExclusion.html?index=${col.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
 					</c:forEach>
 				</c:when>
 				<c:when test="${sheet.documentType == 'ROW'}">
-					<a href="excludeDocument.html">Einzelne Zeile ausschließen</a>
+					<a href="../iplug-pages/excludeDocument.html">Einzelne Zeile ausschließen</a>
 					<c:forEach var="row" items="${sheet.excludedRows}">
-					    ${row.label} <a href="removeExclusion.html?index=${row.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
+					    ${row.label} <a href="../iplug-pages/removeExclusion.html?index=${row.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
 					</c:forEach>
 				</c:when>
 			</c:choose>

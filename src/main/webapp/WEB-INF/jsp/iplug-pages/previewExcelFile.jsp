@@ -27,18 +27,18 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Sheet auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
 			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
-			<form:form method="post" action="" modelAttribute="sheets"> 
+			<form:form method="post" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>
 				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet ${sheet.sheetIndex+1}

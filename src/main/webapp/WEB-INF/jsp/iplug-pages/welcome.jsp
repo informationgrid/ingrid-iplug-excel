@@ -27,7 +27,7 @@
 			<div class="yui-u">
 				<p>
 				
-				<a href="upload.html">Mapping Erstellen</a> 
+				<a href="../iplug-pages/upload.html">Mapping Erstellen</a> 
 							
 				</p>
 			</div>

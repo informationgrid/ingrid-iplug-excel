@@ -12,17 +12,17 @@
 				<td class="fn" valign="top">
 					<c:choose>
 						<c:when test="${col.isMapped}">
-						    <b>${col.label}</b> <a href="/iplug-pages/removeFromIndex.html?index=${col.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
+						    <b>${col.label}</b> <a href="../iplug-pages/removeFromIndex.html?index=${col.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
 						</c:when>
 						<c:otherwise>
-						    <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="/iplug-pages/addToIndex.html?index=${col.index}">Indizieren</a><br/>
+						    <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="../iplug-pages/addToIndex.html?index=${col.index}">Indizieren</a><br/>
 						</c:otherwise>
 					</c:choose>
 					<c:forEach var="f" items="${col.filters}" varStatus="i">
-					    ${f.filterType} ${f.expression} <a href="/iplug-pages/removeFilter.html?index=${col.index}&filterIndex=${i.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
+					    ${f.filterType} ${f.expression} <a href="../iplug-pages/removeFilter.html?index=${col.index}&filterIndex=${i.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
 					</c:forEach>
 					<c:if test="${col.isMapped}">
-					    <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="/iplug-pages/addFilter.html?index=${col.index}">Filter</a>
+					    <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="../iplug-pages/addFilter.html?index=${col.index}">Filter</a>
 					</c:if>
 				
 			</c:forEach>
@@ -54,17 +54,17 @@
                <td class="fn">
                    <c:choose>
                        <c:when test="${row.isMapped}">
-                           <b>${row.label}</b> <a href="/iplug-pages/removeFromIndex.html?index=${row.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
+                           <b>${row.label}</b> <a href="../iplug-pages/removeFromIndex.html?index=${row.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
                        </c:when>
                        <c:otherwise>
-                           <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="/iplug-pages/addToIndex.html?index=${row.index}">Indizieren</a><br/>
+                           <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="../iplug-pages/addToIndex.html?index=${row.index}">Indizieren</a><br/>
                        </c:otherwise>
                    </c:choose>
                    <c:forEach var="f" items="${row.filters}" varStatus="i">
-                       ${f.filterType} ${f.expression} <a href="/iplug-pages/removeFilter.html?index=${row.index}&filterIndex=${i.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
+                       ${f.filterType} ${f.expression} <a href="../iplug-pages/removeFilter.html?index=${row.index}&filterIndex=${i.index}"><img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a><br/>
                    </c:forEach>
                    <c:if test="${row.isMapped}">
-                       <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="/iplug-pages/addFilter.html?index=${row.index}">Filter</a>
+                       <img src="../images/iplug-pages/add.png" border="0" align="absmiddle"> <a href="../iplug-pages/addFilter.html?index=${row.index}">Filter</a>
                    </c:if>
                </td>
 	           <!-- index functions column -->

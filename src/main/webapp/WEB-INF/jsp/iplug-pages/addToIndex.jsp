@@ -26,18 +26,18 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Zum Index hinzufügen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
 		<div id="content">
 			<h2>Geben Sie die Eigenschaften des zu indizierenden Feldes an</h2>
-			<form method="post" action="addToIndex.html" id="addToIndex">
+			<form method="post" action="../iplug-pages/addToIndex.html" id="addToIndex">
 				<input type="hidden" name="index" value="${index}"/>
 				
 				<table id="konfigForm">

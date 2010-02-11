@@ -26,18 +26,18 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Einzelnen Datensatz ausschließen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div id="content">
 			<h2>Sie können für einzelne Datensätze definieren, dass diese nicht berücksichtigt werden sollen</h2>
-			<form method="post" action="excludeDocument.html" id="excludeDocument">
+			<form method="post" action="../iplug-pages/excludeDocument.html" id="excludeDocument">
 				<input type="hidden" name="type" value="${sheet.documentType}"/>
 				<table id="konfigForm">
 					<tr>

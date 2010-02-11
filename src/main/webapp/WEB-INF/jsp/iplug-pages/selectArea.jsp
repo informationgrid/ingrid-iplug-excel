@@ -26,18 +26,18 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Globalen Bereich auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/mapping.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div id="content">
 			<h2>Wählen Sie einen Teilbereich Ihres Sheets aus. Außerhalb liegende Daten werden verworfen.</h2>
-			<form method="post" action="selectArea.html" id="selectArea">
+			<form method="post" action="../iplug-pages/selectArea.html" id="selectArea">
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Von Spalte:</td>

@@ -26,13 +26,13 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Datei auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='/iplug-pages/listMappings.html';">Zurück</a>
-			<a href="#" onclick="document.location='/base/welcome.html';">Abbrechen</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('uploadBean').submit();">Upload</a>
 		</div>
 		<div id="content">

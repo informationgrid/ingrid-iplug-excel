@@ -38,7 +38,7 @@
 		</div>
 		<div id="content">
 			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
-			<form:form method="post" modelAttribute="sheets"> 
+			<form:form action="../iplug-pages/previewExcelFile.html" method="post" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>
 				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet ${sheet.sheetIndex+1}

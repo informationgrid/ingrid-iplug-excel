@@ -38,7 +38,7 @@
 		</div>
 		<div id="content">
 			<h2>Weitere Angaben zur hochgeladenen Datei</h2>
-			<form:form method="post" modelAttribute="sheet"> 
+			<form:form action="../iplug-pages/settings.html" method="post" modelAttribute="sheet"> 
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Ein Datensatz ist:</td>

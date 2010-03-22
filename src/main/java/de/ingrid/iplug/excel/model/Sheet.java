@@ -164,7 +164,7 @@ public class Sheet implements Externalizable {
                 for (final Column column : _columns.values()) {
                     if (firstIsLabel) {
                         final Comparable<? extends Object> value = getValue(column.getIndex(), firstRow.getIndex());
-                        column.setLabel(value.toString());
+                        column.setLabel(value == null ? Column.getDefaultLabel(column.getIndex()) : value.toString());
                     } else {
                         column.setLabel(Column.getDefaultLabel(column.getIndex()));
                     }
@@ -178,7 +178,7 @@ public class Sheet implements Externalizable {
                 for (final Row row : _rows.values()) {
                     if (firstIsLabel) {
                         final Comparable<? extends Object> value = getValue(firstColumn.getIndex(), row.getIndex());
-                        row.setLabel(value.toString());
+                        row.setLabel(value == null ? "" + row.getIndex() : value.toString());
                     } else {
                         row.setLabel("" + row.getIndex());
                     }

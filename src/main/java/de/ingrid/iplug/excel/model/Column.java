@@ -1,5 +1,9 @@
 package de.ingrid.iplug.excel.model;
 
+/**
+ * Class to define column objects.
+ *
+ */
 public class Column extends AbstractEntry {
 
 	public static final String[] LABELS = new String[] { "A", "B", "C", "D",

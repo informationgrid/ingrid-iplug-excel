@@ -26,8 +26,20 @@ import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
 
+/**
+ * Service class for sheets. Creating and loading of sheets. 
+ *
+ */
 public class SheetsService {
 
+    /**
+     * Load sheets.
+     * 
+     * @param plugDescription
+     * @param sheetIndex
+     * @return Loaded sheets.
+     * @throws IOException
+     */
     public static Sheets loadSheets(final PlugdescriptionCommandObject plugDescription, final int sheetIndex)
             throws IOException {
         // get sheet
@@ -48,6 +60,14 @@ public class SheetsService {
         return loadedSheets;
     }
 
+    /**
+     * Load sheet.
+     * 
+     * @param plugDescription
+     * @param sheetIndex
+     * @return Load sheet.
+     * @throws IOException
+     */
     public static Sheet loadSheet(final PlugdescriptionCommandObject plugDescription, final int sheetIndex)
             throws IOException {
         // get sheet
@@ -64,10 +84,24 @@ public class SheetsService {
         return sheet;
     }
 
+    /**
+     * Create sheets.
+     * 
+     * @param file
+     * @return Created sheets.
+     * @throws IOException
+     */
     public static Sheets createSheets(final File file) throws IOException {
         return createSheets(new FileInputStream(file));
 	}
 
+    /**
+     * Create sheets.
+     * 
+     * @param multipartFile
+     * @return Created sheets.
+     * @throws IOException
+     */
     public static Sheets createSheets(final MultipartFile multipartFile) throws IOException {
         final byte[] bytes = multipartFile.getBytes();
         final Sheets sheets = createSheets(new ByteArrayInputStream(bytes));
@@ -78,6 +112,13 @@ public class SheetsService {
         return sheets;
 	}
 
+    /**
+     * Create sheets.
+     * 
+     * @param inputStream
+     * @return Created sheets.
+     * @throws IOException
+     */
     public static Sheets createSheets(final InputStream inputStream) throws IOException {
         // sheets
         final Sheets sheets = new Sheets();
@@ -179,6 +220,12 @@ public class SheetsService {
 		return ret;
 	}
 
+    /**
+     * Get formatted data.
+     * 
+     * @param cell
+     * @return Formated date.
+     */
     private static String getFormattedDateString(final Cell cell) {
 		final Date date = cell.getDateCellValue();
 		final SimpleDateFormat formatter = new SimpleDateFormat( "yyyy-MM-dd" );

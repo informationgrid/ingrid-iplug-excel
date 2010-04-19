@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Creation sheets.
+ *
+ */
 public class Sheets implements Externalizable, Iterable<Sheet> {
 
 	private final List<Sheet> _sheets = new ArrayList<Sheet>();
@@ -16,6 +20,11 @@ public class Sheets implements Externalizable, Iterable<Sheet> {
 		return _sheets;
 	}
 
+    /** Get sheet.
+     * @param index
+     * @return
+     * 		Get existing sheet.
+     */
     public Sheet getSheet(final int index) {
         for (final Sheet sheet : _sheets) {
             if (sheet.getSheetIndex() == index) {
@@ -25,22 +34,45 @@ public class Sheets implements Externalizable, Iterable<Sheet> {
         return null;
     }
 
+	/**
+	 * Add sheet.
+	 * 
+	 * @param sheet
+	 */
 	public void addSheet(final Sheet sheet) {
 		_sheets.add(sheet);
 	}
 
+	/**
+	 * Check if sheet exists.
+	 * 
+	 * @param sheet
+	 * @return
+	 * 		true if sheet exists.
+	 */
 	public boolean existsSheet(final Sheet sheet) {
 		return _sheets.contains(sheet);
 	}
 
+	/**
+	 * Remove sheet.
+	 * 
+	 * @param sheet
+	 */
 	public void removeSheet(final Sheet sheet) {
 		_sheets.remove(sheet);
 	}
 
+    /* (non-Javadoc)
+     * @see java.lang.Iterable#iterator()
+     */
     public Iterator<Sheet> iterator() {
         return _sheets.iterator();
     }
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+	 */
 	public void readExternal(final ObjectInput in) throws IOException,
 			ClassNotFoundException {
 		_sheets.clear();
@@ -51,6 +83,9 @@ public class Sheets implements Externalizable, Iterable<Sheet> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	 */
 	public void writeExternal(final ObjectOutput out) throws IOException {
 		out.writeInt(_sheets.size());
 		for (final Sheet sheet : _sheets) {

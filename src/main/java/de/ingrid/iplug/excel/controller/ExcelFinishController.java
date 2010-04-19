@@ -23,6 +23,15 @@ import de.ingrid.iplug.excel.model.Sheets;
 @SessionAttributes({ "plugDescription", "sheet" })
 public class ExcelFinishController {
 
+    /**
+     * Mapping finish. Create excel file for mapping. 
+     * 
+     * @param plugDescription
+     * @param sheet
+     * @return
+     * 		Web request "redirect:/iplug-pages/listMappings.html" 
+     * @throws IOException
+     */
     @RequestMapping(method = RequestMethod.POST)
     public String postFinish(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
             @ModelAttribute("sheet") final Sheet sheet) throws IOException {
@@ -83,6 +92,14 @@ public class ExcelFinishController {
         return "redirect:/iplug-pages/listMappings.html";
     }
 
+    /**
+     * Create excel sheet file.
+     * 
+     * @param mappingDir
+     * @param fileName
+     * @return
+     * 		excel sheet file
+     */
     private static File createFile(final File mappingDir, final String fileName) {
         File file = new File(mappingDir, fileName);
         if (!file.exists()) {

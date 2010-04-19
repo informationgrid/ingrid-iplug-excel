@@ -1,6 +1,10 @@
 package de.ingrid.iplug.excel.model;
 
 
+/**
+ * Class to define row objects.
+ *
+ */
 public class Row extends AbstractEntry {
 
 	public Row() {

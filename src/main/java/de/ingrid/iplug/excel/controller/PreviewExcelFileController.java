@@ -10,10 +10,22 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Sheets;
 
+/**
+ * Controller to preview excel file.
+ *
+ */
 @Controller
 @SessionAttributes( { "sheets", "sheet" })
 public class PreviewExcelFileController {
 
+    /**
+     * Call settings.
+     * 
+     * @param model
+     * @param sheets
+     * @return
+     * 		If sheet exist return web request "redirect:/iplug-pages/settings.html" else "/iplug-pages/previewExcelFile"
+     */
     @RequestMapping(value = "/iplug-pages/previewExcelFile.html", method = RequestMethod.GET)
     public String settings(final Model model, @ModelAttribute("sheets") final Sheets sheets) {
         if (sheets.getSheets().size() == 1) {
@@ -23,6 +35,15 @@ public class PreviewExcelFileController {
         return "/iplug-pages/previewExcelFile";
 	}
 
+    /**
+     * Submit selected sheet.
+     * 
+     * @param model
+     * @param sheets
+     * @param index
+     * @return
+     * 		If index exist return web request "redirect:/iplug-pages/settings.html" else "/iplug-pages/previewExcelFile"
+     */
     @RequestMapping(value = "/iplug-pages/previewExcelFile.html", method = RequestMethod.POST)
     public String postSettings(final Model model, @ModelAttribute("sheets") final Sheets sheets,
             @RequestParam(value = "sheetIndex", required = false) final Integer index) {

@@ -14,10 +14,24 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.service.SheetsService;
 
+/**
+ * Controller to load a sheet of an excel sheet.
+ *
+ */
 @Controller
 @SessionAttributes( { "plugDescription", "sheet" })
 public class EditMappingController {
 
+    /**
+     * Load excel sheet with sheet index. 
+     * 
+     * @param plugDescription
+     * @param sheetIndex
+     * @param model
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     * @throws IOException
+     */
     @RequestMapping(value = "/iplug-pages/editMapping.html", method = RequestMethod.GET)
     public String editSheet(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
             @RequestParam final Integer sheetIndex, final Model model) throws IOException {

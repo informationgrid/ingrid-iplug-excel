@@ -119,6 +119,9 @@ public abstract class AbstractEntry implements Externalizable {
 		return _matchFilter;
 	}
 
+    /* (non-Javadoc)
+     * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+     */
     public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         // flat types
         _index = in.readInt();
@@ -138,6 +141,9 @@ public abstract class AbstractEntry implements Externalizable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	 */
 	public void writeExternal(final ObjectOutput out) throws IOException {
         // flat types
         out.writeInt(_index);
@@ -155,6 +161,9 @@ public abstract class AbstractEntry implements Externalizable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 		return _label + "#" + _excluded + "#" + _mapped + "#" + _matchFilter;

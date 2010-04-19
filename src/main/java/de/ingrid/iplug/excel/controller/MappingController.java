@@ -10,12 +10,25 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import de.ingrid.iplug.excel.model.Sheet;
 
+/**
+ * Controller to display a mapping document.
+ *
+ */
 @Controller
 @SessionAttributes("sheet")
 public class MappingController {
 
     public static final int HITS_PER_PAGE = 10;
 
+    /**
+     * Show a mapping document.
+     * 
+     * @param sheet
+     * @param begin
+     * @param modelMap
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping"
+     */
     @RequestMapping(value = "/iplug-pages/mapping.html", method = RequestMethod.GET)
     public String mapping(@ModelAttribute("sheet") final Sheet sheet, @RequestParam(required = false) Integer begin,
             final ModelMap modelMap) {

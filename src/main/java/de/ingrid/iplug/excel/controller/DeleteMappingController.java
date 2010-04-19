@@ -11,10 +11,22 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 
+/**
+ * Controller to delete mapping excel sheet.
+ *
+ */
 @Controller
 @SessionAttributes( { "plugDescription" })
 public class DeleteMappingController {
 
+    /**
+     * Delete an existing mapped excel sheet. 
+     * 
+     * @param plugDescription
+     * @param sheetIndex
+     * @return
+     * 		Web request "redirect:/iplug-pages/listMappings.html"
+     */
     @RequestMapping(value = "/iplug-pages/deleteMapping.html", method = RequestMethod.POST)
     public String deleteMapping(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
             @RequestParam(value = "sheetIndex", required = true) final int sheetIndex) {

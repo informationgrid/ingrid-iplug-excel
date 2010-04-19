@@ -13,6 +13,10 @@ import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
 
+/**
+ * Define filters for sheet.
+ *
+ */
 public class SheetFilter {
 
     public static boolean trimSheet(final Sheet sheet) {
@@ -53,6 +57,15 @@ public class SheetFilter {
         return false;
     }
 
+    /**
+     * Select excel sheet field.
+     * 
+     * @param sheet
+     * @param fromCol
+     * @param toCol
+     * @param fromRow
+     * @param toRow
+     */
     public static void select(final Sheet sheet, final int fromCol, final int toCol, final int fromRow,
             final int toRow) {
         // set from and to
@@ -71,6 +84,13 @@ public class SheetFilter {
         }
     }
 
+    /**
+     * Filter row or column.
+     * 
+     * @param sheet
+     * @param entry
+     * @param filter
+     */
     public static void filter(final Sheet sheet, final AbstractEntry entry, final Filter filter) {
         final DocumentType type = sheet.getDocumentType();
         final Values values = sheet.getValues();
@@ -107,6 +127,11 @@ public class SheetFilter {
         }
     }
 
+    /**
+     * Filter row or column.
+     * 
+     * @param sheet
+     */
     public static void filter(final Sheet sheet) {
         final DocumentType type = sheet.getDocumentType();
         final Values values = sheet.getValues();
@@ -165,6 +190,7 @@ public class SheetFilter {
         }
     }
 
+
     @SuppressWarnings("unchecked")
     private static boolean matchFilter(final Comparable<? extends Object> value, final Filter filter) {
         final FilterType type = filter.getFilterType();
@@ -196,12 +222,24 @@ public class SheetFilter {
         }
     }
 
+    /**
+     * Remove column.
+     * 
+     * @param sheet
+     * @param bitSet
+     */
     private static void removeColumns(final Sheet sheet, final BitSet bitSet) {
         for (int i = bitSet.nextSetBit(0); i > -1; i = bitSet.nextSetBit(i + 1)) {
             sheet.removeColumn(i);
         }
     }
 
+    /**
+     * Remove row.
+     * 
+     * @param sheet
+     * @param bitSet
+     */
     private static void removeRows(final Sheet sheet, final BitSet bitSet) {
         for (int i = bitSet.nextSetBit(0); i > -1; i = bitSet.nextSetBit(i + 1)) {
             sheet.removeRow(i);

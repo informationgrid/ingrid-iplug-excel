@@ -14,10 +14,23 @@ import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Sheet;
 
+/**
+ * Controller to add index fields.
+ *
+ */
 @Controller
 @SessionAttributes("sheet")
 public class AddToIndexController {
 
+    /**
+     * Add index field
+     *       
+     * @param sheet
+     * @param index
+     * @param modelMap
+     * @return
+     * 		Web request "/iplug-pages/addToIndex"
+     */
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.GET)
     public String addToIndex(@ModelAttribute("sheet") final Sheet sheet,
             @RequestParam(required = true) final int index, final ModelMap modelMap) {
@@ -41,6 +54,18 @@ public class AddToIndexController {
         return "/iplug-pages/addToIndex";
 	}
 
+    /**
+     * Submit added index field. 
+     * 
+     * @param sheet
+     * @param index
+     * @param fieldName
+     * @param ownFieldName
+     * @param fieldType
+     * @param rank
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/addToIndex.html", method = RequestMethod.POST)
     public String addToIndexPost(@ModelAttribute("sheet") final Sheet sheet,
 			@RequestParam(required = true) final int index,
@@ -70,6 +95,14 @@ public class AddToIndexController {
         return "redirect:/iplug-pages/mapping.html";
 	}
 
+    /**
+     * Remove a index field.
+     * 
+     * @param sheet
+     * @param index
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/removeFromIndex.html", method = RequestMethod.GET)
     public String removeFromIndex(@ModelAttribute("sheet") final Sheet sheet,
 			@RequestParam(required = true) final int index) {

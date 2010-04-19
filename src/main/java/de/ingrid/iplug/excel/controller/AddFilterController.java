@@ -21,10 +21,23 @@ import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.service.SheetFilter;
 
+/**
+ * Controller to manage filter functionality
+ *
+ */
 @Controller
 @SessionAttributes("sheet")
 public class AddFilterController {
 
+    /**
+     * Add filter to index.
+     * 
+     * @param sheet
+     * @param index
+     * @param modelMap
+     * @return
+     * 		Web request "redirect:/iplug-pages/addFilter"
+     */
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.GET)
     public String addFilter(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
             final ModelMap modelMap) {
@@ -78,6 +91,16 @@ public class AddFilterController {
         return "/iplug-pages/addFilter";
 	}
 
+    /**
+     * Submit a added filter to index.
+     * 
+     * @param sheet
+     * @param index
+     * @param filterType
+     * @param expression
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/addFilter.html", method = RequestMethod.POST)
     public String addFilterPost(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
             @RequestParam final FilterType filterType, @RequestParam final String expression) {
@@ -106,6 +129,15 @@ public class AddFilterController {
         return "redirect:/iplug-pages/mapping.html";
 	}
 
+    /**
+     * Remove filter from index.
+     * 
+     * @param sheet
+     * @param index
+     * @param filterIndex
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/removeFilter.html", method = RequestMethod.GET)
     public String removeFilter(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int index,
             @RequestParam final int filterIndex) {

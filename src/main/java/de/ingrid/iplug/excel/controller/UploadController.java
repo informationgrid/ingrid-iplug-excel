@@ -19,6 +19,10 @@ import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.service.SheetFilter;
 import de.ingrid.iplug.excel.service.SheetsService;
 
+/**
+ * Controller for upload excel sheets.
+ *
+ */
 @Controller
 @RequestMapping("/iplug-pages/upload.html")
 @SessionAttributes("sheets")
@@ -39,6 +43,15 @@ public class UploadController {
         return "/iplug-pages/upload";
 	}
 
+	/**
+	 * 	Upload excel file.
+	 * 
+	 * @param uploadBean
+	 * @param model
+	 * @return
+	 * 		Web request "redirect:/iplug-pages/previewExcelFile.html"
+	 * @throws IOException
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	public String upload(@ModelAttribute("uploadBean") final UploadBean uploadBean,
 			final Model model) throws IOException {

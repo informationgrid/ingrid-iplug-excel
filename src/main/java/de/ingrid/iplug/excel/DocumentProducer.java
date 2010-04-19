@@ -91,6 +91,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#hasNext()
+		 */
 		public boolean hasNext() {
 			boolean hasNext = _prev != null ? _prev.hasNext() : false;
 			hasNext = !hasNext ? _documentBitSet.nextSetBit(0) >= 0 : true;
@@ -98,12 +101,18 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#next()
+		 */
 		public Document next() {
 			final Document document = _prev != null && _prev.hasNext() ? _prev.next()
 					: createDocument(_documentBitSet.nextSetBit(0));
 			return document;
 		}
 
+		/* (non-Javadoc)
+		 * @see java.util.Iterator#remove()
+		 */
 		public void remove() {
 			if (_prev != null && _prev.hasNext()) {
 				_prev.remove();
@@ -113,6 +122,13 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 			}
 		}
 
+		/**
+		 * Create Document.
+		 * 
+		 * @param nextBit
+		 * @return
+		 * 		Created document.
+		 */
 		private Document createDocument(final int nextBit) {
 			final Document document = new Document();
 			for (int i = _mappedBitSet.nextSetBit(0); i >= 0; i = _mappedBitSet
@@ -170,6 +186,13 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 			return document;
 		}
 
+		/**
+		 * Get entry.
+		 * 
+		 * @param index
+		 * @return
+		 * 		Existing entry.
+		 */
 		private AbstractEntry getEntry(final int index) {
 		    for (final AbstractEntry entry : _mappedEntries) {
 		        if (entry.getIndex() == index) {
@@ -180,15 +203,22 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		}
 	}
 
+
     @Autowired
     public DocumentProducer(final Stemmer stemmer) {
         _stemmer = stemmer;
     }
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.admin.object.IDocumentProducer#hasNext()
+	 */
 	public boolean hasNext() {
 		return _sheetDocumentIterator.hasNext();
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.admin.object.IDocumentProducer#next()
+	 */
 	public Document next() {
 		return _sheetDocumentIterator.next();
 	}
@@ -196,6 +226,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	public void initialize() throws Exception {
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.utils.IConfigurable#configure(de.ingrid.utils.PlugDescription)
+	 */
 	public void configure(final PlugDescription plugDescription) {
 		final File workinDirectory = plugDescription.getWorkinDirectory();
 		final Sheets sheets = (Sheets) plugDescription.get("sheets");

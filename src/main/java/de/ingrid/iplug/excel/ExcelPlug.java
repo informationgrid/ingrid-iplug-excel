@@ -32,17 +32,26 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 		_indexSearcher = indexSearcher;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.iplug.HeartBeatPlug#close()
+	 */
 	@Override
 	public void close() throws Exception {
 		_indexSearcher.close();
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.utils.ISearcher#search(de.ingrid.utils.query.IngridQuery, int, int)
+	 */
 	public IngridHits search(final IngridQuery query, final int start,
 			final int length) throws Exception {
         preProcess(query);
 		return _indexSearcher.search(query, start, length);
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.utils.IDetailer#getDetail(de.ingrid.utils.IngridHit, de.ingrid.utils.query.IngridQuery, java.lang.String[])
+	 */
 	public IngridHitDetail getDetail(final IngridHit hit,
 			final IngridQuery query, final String[] fields) throws Exception {
 		final IngridHitDetail detail = _indexSearcher.getDetail(hit, query,
@@ -50,6 +59,9 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 		return detail;
 	}
 
+	/* (non-Javadoc)
+	 * @see de.ingrid.utils.IDetailer#getDetails(de.ingrid.utils.IngridHit[], de.ingrid.utils.query.IngridQuery, java.lang.String[])
+	 */
 	public IngridHitDetail[] getDetails(final IngridHit[] hitArray,
 			final IngridQuery query, final String[] fields) throws Exception {
 		final IngridHitDetail[] details = _indexSearcher.getDetails(hitArray,
@@ -57,6 +69,9 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 		return details;
 	}
 
+    /* (non-Javadoc)
+     * @see de.ingrid.utils.IRecordLoader#getRecord(de.ingrid.utils.IngridHit)
+     */
     @Override
     public Record getRecord(final IngridHit hit) throws Exception {
         return _indexSearcher.getRecord(hit);

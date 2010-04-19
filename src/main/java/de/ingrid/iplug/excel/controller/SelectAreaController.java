@@ -11,10 +11,22 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.service.SheetFilter;
 
+/**
+ * Controller to define selected area.
+ *
+ */
 @Controller
 @SessionAttributes("sheet")
 public class SelectAreaController {
 
+    /**
+     * Select area at excel document.
+     * 
+     * @param sheet
+     * @param model
+     * @return
+     * 		Web request "/iplug-pages/selectArea"
+     */
     @RequestMapping(value = "/iplug-pages/selectArea.html", method = RequestMethod.GET)
     public String selectArea(@ModelAttribute("sheet") final Sheet sheet,
 			final ModelMap model) {
@@ -23,6 +35,17 @@ public class SelectAreaController {
         return "/iplug-pages/selectArea";
 	}
 
+    /**
+     * Submit selected area.
+     * 
+     * @param sheet
+     * @param fromCol
+     * @param toCol
+     * @param fromRow
+     * @param toRow
+     * @return
+     * 		Web request "redirect:/iplug-pages/mapping.html"
+     */
     @RequestMapping(value = "/iplug-pages/selectArea.html", method = RequestMethod.POST)
     public String subitSelectArea(@ModelAttribute("sheet") final Sheet sheet, @RequestParam final int fromCol,
             @RequestParam final int toCol, @RequestParam final int fromRow, @RequestParam final int toRow) {

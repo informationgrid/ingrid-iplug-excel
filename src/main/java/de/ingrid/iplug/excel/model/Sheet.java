@@ -13,6 +13,10 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+/**
+ * Creation of a sheet. 
+ *
+ */
 public class Sheet implements Externalizable {
 
 	private String _fileName;
@@ -28,34 +32,80 @@ public class Sheet implements Externalizable {
 	private transient Values _values = new Values();
 	private transient byte[] _workBook;
 
+	/**
+	 * Get filename.
+	 * 
+	 * @return
+	 * 		Filename.
+	 */
 	public String getFileName() {
 		return _fileName;
 	}
 
+	/**
+	 * Set filename.
+	 * 
+	 * @param fileName
+	 */
 	public void setFileName(final String fileName) {
 		_fileName = fileName;
 	}
 
+	/**
+	 * Get descriptor.
+	 * 
+	 * @return 
+	 * 		Descriptor.
+	 */
 	public String getDescription() {
 		return _description;
 	}
 
+	/**
+	 * Set descriptor.
+	 * 
+	 * @param description
+	 */
 	public void setDescription(final String description) {
 		_description = description;
 	}
 
+	/**
+	 * Get sheet index.
+	 * 
+	 * @return
+	 * 		Existing sheet index.
+	 */
 	public int getSheetIndex() {
 		return _sheetIndex;
 	}
 
+	/**
+	 * Set sheet index.
+	 * 
+	 * @param sheetIndex
+	 */
 	public void setSheetIndex(final int sheetIndex) {
 		_sheetIndex = sheetIndex;
 	}
 
+    /**
+     * Get columns.
+     *  
+     * @return
+     * 		Columns.
+     */
     public Collection<Column> getColumns() {
         return _columns.values();
 	}
 
+    /**
+     * Get visible columns.
+     * 
+     * @return
+     * 		Visible columns.
+     * 
+     */
     public Collection<Column> getVisibleColumns() {
         final List<Column> list = new ArrayList<Column>();
         for (final Column column : _columns.values()) {
@@ -66,6 +116,12 @@ public class Sheet implements Externalizable {
         return list;
     }
 
+    /**
+     * Get excluded columns.
+     * 
+     * @return
+     * 		Excluded columns.
+     */
     public Collection<Column> getExcludedColumns() {
         final List<Column> list = new ArrayList<Column>();
         for (final Column column : _columns.values()) {
@@ -76,30 +132,74 @@ public class Sheet implements Externalizable {
         return list;
     }
 
+    /**
+     * Get Columns as map.
+     * 
+     * @return
+     * 		Map with columns.
+     * 
+     */
     public SortedMap<Integer, Column> getColumnsMap() {
         return _columns;
     }
 
+    /**
+     * Set Columns as map.
+     * 
+     * @param columns
+     */
     public void setColumns(final SortedMap<Integer, Column> columns) {
 		_columns = columns;
 	}
 
+    /**
+     * Get Column with index.
+     * 
+     * @param index
+     * @return
+     * 		Column.
+     */
     public Column getColumn(final int index) {
         return _columns.get(index);
     }
 
+    /**
+     * Get last column.
+     * 
+     * @return
+     * 		Column.
+     */
     public int getLastColumnIndex() {
         return _columns.lastKey();
     }
 
+    /**
+     * Remove column at index.
+     * 
+     * @param index
+     * @return
+     * 		Remove column.
+     */
     public Column removeColumn(final int index) {
         return _columns.remove(index);
     }
 
+    /**
+     * Get row.
+     * 
+     * @return
+     * 		Row values.
+     */
     public Collection<Row> getRows() {
         return _rows.values();
 	}
 
+    /**
+     * Get visible rows.
+     * 
+     * @return
+     * 		List of rows.
+     */
     public Collection<Row> getVisibleRows() {
         final List<Row> list = new ArrayList<Row>();
         for (final Row row : _rows.values()) {
@@ -110,6 +210,12 @@ public class Sheet implements Externalizable {
         return list;
     }
 
+    /** 
+     * Get excluded rows.
+     * 
+     * @return
+     * 		List of excluded rows.
+     */
     public Collection<Row> getExcludedRows() {
         final List<Row> list = new ArrayList<Row>();
         for (final Row row : _rows.values()) {
@@ -120,38 +226,94 @@ public class Sheet implements Externalizable {
         return list;
     }
 
+    /**
+     * Get row as map
+     * 
+     * @return
+     * 		Map with rows.
+     * 
+     */
     public SortedMap<Integer, Row> getRowsMap() {
         return _rows;
     }
 
+    /**
+     * Set a map of rows.
+     * 
+     * @param rows
+     */
     public void setRows(final SortedMap<Integer, Row> rows) {
 		_rows = rows;
 	}
 
+    /**
+     * Get row at index.
+     * 
+     * @param index
+     * @return
+     * 		Row at index.
+     */
     public Row getRow(final int index) {
         return _rows.get(index);
     }
 
+    /** 
+     * Get last row.
+     * 
+     * @return
+     * 		Last row.
+     * 
+     */
     public int getLastRowIndex() {
         return _rows.lastKey();
     }
 
+    /**
+     * Remove row at index.
+     * 
+     * @param index
+     * @return
+     * 		Remove row at index.
+     * 
+     */
     public Row removeRow(final int index) {
         return _rows.remove(index);
     }
 
+	/**
+	 * Get document type.
+	 * 
+	 * @return
+	 * 		Document type.
+	 */
 	public DocumentType getDocumentType() {
 		return _documentType;
 	}
 
+	/**
+	 * Set document type.
+	 * 
+	 * @param documentType
+	 */
 	public void setDocumentType(final DocumentType documentType) {
 		_documentType = documentType;
 	}
 
+	/**
+	 * Check if first is label.
+	 * 
+	 * @return
+	 * 		true if first is label.
+	 */
 	public boolean isFirstIsLabel() {
 		return _firstIsLabel;
 	}
 
+	/**
+	 * Set first is label.
+	 * 
+	 * @param firstIsLabel
+	 */
 	public void setFirstIsLabel(final boolean firstIsLabel) {
         if (_firstIsLabel != firstIsLabel) {
             // handle firstIsLabel
@@ -188,30 +350,73 @@ public class Sheet implements Externalizable {
         }
 	}
 
+	/**
+	 * Add row.
+	 * 
+	 * @param row
+	 */
 	public void addRow(final Row row) {
         _rows.put(row.getIndex(), row);
 	}
 
+	/**
+	 * Add column.
+	 * 
+	 * @param column
+	 */
 	public void addColumn(final Column column) {
         _columns.put(column.getIndex(), column);
 	}
 
+	/**
+	 * Set values.
+	 * 
+	 * @param values
+	 */
 	public void setValues(final Values values) {
 		_values = values;
 	}
 
+	/**
+	 * Get values.
+	 * 
+	 * @return
+	 *		Values. 
+	 * 
+	 */
 	public Values getValues() {
 		return _values;
 	}
 
+    /**
+     * Get values.
+     * 
+     * @param point
+     * @return
+     * 		Values.
+     */
     public Comparable<? extends Object> getValue(final Point point) {
         return _values.getValue(point);
     }
 
+    /**
+     * Get values.
+     * 
+     * @param x
+     * @param y
+     * @return
+     * 		Values.
+     */
     public Comparable<? extends Object> getValue(final int x, final int y) {
         return _values.getValue(x, y);
     }
 
+	/**
+	 * Get values as map.
+	 * 
+	 * @return
+	 * 		Map with values.
+	 */
 	public Map<Integer, List<Comparable<?>>> getValuesAsMap() {
 		final HashMap<Integer, List<Comparable<?>>> map = new LinkedHashMap<Integer, List<Comparable<?>>>();
 		int rowIndex = 0;
@@ -228,6 +433,12 @@ public class Sheet implements Externalizable {
 		return map;
 	}
 
+    /**
+     * Get visible values.
+     * 
+     * @return
+     * 		Visible values as list. 
+     */
     public List<List<Comparable<?>>> getVisibleValues() {
         final List<List<Comparable<?>>> map = new ArrayList<List<Comparable<?>>>();
         for (final Row row : getVisibleRows()) {
@@ -241,6 +452,9 @@ public class Sheet implements Externalizable {
         return map;
     }
 
+    /* (non-Javadoc)
+     * @see java.io.Externalizable#readExternal(java.io.ObjectInput)
+     */
     public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         // flat types
 		_fileName = in.readUTF();
@@ -273,6 +487,9 @@ public class Sheet implements Externalizable {
 		// values does not need to deserialize
 	}
 
+	/* (non-Javadoc)
+	 * @see java.io.Externalizable#writeExternal(java.io.ObjectOutput)
+	 */
 	public void writeExternal(final ObjectOutput out) throws IOException {
 		// flat types
 		out.writeUTF(_fileName);
@@ -301,38 +518,82 @@ public class Sheet implements Externalizable {
 		// values does not need to serialize
 	}
 
+	/**
+	 * Set work book.
+	 * 
+	 * @param workBook
+	 */
 	public void setWorkbook(final byte[] workBook) {
 		_workBook = workBook;
 	}
 
+	/**
+	 * Get workbook.
+	 * 
+	 * @return
+	 * 		Work book as byte.
+	 * 
+	 */
 	public byte[] getWorkbook() {
 		return _workBook;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		return _fileName.hashCode() + _sheetIndex;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(final Object obj) {
 		final Sheet other = (Sheet) obj;
         return other.getSheetIndex() == _sheetIndex && other.getFileName().equals(_fileName);
 	}
 
+    /**
+     * Set selected x and y.
+     * 
+     * @param x
+     * @param y
+     */
     public void setFrom(final int x, final int y) {
         _selectedFrom.setX(x);
         _selectedFrom.setY(y);
     }
 
+    /**
+     * Get x and y of selection.
+     * 
+     * @return
+     * 		Point with x and y.
+     * 
+     */
     public Point getSelectedFrom() {
         return _selectedFrom;
     }
 
+    /**
+     * Get column from selected x.
+     * 
+     * @return
+     * 		Column of selected x.
+     * 
+     */
     public Column getFromColumn() {
         return getColumn(_selectedFrom.getX());
     }
 
+    /**
+     * Get row from selected y.
+     * 
+     * @return
+     * 		Row of selected y.
+     */
     public Row getFromRow() {
         return getRow(_selectedFrom.getY());
     }

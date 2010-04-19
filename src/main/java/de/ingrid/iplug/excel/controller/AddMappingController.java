@@ -17,10 +17,25 @@ import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.service.SheetFilter;
 import de.ingrid.iplug.excel.service.SheetsService;
 
+/**
+ * Controller to add an excel sheet as mapping data. All existing sheets of an excel file
+ * will be shown. 
+ *
+ */
 @Controller
 @SessionAttributes( { "plugDescription", "sheets" })
 public class AddMappingController {
 
+    /**
+     * Load all sheet of an excel file with an index. 
+     * 
+     * @param plugDescription
+     * @param sheetIndex
+     * @param model
+     * @return
+     * 		Web request "redirect:/iplug-pages/previewExcelFile.html"
+     * @throws IOException
+     */
     @RequestMapping(value = "/iplug-pages/addMapping.html", method = RequestMethod.GET)
     public String editSheet(@ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,
             @RequestParam final Integer sheetIndex, final Model model) throws IOException {

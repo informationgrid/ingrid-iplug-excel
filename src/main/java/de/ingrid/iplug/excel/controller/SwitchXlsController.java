@@ -20,6 +20,10 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.UploadBean;
 import de.ingrid.iplug.excel.model.Sheets;
 
+/**
+ * Controller to upgrade excel files.
+ *
+ */
 @Controller
 @SessionAttributes( { "plugDescription" })
 public class SwitchXlsController {
@@ -34,12 +38,31 @@ public class SwitchXlsController {
 		return new UploadBean();
 	}
 
+    /**
+     * Add sheet index to modelMap.
+     * 
+     * @param sheetIndex
+     * @param modelMap
+     * @return
+     * 		Web request "/iplug-pages/switchXls"
+     * @throws IOException
+     */
     @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.GET)
     public String switchXls(@RequestParam final Integer sheetIndex, final ModelMap modelMap) throws IOException {
         modelMap.addAttribute("sheetIndex", sheetIndex);
         return "/iplug-pages/switchXls";
 	}
 
+    /**
+     * Upload excel files.
+     * 
+     * @param sheetIndex
+     * @param plugDescription
+     * @param uploadBean
+     * @return
+     * 		Web request "redirect:/iplug-pages/listMappings.html"
+     * @throws IOException
+     */
     @RequestMapping(value = "/iplug-pages/switchXls.html", method = RequestMethod.POST)
     public String upload(@RequestParam final Integer sheetIndex,
             @ModelAttribute("plugDescription") final PlugdescriptionCommandObject plugDescription,

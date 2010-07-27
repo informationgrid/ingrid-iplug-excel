@@ -5,6 +5,7 @@
 	<!-- set global properties for this build -->
 	<property name="iPlugName" 			value="${project.artifactId}-${project.version}"/>
 	<property name="xml-communication" 	value="${installDir}/conf/communication.xml"/>
+    <property name="start-script"       value="${installDir}/start.sh"/>
 	
 	<target name="extract" description="Extract all files to the installation directory.">
 		<unzip src="${antinstaller.jar}" dest="${installDir}">
@@ -18,6 +19,8 @@
 		</move>
 		
 		<mkdir dir="${installDir}/logs"/>
+        
+        <replace file="${start-script}" token="@SERVER_PORT@" value="${localServerPort}"/>
     
     <condition property="copy.plugDescription">
       <not>
@@ -47,7 +50,7 @@ Gehen Sie ins Verzeichnis:
 ${installDir}
 und rufen sie von der Kommandozeile folgendes auf
 "sh admin.sh", um im Webbrowser das iPlug unter
-der folgenden Adresse "http://localhost:8088"
+der folgenden Adresse "http://localhost:${localServerPort}"
 zu konfigurieren. Anstelle von localhost koennen Sie
 auch die IP-Adresse des Computers eingeben!
 Bitte lesen Sie bzgl. der Administration die Kapitel unter

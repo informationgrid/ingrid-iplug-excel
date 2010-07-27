@@ -9,6 +9,8 @@
 #
 #   INGRID_OPTS      addtional java runtime options
 #
+#	INGRID_USER 	 starting user, default ist "ingrid"
+#
 
 THIS="$0"
 
@@ -17,11 +19,18 @@ THIS_DIR=`dirname "$THIS"`
 INGRID_HOME=`cd "$THIS_DIR" ; pwd`
 PID=$INGRID_HOME/ingrid.pid
 
-INGRID_OPTS="-Djetty.port=8082"
+INGRID_OPTS="-Djetty.port=@SERVER_PORT@ -Djetty.home=./jetty"
 if [ -f $INGRID_HOME/conf/plugDescription.xml ]; then
-    tag="IPLUG_ADMIN_GUI_PORT"
-    OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string/>\n\t\r '$tag`
-    INGRID_OPTS="-Djetty.port="$OUT
+    for tag in IPLUG_ADMIN_GUI_PORT
+    do
+        OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string>'${tag}'</string>\n' | tr -d '\t' | sed 's/^<.*>\([^<].*\)<.*>$/\1/' `
+        eval ${tag}=`echo -ne \""${OUT}"\"`
+    done
+  P_ARRAY=( `echo ${IPLUG_ADMIN_GUI_PORT}` )
+  if [ ${P_ARRAY[0]} = $'\r' ]; then
+    P_ARRAY=( ${P_ARRAY[1]} )
+  fi
+  INGRID_OPTS="-Djetty.home=./jetty -Djetty.port="${P_ARRAY[0]}
 fi
 
 # functions
@@ -84,8 +93,12 @@ startIplug()
       fi
   fi
   
-  JAVA_HOME=${INGRID_JAVA_HOME:-"$JAVA_HOME"}
- 
+  # some Java parameters
+  if [ "$INGRID_JAVA_HOME" != "" ]; then
+    #echo "run java in $INGRID_JAVA_HOME"
+    JAVA_HOME=$INGRID_JAVA_HOME
+  fi
+  
   if [ "$JAVA_HOME" = "" ]; then
     echo "Error: JAVA_HOME is not set."
     exit 1
@@ -100,14 +113,10 @@ startIplug()
     echo "run with heapsize $JAVA_HEAP_MAX"
   fi
 
-  # CLASSPATH initially contains $INGRID_CONF_DIR, or defaults to $INGRID_HOME/conf
-  CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
-  CLASSPATH=${CLASSPATH}:$JAVA_HOME/lib/tools.jar
-  CLASSPATH=${CLASSPATH}:${INGRID_HOME}
-  
   # so that filenames w/ spaces are handled correctly in loops below
   IFS=
   # add libs to CLASSPATH
+  CLASSPATH=${CLASSPATH}:${INGRID_CONF_DIR:=$INGRID_HOME/conf}
   for f in $INGRID_HOME/lib/*.jar; do
     CLASSPATH=${CLASSPATH}:$f;
   done
@@ -119,10 +128,12 @@ startIplug()
     CLASSPATH=`cygpath -p -w "$CLASSPATH"`
   fi
 
-  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME"
-	
   # run it
-  exec nohup "$JAVA" $INGRID_HEAPSIZE $INGRID_OPTS -jar start.jar > console.log &
+  export CLASSPATH="$CLASSPATH"
+  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME"
+  CLASS=de.ingrid.iplug.excel.JettyStarter
+	
+  exec nohup "$JAVA" $JAVA_HEAPSIZE $INGRID_OPTS $CLASS > console.log & 
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID

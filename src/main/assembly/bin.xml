@@ -7,11 +7,8 @@
   <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
 	<fileSet>
-      <directory>conf</directory>
+      <directory>src/main/release/conf</directory>
       <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
-      <includes>
-        <include>**/ingrid.auth</include>
-      </includes>
     </fileSet>
 	<fileSet>
       <directory>src/main/release/scripts</directory>
@@ -27,8 +24,15 @@
       <outputDirectory>/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>target/jetty-6.1.14</directory>
-      <outputDirectory>${project.artifactId}-${project.version}/</outputDirectory>
+      <directory>src/main/webapp</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
+      <excludes>
+        <exclude>**/WEB-INF/jetty-web.xml</exclude>
+      </excludes>
+    </fileSet>
+    <fileSet>
+      <directory>target/base-webapp</directory>
+      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>target/logs</directory>
@@ -39,4 +43,22 @@
       <outputDirectory>${project.artifactId}-${project.version}/doc</outputDirectory>
     </fileSet>
   </fileSets>
+  <files>
+    <file>
+      <source>src/main/release/jetty/jetty-web.xml</source>
+      <outputDirectory>${project.artifactId}-${project.version}/webapp/WEB-INF</outputDirectory>
+      <filtered>true</filtered>
+    </file>
+  </files>
+  <dependencySets>
+    <dependencySet>
+      <outputDirectory>${project.artifactId}-${project.version}/lib</outputDirectory>
+      <unpack>false</unpack>
+      <scope>runtime</scope>
+      <excludes>
+        <exclude>de.ingrid:ingrid-installer</exclude>
+        <!-- <exclude>de.ingrid:ingrid-base-webapp-0.1-SNAPSHOT-res</exclude>-->
+      </excludes>
+    </dependencySet>
+  </dependencySets>
 </assembly>

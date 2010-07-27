@@ -22,6 +22,15 @@
       <comment displayText="Hinweis: " bold="true"/>
       <comment displayText="" explanatoryText="Wenn dies ein Update ist, dann können die Einstellungen der vorherigen Installation verwendet werden. Dazu muss sich die Datei 'ant.install.properties' im gleichen Verzeichnis wie der Installer befinden. Es empfiehlt sich daher, die Updates immer vom gleichen Verzeichnis auszuführen."/>
 	</page>
+    
+    <page
+            type        ="input"
+            name        ="componentOptions"
+            displayText ="Einstellungen fuer das iPlug-Excel">
+            
+            <comment displayText="" explanatoryText="Lokaler Port, unter dem die Administrationsoberfläche des Excel-iPlugs erreichbar sein soll."/>           
+            <text property="localServerPort" displayText="Port für Adminoberfläche:" defaultValue="50060"/>
+    </page>
 
 	<!--  type="input" shows a list of editable options for the installer -->
 	<page
@@ -40,6 +49,7 @@
 			type		="progress"
 			name		="progress"
 			displayText	="Installationsfortschritt"
-			showTargets	="true">
+			showTargets	="true"
+            target      ="startIPlug">
 	</page>
 </installer>

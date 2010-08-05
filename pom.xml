@@ -57,12 +57,14 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-base-webapp</artifactId>
+            <version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-base-webapp</artifactId>
 			<classifier>res</classifier>
 			<type>zip</type>
+            <version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>

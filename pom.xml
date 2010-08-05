@@ -23,6 +23,30 @@
           <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
         </repository>
 	</repositories>
+
+	<!-- Always set differing versions via DEPENDENCY MANAGEMENT, so assembling works ! NEVER set differing versions direct in dependency ! -->
+	<dependencyManagement>
+      <dependencies>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-base-webapp</artifactId>
+            <version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-base-webapp</artifactId>
+			<classifier>res</classifier>
+			<type>zip</type>
+            <version>1.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.5-beta5</version>
+		</dependency>
+      </dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>de.ingrid</groupId>
@@ -57,14 +81,12 @@
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-base-webapp</artifactId>
-            <version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>de.ingrid</groupId>
 			<artifactId>ingrid-base-webapp</artifactId>
 			<classifier>res</classifier>
 			<type>zip</type>
-            <version>1.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
@@ -77,7 +99,6 @@
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
-			<version>3.5-beta5</version>
 		</dependency>
 <!-- The two following dependencies are needed for Jetty -->
         <dependency>

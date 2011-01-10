@@ -23,14 +23,11 @@ INGRID_OPTS="-Djetty.port=@SERVER_PORT@ -Djetty.home=./jetty"
 if [ -f $INGRID_HOME/conf/plugDescription.xml ]; then
     for tag in IPLUG_ADMIN_GUI_PORT
     do
-        OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string>'${tag}'</string>\n' | tr -d '\t' | sed 's/^<.*>\([^<].*\)<.*>$/\1/' `
-        eval ${tag}=`echo -ne \""${OUT}"\"`
+        OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugDescription.xml | tr -d '<string>'${tag}'</string>\n' | tr -d '\t' | tr -d ' ' | sed 's/^<.*>\([^<].*\)<.*>$/\1/' `
+        eval ${tag}=`echo \""${OUT}"\"`
     done
-  P_ARRAY=( `echo ${IPLUG_ADMIN_GUI_PORT}` )
-  if [ ${P_ARRAY[0]} = $'\r' ]; then
-    P_ARRAY=( ${P_ARRAY[1]} )
-  fi
-  INGRID_OPTS="-Djetty.home=./jetty -Djetty.port="${P_ARRAY[0]}
+  P_ARRAY=`echo ${IPLUG_ADMIN_GUI_PORT}`
+  INGRID_OPTS="-Djetty.home=./jetty -Djetty.port="${P_ARRAY}
 fi
 
 # functions

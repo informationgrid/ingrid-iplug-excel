@@ -9,6 +9,7 @@ public class ExcelDatatype extends AbstractDataType {
 
 	public ExcelDatatype() {
         super(EXCEL, new DscOtherDataType());
+        setForceActive(true);
 	}
 
 }

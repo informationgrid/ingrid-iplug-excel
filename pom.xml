@@ -9,7 +9,7 @@
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-iplug-excel</artifactId>
 	<packaging>jar</packaging>
-	<version>3.1.0-SNAPSHOT</version>
+	<version>3.0.1-SNAPSHOT</version>
 	<name>ingrid-iplug-excel</name>
 	<scm>
 		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-excel/trunk</connection>
@@ -24,16 +24,47 @@
         </repository>
 	</repositories>
 
-	<!-- Always set differing versions via DEPENDENCY MANAGEMENT, so assembling works ! NEVER set differing versions direct in dependency ! -->
-	<dependencyManagement>
-			<dependencies>
-				<dependency>
-					<groupId>org.apache.poi</groupId>
-					<artifactId>poi</artifactId>
-					<version>3.5-beta5</version>
-				</dependency>
-			</dependencies>
-	</dependencyManagement>
+  <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
+  <!-- Always set differing versions via DEPENDENCY MANAGEMENT, so assembling works ! NEVER set differing versions direct in dependency ! -->
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-utils</artifactId>
+        <version>3.0.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-ibus</artifactId>
+        <version>3.0.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-base-webapp</artifactId>
+        <version>3.0.1-SNAPSHOT</version>
+        <type>war</type>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-base-webapp</artifactId>
+        <version>3.0.1-SNAPSHOT</version>
+        <type>jar</type>
+      </dependency>
+      <dependency>
+        <groupId>de.ingrid</groupId>
+        <artifactId>ingrid-base-webapp</artifactId>
+        <version>3.0.1-SNAPSHOT</version>
+        <classifier>res</classifier>
+        <type>zip</type>
+      </dependency>
+      <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.5-beta5</version>
+      </dependency>
+    </dependencies>
+    </dependencyManagement>
 
 	<dependencies>
 		<dependency>

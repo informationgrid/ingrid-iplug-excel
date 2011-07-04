@@ -5,12 +5,16 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
-    <release version="3.0.1-SNAPSHOT" date="2011-xx-xx" description="Release">
-      <action type="add">
+    <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
+      <action type="add" dev="wemove" issue="INGRID23-152">
         Add a new index.sh script to index an iPlug from command line.
       </action>
-    </release>  
-	  <release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
+      <action type="update" dev="wemove" issue="INGRID-1940">
+        Introduced new field "metainfo" in query for various control info to be handled by iBus / iPlugs. 
+      </action>
+    </release>
+
+    <release version="3.0.0" date="2011-05-06" description="Release InGrid3.0">
       <action type="update" dev="wemove">
 				Use most current dependencies (jars, except interface-opensearch and dsc), NO FUNCTIONAL CHANGES !
       </action>

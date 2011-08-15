@@ -5,6 +5,11 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
+    <release version="3.1.0-SNAPSHOT" date="2011-xx-xx" description="">
+      <action type="update" dev="wemove" issue="INGRID-1962">
+        Rework title and general content query analysis to better match the analysis of the index process.
+      </action>
+    </release>  
     <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
       <action type="add" dev="wemove" issue="INGRID23-152">
         Add a new index.sh script to index an iPlug from command line.

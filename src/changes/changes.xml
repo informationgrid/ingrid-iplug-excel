@@ -9,6 +9,9 @@
       <action type="update" dev="wemove" issue="INGRID-1885">
         Updated start.sh, which had an issue when being batch-invoked, deleted RSYNC which is no longer used, see https://dev.wemove.com/jira/browse/INGRID-1885
       </action>
+      <action type="fix" dev="wemove">
+        Fix query problems if a stop word is part of the query (i.e. 'is').
+      </action>
     </release>   
     <release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
       <action type="update" dev="wemove" issue="INGRID-1962">

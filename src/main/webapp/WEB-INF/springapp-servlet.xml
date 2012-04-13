@@ -37,6 +37,8 @@
                 <!-- ref bean="dataTypeQueryParser" /-->
                 <ref bean="fieldQueryParser" />
                 <ref bean="titleQueryParser" />
+                <ref bean="wildCardFieldQueryParser" />
+                <ref bean="rangeQueryParser" />
                 <ref bean="allResultsOnEmptyQueryParser" />
             </list>
         </property>

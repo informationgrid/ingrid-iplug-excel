@@ -54,14 +54,14 @@ der folgenden Adresse "http://localhost:${localServerPort}"
 zu konfigurieren. Anstelle von localhost koennen Sie
 auch die IP-Adresse des Computers eingeben!
 Bitte lesen Sie bzgl. der Administration die Kapitel unter
-http://www.kst.portalu.de/wiki/index.php/IPlug_Excel
+http://kst.portalu.de/foswiki/bin/view/InGrid3/IPlugExcel
 
 Bevor das iPlug benutzt werden kann, muss es in der iBus-
 Administration (im Portal) eingeschaltet werden.
 
 Weitere Informationen entnehmen Sie bitte dem
 Online-Handbuch unter 
-http://www.kst.portalu.de/wiki/index.php/InGrid_Installation.
+http://kst.portalu.de/foswiki/bin/view/InGrid3/InGridBetriebshandbuch.
 		</echo>
 	</target>
 	

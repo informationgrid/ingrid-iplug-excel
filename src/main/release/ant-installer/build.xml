@@ -19,6 +19,7 @@
 		</move>
 		
 		<mkdir dir="${installDir}/logs"/>
+        <mkdir dir="${installDir}/webapp/WEB-INF/work"/>
         
         <replace file="${start-script}" token="@SERVER_PORT@" value="${localServerPort}"/>
     

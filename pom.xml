@@ -38,6 +38,13 @@
 			<artifactId>ingrid-base-webapp</artifactId>
             <version>3.2.1</version>
       </dependency>
+      <dependency>
+			<groupId>de.ingrid</groupId>
+			<artifactId>ingrid-base-webapp</artifactId>
+            <version>3.2.1</version>
+			<classifier>res</classifier>
+			<type>zip</type>
+	  </dependency>
     </dependencies>
     </dependencyManagement>
 

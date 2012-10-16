@@ -172,7 +172,7 @@ startIplug()
 
   # run it
   export CLASSPATH="$CLASSPATH"
-  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME"
+  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME -Dfile.encoding=UTF8"
   CLASS=de.ingrid.iplug.excel.JettyStarter
 	
   exec nohup "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS $CLASS > console.log & 

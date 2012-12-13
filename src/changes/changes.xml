@@ -5,9 +5,12 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
-  	<release version="3.3.0" date="2013-01-??" description="Release InGrid 3.3">
+  	<release version="3.3.0-SNAPSHOT" date="2013-01-??" description="Release InGrid 3.3">
         <action type="add" dev="wemove" issue="INGRID-2150">
             Add java parameter "-Dfile.encoding=UTF8" to start script.
+        </action>
+        <action type="update" dev="wemove" issue="INGRID-2156">
+          Connect to iBus even if the iBus was started after the iPlug.
         </action>
         <action type="fix" dev="wemove" issue="INGRID-2176">
           Fix problem where no facet was produced from index field values if a query fragment was defined in the facet definition.

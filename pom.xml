@@ -3,13 +3,13 @@
 	<parent>
 		<groupId>de.ingrid</groupId>
 		<artifactId>ingrid-releases-pom</artifactId>
-		<version>3.3.0-SNAPSHOT</version>
+		<version>3.3.0</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ingrid</groupId>
 	<artifactId>ingrid-iplug-excel</artifactId>
 	<packaging>jar</packaging>
-	<version>3.3.0-SNAPSHOT</version>
+	<version>3.3.0-RELEASE-SNAPSHOT</version>
 	<name>ingrid-iplug-excel</name>
 	<scm>
 		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-excel/trunk</connection>
@@ -33,20 +33,8 @@
             <artifactId>poi</artifactId>
             <version>3.5-beta5</version>
       </dependency>
-      <dependency>
-			<groupId>de.ingrid</groupId>
-			<artifactId>ingrid-base-webapp</artifactId>
-            <version>3.2.1</version>
-      </dependency>
-      <dependency>
-			<groupId>de.ingrid</groupId>
-			<artifactId>ingrid-base-webapp</artifactId>
-            <version>3.2.1</version>
-			<classifier>res</classifier>
-			<type>zip</type>
-	  </dependency>
     </dependencies>
-    </dependencyManagement>
+  </dependencyManagement>
 
 	<dependencies>
 		<dependency>

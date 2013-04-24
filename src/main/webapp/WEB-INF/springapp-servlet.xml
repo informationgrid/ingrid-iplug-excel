@@ -53,9 +53,8 @@
     
     <!-- enable Auto-detecting of components (annotation based configuration including autowire ...) -->
     <context:component-scan base-package="de.ingrid">
-        <!--  EXAMPLE for including/excluding stuff ! These ones then should not be part of autowire ! -->
-        <!-- context:include-filter type="regex" expression=".*Stub.*Repository"/-->
-        <!-- context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/-->
+        <!-- STEMMER: Exclude autocreation of stemmers ! We explicitly create stemmer via xml then used in auto wiring ! -->
+        <context:exclude-filter type="regex" expression="de.ingrid.admin.search.*Stemmer*" />
     </context:component-scan>
 
     <!--

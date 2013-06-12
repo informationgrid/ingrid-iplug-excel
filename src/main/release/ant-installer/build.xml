@@ -1,4 +1,4 @@
-<project name="PortalU Installation">
+<project name="PortalU Installation" basedir=".">
     <description>
         iPlug-Excel Installation Script
     </description>
@@ -6,6 +6,25 @@
 	<property name="iPlugName" 			value="${project.artifactId}-${project.version}"/>
 	<property name="xml-communication" 	value="${installDir}/conf/communication.xml"/>
     <property name="start-script"       value="${installDir}/start.sh"/>
+
+    <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
+    <property name="libraryDir"         value="lib" />
+    <property name="libraryIdent"       value="ingrid-iplug-excel-" />
+    <!-- <property name="libraryIdent"       value="MANIFEST.MF" /> -->
+    <property name="versionsWithConfigurations"  value="3.3.0" />
+    <property name="minSupportedVersion" value="3.3.0" />
+
+    <import file="build-installer-utils.xml"  as="utils" />
+    <import file="build-patch.xml"            as="patch" />
+
+    <target name="setUpdateProperty" depends="checkPreconditionsForUpdate, extractUpdate">
+        <property name="installType" value="update" />
+        <property name="updateProcedure" value="true" />
+    </target>
+    
+    <target name="setInstallProperty" depends="extract">
+        <property name="installProcedure" value="true" />
+    </target>
 	
 	<target name="extract" description="Extract all files to the installation directory.">
 		<unzip src="${antinstaller.jar}" dest="${installDir}">
@@ -23,12 +42,30 @@
         
         <replace file="${start-script}" token="@SERVER_PORT@" value="${localServerPort}"/>
     
-    <condition property="copy.plugDescription">
-      <not>
-        <equals arg1="${plugDescription}" arg2="noPlugDescription"/>
-      </not>
-    </condition>
+	    <condition property="copy.plugDescription">
+	      <not>
+	        <equals arg1="${plugDescription}" arg2="noPlugDescription"/>
+	      </not>
+	    </condition>
 	</target>
+
+	<target name="extractUpdate">
+        <unzip src="${antinstaller.jar}" dest=".">
+            <patternset>
+                <include name="**/*.*"/>
+                <exclude name="${iPlugName}/conf/communication.xml" />
+                <exclude name="${iPlugName}/start.sh" />
+            </patternset>
+        </unzip>
+        
+        <delete>
+            <fileset dir="${installDir}/lib" includes="**/*"/>
+        </delete>
+        
+        <move toDir="${installDir}">
+            <fileset dir="./${iPlugName}"/>
+        </move>
+    </target>
 	
 	<target name="ibus" description="Set configuration correctly for the iBus.">
 		<echo>Schreibe iBus Konfiguration in communication.xml</echo>

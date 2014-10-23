@@ -36,7 +36,7 @@ public class Configuration implements IConfig {
         pdObject.put( "iPlugClass", "de.ingrid.iplug.excel.ExcelPlug");
         
         if(pdObject.get("sheets") == null){
-        	if(sheets != null){
+        	if(!sheets.equals("")){
         		xstream = new XStream();
             	pdObject.put("sheets", xstream.fromXML(sheets));
         	}

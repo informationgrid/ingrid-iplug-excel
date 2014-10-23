@@ -50,43 +50,49 @@
 					<tr>
 						<td class="leftCol">Von Spalte:</td>
 						<td>
-							<select name="fromCol">
-								<c:forEach var="col" items="${columns}">
-									<option value="${col.index}">${col.label}</option>
-								</c:forEach>
-							</select>
+							<div class="input full">
+								<select name="fromCol">
+									<c:forEach var="col" items="${columns}">
+										<option value="${col.index}">${col.label}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Bis Spalte:</td>
 						<td>
-							<select name="toCol">
-								<c:forEach var="col" items="${columns}" varStatus="status">
-									<option value="${col.index}" <c:if test="${status.last}">selected="selected"</c:if>>${col.label}</option>
-								</c:forEach>
-							</select>
-							</select>
+							<div class="input full">
+								<select name="toCol">
+									<c:forEach var="col" items="${columns}" varStatus="status">
+										<option value="${col.index}" <c:if test="${status.last}">selected="selected"</c:if>>${col.label}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Von Zeile:</td>
 						<td>
-							<select name="fromRow">
-								<c:forEach var="row" items="${rows}">
-									<option value="${row.index}">${row.label}</option>
-								</c:forEach>
-							</select>
-							</select>
+							<div class="input full">
+								<select name="fromRow">
+									<c:forEach var="row" items="${rows}">
+										<option value="${row.index}">${row.label}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 					<tr>
 						<td class="leftCol">Bis Zeile:</td>
 						<td>
-							<select name="toRow">
-								<c:forEach var="row" items="${rows}" varStatus="status">
-									<option value="${row.index}" <c:if test="${status.last}">selected="selected"</c:if>>${row.label}</option>
-								</c:forEach>
-							</select>
+							<div class="input full">
+								<select name="toRow">
+									<c:forEach var="row" items="${rows}" varStatus="status">
+										<option value="${row.index}" <c:if test="${status.last}">selected="selected"</c:if>>${row.label}</option>
+									</c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 				</table>

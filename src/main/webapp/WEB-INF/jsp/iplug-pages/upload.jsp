@@ -49,7 +49,11 @@
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Excel Datei:</td>
-						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
+						<td>
+							<div class="input full">
+								<input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" />
+							</div>
+						</td>
 					</tr>
 				</table>
 			</form:form>

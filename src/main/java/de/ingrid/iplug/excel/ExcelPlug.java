@@ -3,6 +3,9 @@ package de.ingrid.iplug.excel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tngtech.configbuilder.ConfigBuilder;
+
+import de.ingrid.admin.JettyStarter;
 import de.ingrid.admin.search.IngridIndexSearcher;
 import de.ingrid.iplug.HeartBeatPlug;
 import de.ingrid.iplug.IPlugdescriptionFieldFilter;
@@ -21,7 +24,8 @@ import de.ingrid.utils.query.IngridQuery;
 public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
 	private final IngridIndexSearcher _indexSearcher;
-
+	public static Configuration conf;
+	
 	@Autowired
 	public ExcelPlug(final IngridIndexSearcher indexSearcher,
 			final IPlugdescriptionFieldFilter[] fieldFilters,
@@ -75,5 +79,10 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
     @Override
     public Record getRecord(final IngridHit hit) throws Exception {
         return _indexSearcher.getRecord(hit);
+    }
+    
+    public static void main(String[] args) throws Exception {
+        conf = new ConfigBuilder<Configuration>(Configuration.class).withCommandLineArgs(args).build();
+        new JettyStarter( conf );
     }
 }

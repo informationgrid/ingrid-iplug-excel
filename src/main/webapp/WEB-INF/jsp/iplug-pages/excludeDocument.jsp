@@ -46,7 +46,9 @@
 		<div id="content">
 			<h2>Sie können für einzelne Datensätze definieren, dass diese nicht berücksichtigt werden sollen</h2>
 			<form method="post" action="../iplug-pages/excludeDocument.html" id="excludeDocument">
-				<input type="hidden" name="type" value="${sheet.documentType}"/>
+				<div class="input full">
+					<input type="hidden" name="type" value="${sheet.documentType}"/>
+				</div>
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">
@@ -56,19 +58,21 @@
 							</c:choose>
 						</td>
 						<td>
-							<select name="index">
-								<c:choose>
-									<c:when test="${sheet.documentType == 'COLUMN'}">
-										<c:set var="docs" value="${sheet.visibleColumns}" />
-									</c:when>
-									<c:when test="${sheet.documentType == 'ROW'}">
-										<c:set var="docs" value="${sheet.visibleRows}" />
-									</c:when>
-								</c:choose>
-								<c:forEach var="doc" items="${docs}">
-                                    <option value="${doc.index}">${doc.label}</option>
-                                </c:forEach>
-							</select>
+							<div class="input full">
+								<select name="index">
+									<c:choose>
+										<c:when test="${sheet.documentType == 'COLUMN'}">
+											<c:set var="docs" value="${sheet.visibleColumns}" />
+										</c:when>
+										<c:when test="${sheet.documentType == 'ROW'}">
+											<c:set var="docs" value="${sheet.visibleRows}" />
+										</c:when>
+									</c:choose>
+									<c:forEach var="doc" items="${docs}">
+	                                    <option value="${doc.index}">${doc.label}</option>
+	                                </c:forEach>
+								</select>
+							</div>
 						</td>
 					</tr>
 				</table>

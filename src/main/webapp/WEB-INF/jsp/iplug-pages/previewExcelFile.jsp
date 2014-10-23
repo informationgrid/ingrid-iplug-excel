@@ -49,7 +49,9 @@
 			<form:form action="../iplug-pages/previewExcelFile.html" method="post" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>
-				<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet ${sheet.sheetIndex+1}
+				<div class="input full">
+					<input type="radio" name="sheetIndex" value="${sheet.sheetIndex}"/> Sheet ${sheet.sheetIndex+1}
+				</div>
 			</h2>
 			<div style="overflow:auto">
 			    <%@ include file="renderSheet.jsp" %>

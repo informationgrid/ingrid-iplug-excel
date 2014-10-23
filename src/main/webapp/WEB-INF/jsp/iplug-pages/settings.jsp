@@ -51,7 +51,9 @@
 					<tr>
 						<td class="leftCol">Ein Datensatz ist:</td>
 						<td>
-							<form:select path="documentType" items="${documentTypes}"></form:select>
+							<div class="input full">
+								<form:select path="documentType" items="${documentTypes}"></form:select>
+							</div>
 						</td>
 					</tr>
 					<tr>
@@ -63,7 +65,7 @@
 					<tr>
 						<td class="leftCol">Beschreibung der Daten:</td>
 						<td>
-							<form:input path="description"/>
+							<div class="input full"><form:input path="description"/></div>
 						</td>
 					</tr>
 				</table>

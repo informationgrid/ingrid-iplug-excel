@@ -46,11 +46,17 @@
 		<div id="content">
 			<h2>Wählen Sie eine Excel Datei aus, die Sie indizieren möchten</h2>
 			<form:form  enctype="multipart/form-data" modelAttribute="uploadBean"> 
-			    <input type="hidden" name="sheetIndex" value="${sheetIndex}" />
+			    <div class="input full">
+					<input type="hidden" name="sheetIndex" value="${sheetIndex}" />
+				</div>
 				<table id="konfigForm">
 					<tr>
 						<td class="leftCol">Excel Datei:</td>
-						<td><input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" /></td>
+						<td>
+							<div class="input full">
+								<input type="file" name="file"/> <form:errors path="file" cssClass="error" element="div" />
+							</div>
+						</td>
 					</tr>
 				</table>
 			</form:form>

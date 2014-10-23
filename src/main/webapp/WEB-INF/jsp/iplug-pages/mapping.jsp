@@ -85,10 +85,14 @@
 	      	</div>      	   
 	      	
 	      	<c:if test="${begin > 0}">
-	      		<input type="button" value="&laquo; ${prev + 1} - ${begin} anzeigen" onclick="document.location = 'mapping.html?begin=${prev}'" />
+	      		<div class="input full">
+					<input type="button" value="&laquo; ${prev + 1} - ${begin} anzeigen" onclick="document.location = 'mapping.html?begin=${prev}'" />
+				</div>
 	      	</c:if>
 	      	<c:if test="${nextBegin > end && nextBegin <= last}">
-	      		<input type="button" value="${nextBegin + 1} - ${nextEnd + 1} anzeigen &raquo;" onclick="document.location = 'mapping.html?begin=${nextBegin}'" />
+	      		<div class="input full">
+					<input type="button" value="${nextBegin + 1} - ${nextEnd + 1} anzeigen &raquo;" onclick="document.location = 'mapping.html?begin=${nextBegin}'" />
+				</div>
 	      	</c:if>
         </div>	
 	</div>

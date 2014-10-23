@@ -63,7 +63,7 @@
 					<td>
 						<form action="../iplug-pages/deleteMapping.html" method="POST" style="float:left">
 							<input type="submit" value="Löschen"/>
-							<input type="hidden" name="sheetIndex" value="${status.index}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/>
 						</form>
 						<form action="../iplug-pages/editMapping.html" method="GET" style="float:left">
 							<input type="submit" value="Bearbeiten"/>
@@ -75,7 +75,7 @@
 						</form>
 						<form action="../iplug-pages/switchXls.html" method="GET" style="float:left">
 							<input type="submit" value="Datei aktualisieren"/>
-							<input type="hidden" name="sheetIndex" value="${status.index}"/> 
+							<input type="hidden" name="sheetIndex" value="${status.index}"/>
 						</form>
 					</td>
 				</tr>

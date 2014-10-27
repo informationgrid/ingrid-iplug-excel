@@ -5,7 +5,7 @@
 	<!-- set global properties for this build -->
 	<property name="iPlugName" 			value="${project.artifactId}-${project.version}"/>
 	<property name="xml-communication" 	value="${installDir}/conf/communication.xml"/>
-    <property name="start-script"       value="${installDir}/start.sh"/>
+	<property name="config"             value="${installDir}/conf/config.override.properties"/>
 
     <!-- THIS PORPERTIES ARE NECESSARY FOR UPDATES -->
     <property name="libraryDir"         value="lib" />
@@ -40,8 +40,6 @@
 		<mkdir dir="${installDir}/logs"/>
         <mkdir dir="${installDir}/webapp/WEB-INF/work"/>
         
-        <replace file="${start-script}" token="@SERVER_PORT@" value="${localServerPort}"/>
-    
 	    <condition property="copy.plugDescription">
 	      <not>
 	        <equals arg1="${plugDescription}" arg2="noPlugDescription"/>
@@ -54,7 +52,6 @@
             <patternset>
                 <include name="**/*.*"/>
                 <exclude name="${iPlugName}/conf/communication.xml" />
-                <exclude name="${iPlugName}/start.sh" />
             </patternset>
         </unzip>
         
@@ -67,15 +64,15 @@
         </move>
     </target>
 	
-	<target name="ibus" description="Set configuration correctly for the iBus.">
-		<echo>Schreibe iBus Konfiguration in communication.xml</echo>
-		<xmlproperty file="${xml-communication}" prefix="plugXML"/>
-		<replace file="${xml-communication}" token="${plugXML.communication.client(name)}" 								value="${clientName}-admin"/>
-		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server(name)}" 			value="${serverName}"/>
-		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server.socket(ip)}" 		value="${serverIp}"/>
-		<replace file="${xml-communication}" token="${plugXML.communication.client.connections.server.socket(port)}" 	value="${serverPort}"/>		
-	</target>
-  
+	<target name="adminPort" description="Configure the admin port.">
+        <echo>Schreiben der Konfiguration
+        </echo>
+        <touch file="${config}"/>
+        <propertyfile file="${config}">
+            <entry key="jetty.port" value="${localServerPort}" />
+        </propertyfile>
+    </target>
+	
 	<target name="startIPlug">
 		<echo>
 =================

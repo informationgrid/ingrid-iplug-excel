@@ -19,17 +19,6 @@ THIS_DIR=`dirname "$THIS"`
 INGRID_HOME=`cd "$THIS_DIR" ; pwd`
 PID=$INGRID_HOME/ingrid.pid
 
-INGRID_OPTS="-Djetty.port=@SERVER_PORT@ -Djetty.home=./jetty"
-if [ -f $INGRID_HOME/conf/plugdescription.xml ]; then
-    for tag in IPLUG_ADMIN_GUI_PORT
-    do
-        OUT=`grep --after-context=1 $tag $INGRID_HOME/conf/plugdescription.xml | tr -d '<string>'${tag}'</string>\n' | tr -d '\t' | tr -d ' ' | sed 's/^<.*>\([^<].*\)<.*>$/\1/' `
-        eval ${tag}=`echo \""${OUT}"\"`
-    done
-  P_ARRAY=`echo ${IPLUG_ADMIN_GUI_PORT}`
-  INGRID_OPTS="-Djetty.home=./jetty -Djetty.port="${P_ARRAY}
-fi
-
 # include a debug script, if available, i.e. to specify debug port, etc.
 # caution: the debug script must echo the actual command to be able to work in the current environment
 if [ -f $INGRID_HOME/debug.sh ]; then
@@ -61,7 +50,7 @@ stopIplug()
 			else
 				COUNTER=1
 				SECS=0
-				while [  $COUNTER -lt 10 ]; 
+				while [  $COUNTER -lt 10 ];
 				do
 					COUNTER=$(($COUNTER + 1))
 					echo "process is still running. wait 1 more sec."
@@ -72,15 +61,15 @@ stopIplug()
 					    echo "process ($procid) has been terminated after $SECS sec."
 					    unlink $PID
 					    exit 0
-					fi					
+					fi
 				done
 				echo "process is still running. force kill -9."
 				kill -9 `cat $PID`
 				exit 0
-			fi 
+			fi
 		else
 			echo "process is not running. Exit."
-			unlink $PID 
+			unlink $PID
 		fi
 	else
 		echo "process is not running. Exit."
@@ -104,7 +93,7 @@ stopNoExitIplug()
 			else
 				COUNTER=1
 				SECS=0
-				while [  $COUNTER -lt 10 ]; 
+				while [  $COUNTER -lt 10 ];
 				do
 					COUNTER=$(($COUNTER + 1))
 					echo "process is still running. wait 1 more sec."
@@ -114,13 +103,13 @@ stopNoExitIplug()
 						SECS=$(($COUNTER + $SECS))
 					    echo "process ($procid) has been terminated after $SECS sec."
 					    unlink $PID
-					fi					
+					fi
 				done
 				echo "process is still running. force kill -9."
 				kill -9 `cat $PID`
 			fi
 		else
-			echo "process is not running. Exit."			
+			echo "process is not running. Exit."
 		fi
     else
       echo "process is not running. Exit."
@@ -139,21 +128,21 @@ startIplug()
         exit 1
       fi
   fi
-  
+
   # some Java parameters
   if [ "$INGRID_JAVA_HOME" != "" ]; then
     #echo "run java in $INGRID_JAVA_HOME"
     JAVA_HOME=$INGRID_JAVA_HOME
   fi
-  
+
   if [ "$JAVA_HOME" = "" ]; then
     echo "Error: JAVA_HOME is not set."
     exit 1
   fi
-  
+
   JAVA=$JAVA_HOME/bin/java
   JAVA_HEAP_MAX=-Xmx128m
-  
+
   # check envvars which might override default args
   if [ "$INGRID_HEAPSIZE" != "" ]; then
     JAVA_HEAP_MAX="-Xmx""$INGRID_HEAPSIZE""m"
@@ -169,7 +158,7 @@ startIplug()
   done
   # restore ordinary behaviour
   unset IFS
-  
+
   # cygwin path translation
   if expr `uname` : 'CYGWIN*' > /dev/null; then
     CLASSPATH=`cygpath -p -w "$CLASSPATH"`
@@ -178,10 +167,10 @@ startIplug()
   # run it
   export CLASSPATH="$CLASSPATH"
   INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME -Dfile.encoding=UTF8"
-  CLASS=de.ingrid.iplug.excel.JettyStarter
-	
-  exec nohup "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS $CLASS > console.log & 
-  
+  CLASS=de.ingrid.iplug.excel.ExcelPlug
+
+  exec nohup "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS $CLASS > console.log &
+
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID
 }
@@ -195,7 +184,7 @@ STARTING_USER=`whoami`
 if [ "$STARTING_USER" != "$INGRID_USER" ]; then
   echo "You must be user '$INGRID_USER' to start that script! Set INGRID_USER in environment to overwrite this."
   exit 1
-fi 
+fi
 
 case "$1" in
   start)

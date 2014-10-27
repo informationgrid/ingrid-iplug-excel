@@ -51,7 +51,8 @@
     		ifTarget    ="setInstallProperty"
             type        ="input"
             name        ="componentOptions"
-            displayText ="Einstellungen fuer das iPlug-Excel">
+            displayText ="Einstellungen fuer das iPlug-Excel"
+            target      ="adminPort">
             
             <comment displayText="" explanatoryText="Lokaler Port, unter dem die Administrationsoberfläche des Excel-iPlugs erreichbar sein soll."/>           
             <text property="localServerPort" displayText="Port für Adminoberfläche:" defaultValue="50060"/>

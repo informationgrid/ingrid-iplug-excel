@@ -3,9 +3,7 @@ package de.ingrid.iplug.excel.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -17,6 +15,7 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
+import de.ingrid.utils.tool.PlugDescriptionUtil;
 
 @Controller
 @RequestMapping("/iplug-pages/finish.html")
@@ -64,8 +63,6 @@ public class ExcelFinishController {
         sheets.addSheet(sheet);
 
         // update fields
-        final List<String> fields = new ArrayList<String>();
-        plugDescription.put("fields", fields);
         for (final Sheet aSheet : sheets) {
             Collection<? extends AbstractEntry> entries = null;
             switch (aSheet.getDocumentType()) {
@@ -82,8 +79,8 @@ public class ExcelFinishController {
             for (final AbstractEntry entry : entries) {
                 if (entry.isMapped()) {
                     final String label = entry.getLabel().trim();
-                    if (!"".equals(label) && !fields.contains(label)) {
-                        fields.add(label);
+                    if ( !label.isEmpty() ) {
+                        PlugDescriptionUtil.addFieldToPlugDescription( plugDescription, label );
                     }
                 }
             }

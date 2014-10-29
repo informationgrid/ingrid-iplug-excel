@@ -19,11 +19,8 @@ import de.ingrid.admin.command.PlugdescriptionCommandObject;
 @PropertyLocations(directories = { "conf" }, fromClassLoader = true)
 public class Configuration implements IConfig {
 
+    @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog( Configuration.class );
-
-    @PropertyValue("plugdescription.fields")
-    @DefaultValue("")
-    public List<String> fields;
 
     @PropertyValue("plugdescription.sheets")
     @DefaultValue("")
@@ -44,11 +41,6 @@ public class Configuration implements IConfig {
     @Override
     public void addPlugdescriptionValues(PlugdescriptionCommandObject pdObject) {
         pdObject.put( "iPlugClass", "de.ingrid.iplug.excel.ExcelPlug" );
-
-        for (String field : fields) {
-            pdObject.remove( field );
-            pdObject.addField( field );
-        }
 
         pdObject.setRecordLoader( recordLoader );
         if (pdObject.getRankingTypes().length == 0) {

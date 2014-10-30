@@ -26,13 +26,6 @@ public class Configuration implements IConfig {
     @DefaultValue("")
     public String sheets;
 
-    @PropertyValue("plugdescription.isRecordLoader")
-    @DefaultValue("false")
-    public boolean recordLoader;
-
-    @PropertyValue("plugdescription.ranking")
-    public String rankings;
-
     private XStream xstream;
 
     @Override
@@ -41,26 +34,6 @@ public class Configuration implements IConfig {
     @Override
     public void addPlugdescriptionValues(PlugdescriptionCommandObject pdObject) {
         pdObject.put( "iPlugClass", "de.ingrid.iplug.excel.ExcelPlug" );
-
-        pdObject.setRecordLoader( recordLoader );
-        if (pdObject.getRankingTypes().length == 0) {
-            if (rankings != null) {
-                String[] rankingList = rankings.split( "," );
-                boolean score = false;
-                boolean date = false;
-                boolean notRanked = false;
-                for (String ranking : rankingList) {
-                    if (ranking.equals( "score" )) {
-                        score = true;
-                    } else if (ranking.equals( "date" )) {
-                        date = true;
-                    } else if (ranking.equals( "notRanked" )) {
-                        notRanked = true;
-                    }
-                }
-                pdObject.setRankinTypes( score, date, notRanked );
-            }
-        }
 
         if (pdObject.get( "sheets" ) == null) {
             if (!sheets.equals( "" )) {

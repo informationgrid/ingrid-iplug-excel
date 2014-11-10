@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  **************************************************-
+  ingrid-iplug-excel
+  ==================================================
+  Copyright (C) 2014 wemove digital solutions GmbH
+  ==================================================
+  Licensed under the EUPL, Version 1.1 or – as soon they will be
+  approved by the European Commission - subsequent versions of the
+  EUPL (the "Licence");
+
+  You may not use this work except in compliance with the Licence.
+  You may obtain a copy of the Licence at:
+
+  http://ec.europa.eu/idabc/eupl5
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the Licence is distributed on an "AS IS" basis,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the Licence for the specific language governing permissions and
+  limitations under the Licence.
+  **************************************************#
+  -->
+
 <document>
   <properties>
     <title>History Ingrid Excel iPlug</title>
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
+    <release version="3.5-SNAPSHOT" date="2014-xx-xx" description="Release InGrid 3.5">
+        <action type="add" dev="wemove" issue="REDMINE-524">
+            Added license header to all source files for Open Source migration.
+        </action>
+    </release>
     <release version="3.3.1" date="2013-10-31" description="Release InGrid 3.3.1">
       <action type="update" dev="wemove" issue="INGRID-2246">
           Use german analyzer when creating/searching lucene index, now configured via XML.
@@ -45,7 +73,7 @@
       <action type="fix" dev="wemove">
         Fix query problems if a stop word is part of the query (i.e. 'is').
       </action>
-    </release>   
+    </release>
     <release version="3.1.0" date="2011-09-15" description="Release InGrid 3.1">
       <action type="update" dev="wemove" issue="INGRID-1962">
         Rework title and general content query analysis to better match the analysis of the index process.
@@ -59,13 +87,13 @@
       <action type="fix" issue="INGRID-1992">
         Changed logging behavior, so that not so many files will be created.
       </action>
-    </release>  
+    </release>
     <release version="3.0.1" date="2011-07-04" description="Add-Ons + Bugfixes for InGrid 3.0">
       <action type="add" dev="wemove" issue="INGRID23-152">
         Add a new index.sh script to index an iPlug from command line.
       </action>
       <action type="update" dev="wemove" issue="INGRID-1940">
-        Introduced new field "metainfo" in query for various control info to be handled by iBus / iPlugs. 
+        Introduced new field "metainfo" in query for various control info to be handled by iBus / iPlugs.
       </action>
     </release>
 
@@ -74,7 +102,7 @@
 				Use most current dependencies (jars, except interface-opensearch and dsc), NO FUNCTIONAL CHANGES !
       </action>
     </release>
-		
+
     <release version="2.3.1" date="2011-01-24" description="Update dependencies Release">
       <action type="fix" dev="wemove">
         Fix start script for running on Ubuntu.

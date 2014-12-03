@@ -12,15 +12,15 @@
 	<version>3.5.0-SNAPSHOT</version>
 	<name>ingrid-iplug-excel</name>
 	<scm>
-		<connection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-excel/trunk</connection>
-		<developerConnection>scm:svn:https://harrison.its-technidata.de:444/svn/ingrid/ingrid-iplug-excel/trunk</developerConnection>
+		<connection>scm:git:git@github.com:informationgrid/ingrid-iplug-excel.git</connection>
+		<developerConnection>scm:git:git@github.com:informationgrid/ingrid-iplug-excel.git</developerConnection>
 	</scm>
 	<repositories>
 		<!-- Repo of parent pom needed, parent pom may not be installed locally yet -->
 		<repository>
           <id>de.ingrid.all</id>
           <name>Maven Repo InGrid</name>
-          <url>http://harrison.its-technidata.de/archiva/repository/ingrid-all</url>
+          <url>https://dev.informationgrid.eu/archiva/repository/ingrid-all</url>
         </repository>
 	</repositories>
 

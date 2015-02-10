@@ -1,12 +1,12 @@
 Excel iPlug
 ========
 
-The Excel-iPlug connects the data of an Excel File to the InGrid data space.
+The Excel-iPlug connects the data of Excel Files to the InGrid data space.
 
 Features
 --------
 
-- index any Excel File at a certain schedule
+- index Excel Files at a certain schedule
 - user friendly, GUI based mapping of Excel Sheets to an index
 - provides search functionality on the indexed data
 - GUI for easy administration

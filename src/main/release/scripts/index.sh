@@ -77,13 +77,6 @@ indexIplug()
   fi
   
   JAVA=$JAVA_HOME/bin/java
-  JAVA_HEAP_MAX=-Xmx128m
-  
-  # check envvars which might override default args
-  if [ "$INGRID_HEAPSIZE" != "" ]; then
-    JAVA_HEAP_MAX="-Xmx""$INGRID_HEAPSIZE""m"
-    echo "run with heapsize $JAVA_HEAP_MAX"
-  fi
 
   # so that filenames w/ spaces are handled correctly in loops below
   IFS=
@@ -102,10 +95,10 @@ indexIplug()
 
   # run it
   export CLASSPATH="$CLASSPATH"
-  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME -Dfile.encoding=UTF8"
+  INGRID_OPTS="$INGRID_OPTS -Dingrid_home=$INGRID_HOME -Dfile.encoding=UTF8 -XX:+UseG1GC -XX:+UseStringDeduplication -XX:NewRatio=3"
   CLASS=de.ingrid.admin.search.IndexDriver
 	
-  exec nohup "$JAVA" $JAVA_HEAP_MAX $INGRID_OPTS $CLASS > console.log & 
+  exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log & 
   
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID

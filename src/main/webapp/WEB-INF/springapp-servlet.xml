@@ -60,17 +60,12 @@
         <property name="queryParsers">
             <list>
                 <ref bean="defaultFieldsQueryConverter" />
+                <ref bean="datatypePartnerProviderQueryConverter" />
                 <ref bean="fieldQueryIGCConverter" />
-                <!-- <ref bean="rangeQueryParser" /> -->
+                <ref bean="rangeQueryConverter" />
                 <ref bean="wildcardQueryConverter" />
+                <ref bean="wildcardFieldQueryConverter" />
                 <ref bean="matchAllQueryConverter" />
-<!--            <ref bean="contentQueryParser" />
-                <ref bean="titleQueryParser" />
-                <ref bean="fieldQueryParser" />
-                <ref bean="wildCardFieldQueryParser" />
-                <ref bean="rangeQueryParser" />
-                <ref bean="allResultsOnEmptyQueryParser" /> 
--->
             </list>
         </property>
      </bean>

@@ -27,24 +27,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
-
-import org.apache.lucene.document.Document;
-
 import de.ingrid.admin.StringUtils;
 import de.ingrid.admin.mapping.FieldType;
-import de.ingrid.admin.search.GermanStemmer;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.service.SheetsService;
+import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.PlugDescription;
 
 public class DocumentProducerTest extends TestCase {
 
 	public void testProduce() throws Exception {
-        final DocumentProducer documentProducer = new DocumentProducer(new GermanStemmer());
+        final DocumentProducer documentProducer = new DocumentProducer();
 
 		// setup plugdescription
 		final PlugDescription plugDescription = new PlugDescription();
@@ -92,14 +89,14 @@ public class DocumentProducerTest extends TestCase {
 		plugDescription.put("sheets", sheets);
 
 		documentProducer.configure(plugDescription);
-		final List<Document> documents = new ArrayList<Document>();
+		final List<ElasticDocument> documents = new ArrayList<ElasticDocument>();
 		while (documentProducer.hasNext()) {
-			final Document next = documentProducer.next();
+			final ElasticDocument next = documentProducer.next();
 			assertNotNull(next);
 			documents.add(next);
 		}
 		assertEquals(5, documents.size());
-		Document document = documents.get(0);
+		ElasticDocument document = documents.get(0);
 		assertEquals("Foo", document.get("B"));
 		assertEquals(StringUtils.padding(32), document.get("C"));
 

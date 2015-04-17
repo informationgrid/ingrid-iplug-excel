@@ -213,7 +213,7 @@ public class SheetFilter {
     }
 
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     private static boolean matchFilter(final Comparable<? extends Object> value, final Filter filter) {
         final FilterType type = filter.getFilterType();
         final Comparable<? extends Serializable> expression = filter.getExpression();

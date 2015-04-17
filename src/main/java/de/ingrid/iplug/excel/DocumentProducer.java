@@ -30,23 +30,18 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.Field.Index;
-import org.apache.lucene.document.Field.Store;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
-import de.ingrid.admin.search.Stemmer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
 import de.ingrid.iplug.excel.service.SheetsService;
+import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.IConfigurable;
 import de.ingrid.utils.PlugDescription;
 
@@ -54,12 +49,11 @@ import de.ingrid.utils.PlugDescription;
 public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 	private SheetDocumentIterator _sheetDocumentIterator;
-	private final Stemmer _stemmer;
 
-	static class SheetDocumentIterator implements Iterator<Document> {
+	static class SheetDocumentIterator implements Iterator<ElasticDocument> {
 
-		private static final Logger LOG = Logger
-				.getLogger(SheetDocumentIterator.class);
+		@SuppressWarnings("unused")
+        private static final Logger LOG = Logger.getLogger(SheetDocumentIterator.class);
 
 		private final SheetDocumentIterator _prev;
 
@@ -73,18 +67,11 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 		private final Sheet _sheet;
 
-		private final String _name;
-
-		private final Stemmer _stemmer;
-
         private Values _values;
 
-        public SheetDocumentIterator(final String name, final SheetDocumentIterator prev, final Sheet sheet,
-                final Stemmer stemmer) {
-			_name = name;
+        public SheetDocumentIterator(final String name, final SheetDocumentIterator prev, final Sheet sheet) {
 			_prev = prev;
 			_sheet = sheet;
-			_stemmer = stemmer;
 
 			if (_sheet != null) {
 				final DocumentType documentType = _sheet.getDocumentType();
@@ -126,8 +113,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		/* (non-Javadoc)
 		 * @see java.util.Iterator#next()
 		 */
-		public Document next() {
-			final Document document = _prev != null && _prev.hasNext() ? _prev.next()
+		public ElasticDocument next() {
+			final ElasticDocument document = _prev != null && _prev.hasNext() ? _prev.next()
 					: createDocument(_documentBitSet.nextSetBit(0));
 			return document;
 		}
@@ -151,8 +138,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		 * @return
 		 * 		Created document.
 		 */
-		private Document createDocument(final int nextBit) {
-			final Document document = new Document();
+		private ElasticDocument createDocument(final int nextBit) {
+			final ElasticDocument document = new ElasticDocument();
 			for (int i = _mappedBitSet.nextSetBit(0); i >= 0; i = _mappedBitSet
 					.nextSetBit(i + 1)) {
 
@@ -175,33 +162,23 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				final String label = entry.getLabel();
 				switch (fieldType) {
 				case TEXT:
-					document.add(new Field(label, value.toString(), Store.YES,
-							Index.ANALYZED));
+				    document.put( label, value.toString() );
 					break;
 				case KEYWORD:
 				case BOOLEAN:
 				case DATE:
-					document.add(new Field(label, value.toString(), Store.YES,
-							Index.NOT_ANALYZED));
+				    document.put( label, value.toString() );
 					break;
 				case NUMBER:
-					document.add(new Field(label, StringUtils.padding(Double
-							.parseDouble(value.toString())), Store.YES,
-							Index.NOT_ANALYZED));
+				    document.put(  label, StringUtils.padding(Double.parseDouble(value.toString())) );
 					break;
 
 				default:
 					break;
 				}
-				try {
-					document.add(new Field("content", _stemmer.stem(value
-							.toString()), Store.NO, Index.ANALYZED));
-				} catch (final IOException e) {
-					LOG.warn(_name + ": can not stem content: "
-							+ value.toString(), e);
-				}
-                document.add(new Field("content", value.toString(), Store.NO,
-						Index.ANALYZED));
+
+				document.put( "content", value.toString());
+                //document.add(new Field("content", value.toString(), Store.NO, Index.ANALYZED));
 
 			}
 			remove();
@@ -225,12 +202,6 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		}
 	}
 
-
-    @Autowired
-    public DocumentProducer(final Stemmer stemmer) {
-        _stemmer = stemmer;
-    }
-
 	/* (non-Javadoc)
 	 * @see de.ingrid.admin.object.IDocumentProducer#hasNext()
 	 */
@@ -241,7 +212,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	/* (non-Javadoc)
 	 * @see de.ingrid.admin.object.IDocumentProducer#next()
 	 */
-	public Document next() {
+	public ElasticDocument next() {
 		return _sheetDocumentIterator.next();
 	}
 
@@ -268,7 +239,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
                             final Values values = tmpSheet.getValues();
                             sheet.setValues(values);
                             _sheetDocumentIterator = new SheetDocumentIterator(sheet.getFileName() + ".sheet."
-                                    + sheet.getSheetIndex(), _sheetDocumentIterator, sheet, _stemmer);
+                                    + sheet.getSheetIndex(), _sheetDocumentIterator, sheet);
                         }
                     }
                 } catch (final IOException e) {

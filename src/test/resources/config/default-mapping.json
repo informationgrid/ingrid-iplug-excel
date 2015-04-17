@@ -1,0 +1,17 @@
+{ 
+    "_default_" : { 
+        "_source" : { "enabled" : true }, 
+        "properties": {
+            "datatype": {
+                "type": "string",
+                "store" : false,
+                "index" : "not_analyzed"
+            },
+            "content": {
+                "type": "string",
+                "store" : false,
+                "index" : "not_analyzed"
+            }
+        }
+    } 
+}

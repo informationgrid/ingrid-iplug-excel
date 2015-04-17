@@ -26,16 +26,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.Utils;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -44,6 +41,7 @@ import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
 import de.ingrid.iplug.excel.service.SheetsService;
+import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.IConfigurable;
 import de.ingrid.utils.PlugDescription;
 
@@ -52,7 +50,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 	private SheetDocumentIterator _sheetDocumentIterator;
 
-	static class SheetDocumentIterator implements Iterator<Map<String, Object>> {
+	static class SheetDocumentIterator implements Iterator<ElasticDocument> {
 
 		@SuppressWarnings("unused")
         private static final Logger LOG = Logger.getLogger(SheetDocumentIterator.class);
@@ -69,12 +67,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
 		private final Sheet _sheet;
 
-		private final String _name;
-
         private Values _values;
 
         public SheetDocumentIterator(final String name, final SheetDocumentIterator prev, final Sheet sheet) {
-			_name = name;
 			_prev = prev;
 			_sheet = sheet;
 
@@ -118,8 +113,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		/* (non-Javadoc)
 		 * @see java.util.Iterator#next()
 		 */
-		public Map<String, Object> next() {
-			final Map<String, Object> document = _prev != null && _prev.hasNext() ? _prev.next()
+		public ElasticDocument next() {
+			final ElasticDocument document = _prev != null && _prev.hasNext() ? _prev.next()
 					: createDocument(_documentBitSet.nextSetBit(0));
 			return document;
 		}
@@ -143,8 +138,8 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		 * @return
 		 * 		Created document.
 		 */
-		private Map<String, Object> createDocument(final int nextBit) {
-			final Map<String, Object> document = new HashMap<String, Object>();
+		private ElasticDocument createDocument(final int nextBit) {
+			final ElasticDocument document = new ElasticDocument();
 			for (int i = _mappedBitSet.nextSetBit(0); i >= 0; i = _mappedBitSet
 					.nextSetBit(i + 1)) {
 
@@ -167,23 +162,22 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				final String label = entry.getLabel();
 				switch (fieldType) {
 				case TEXT:
-				    Utils.addToDoc( document, label, value.toString() );
+				    document.put( label, value.toString() );
 					break;
 				case KEYWORD:
 				case BOOLEAN:
 				case DATE:
-				    Utils.addToDoc( document, label, value.toString());
+				    document.put( label, value.toString() );
 					break;
 				case NUMBER:
-				    Utils.addToDoc( document, label, StringUtils.padding(Double
-							.parseDouble(value.toString())));
+				    document.put(  label, StringUtils.padding(Double.parseDouble(value.toString())) );
 					break;
 
 				default:
 					break;
 				}
 
-				Utils.addToDoc( document, "content", value.toString());
+				document.put( "content", value.toString());
                 //document.add(new Field("content", value.toString(), Store.NO, Index.ANALYZED));
 
 			}
@@ -218,7 +212,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	/* (non-Javadoc)
 	 * @see de.ingrid.admin.object.IDocumentProducer#next()
 	 */
-	public Map<String, Object> next() {
+	public ElasticDocument next() {
 		return _sheetDocumentIterator.next();
 	}
 

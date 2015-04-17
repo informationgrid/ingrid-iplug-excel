@@ -25,7 +25,6 @@ package de.ingrid.iplug.excel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import junit.framework.TestCase;
 import de.ingrid.admin.StringUtils;
@@ -36,6 +35,7 @@ import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.service.SheetsService;
+import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.PlugDescription;
 
 public class DocumentProducerTest extends TestCase {
@@ -89,14 +89,14 @@ public class DocumentProducerTest extends TestCase {
 		plugDescription.put("sheets", sheets);
 
 		documentProducer.configure(plugDescription);
-		final List<Map<String, Object>> documents = new ArrayList<Map<String, Object>>();
+		final List<ElasticDocument> documents = new ArrayList<ElasticDocument>();
 		while (documentProducer.hasNext()) {
-			final Map<String, Object> next = documentProducer.next();
+			final ElasticDocument next = documentProducer.next();
 			assertNotNull(next);
 			documents.add(next);
 		}
 		assertEquals(5, documents.size());
-		Map<String, Object> document = documents.get(0);
+		ElasticDocument document = documents.get(0);
 		assertEquals("Foo", document.get("B"));
 		assertEquals(StringUtils.padding(32), document.get("C"));
 

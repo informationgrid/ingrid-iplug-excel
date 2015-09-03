@@ -20,7 +20,7 @@
   limitations under the Licence.
   **************************************************#
   -->
-<project name="PortalU Installation" basedir=".">
+<project name="InGrid-Portal Installation" basedir=".">
     <description>
         iPlug-Excel Installation Script
     </description>
@@ -109,14 +109,10 @@ der folgenden Adresse "http://localhost:${localServerPort}"
 zu konfigurieren. Anstelle von localhost koennen Sie
 auch die IP-Adresse des Computers eingeben!
 Bitte lesen Sie bzgl. der Administration die Kapitel unter
-http://kst.portalu.de/foswiki/bin/view/InGrid3/IPlugExcel
+"http://www.ingrid-oss.eu"
 
 Bevor das iPlug benutzt werden kann, muss es in der iBus-
 Administration (im Portal) eingeschaltet werden.
-
-Weitere Informationen entnehmen Sie bitte dem
-Online-Handbuch unter 
-http://kst.portalu.de/foswiki/bin/view/InGrid3/InGridBetriebshandbuch.
 		</echo>
 	</target>
 	

@@ -195,14 +195,31 @@
           </execution>
         </executions>
       </plugin>
-      <plugin>
-        <groupId>external.atlassian.jgitflow</groupId>
-        <artifactId>jgitflow-maven-plugin</artifactId>
-        <version>1.0-m5.1</version>
-        <configuration>
-            <!-- see goals wiki page for configuration options -->
-        </configuration>
-      </plugin>
+       <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m5.1</version>
+                <configuration>
+                    <prefixes>
+                        <masterBranch>master</masterBranch>
+                        <developBranch>develop</developBranch>
+                        <featureBranchPrefix>feature/</featureBranchPrefix>
+                        <releaseBranchPrefix>release/</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+                        <supportBranchPrefix>support/</supportBranchPrefix>
+                        <versionTagPrefix>v-</versionTagPrefix>
+                    </prefixes>
+                    <msgPrefix>[jgitflow-maven-plugin]</msgPrefix>
+                    <enableFeatureVersions>true</enableFeatureVersions>
+                    <pushFeatures>false</pushFeatures>
+                    <pushReleases>false</pushReleases>
+                    <pushHotfixes>false</pushHotfixes>
+                    <pushSupport>true</pushSupport>
+                    <skipBuild>false</skipBuild>
+                    <skipDeploy>false</skipDeploy>
+                    <skipTests>false</skipTests>
+                </configuration>
+            </plugin>
     </plugins>
   </build>
 </project>

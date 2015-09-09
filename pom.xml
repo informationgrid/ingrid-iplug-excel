@@ -9,7 +9,7 @@
   <groupId>de.ingrid</groupId>
   <artifactId>ingrid-iplug-excel</artifactId>
   <packaging>jar</packaging>
-  <version>3.6.0.4-SNAPSHOT</version>
+  <version>3.6.0.3</version>
   <name>ingrid-iplug-excel</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-iplug-excel.git</connection>

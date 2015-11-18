@@ -3,7 +3,7 @@
   <parent>
     <groupId>de.ingrid</groupId>
     <artifactId>ingrid-releases-pom</artifactId>
-    <version>3.6.1-SNAPSHOT</version>
+    <version>3.6.1</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.ingrid</groupId>
@@ -76,17 +76,17 @@
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-utils</artifactId>
-      <version>3.6.1-SNAPSHOT</version>
+      <version>3.6.1</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1-SNAPSHOT</version>
+      <version>3.6.1</version>
     </dependency>
     <dependency>
       <groupId>de.ingrid</groupId>
       <artifactId>ingrid-base-webapp</artifactId>
-      <version>3.6.1-SNAPSHOT</version>
+      <version>3.6.1</version>
       <classifier>res</classifier>
       <type>zip</type>
     </dependency>
@@ -202,31 +202,15 @@
           </execution>
         </executions>
       </plugin>
-       <plugin>
-                <groupId>external.atlassian.jgitflow</groupId>
-                <artifactId>jgitflow-maven-plugin</artifactId>
-                <version>1.0-m5.1</version>
-                <configuration>
-                    <prefixes>
-                        <masterBranch>master</masterBranch>
-                        <developBranch>develop</developBranch>
-                        <featureBranchPrefix>feature/</featureBranchPrefix>
-                        <releaseBranchPrefix>release/</releaseBranchPrefix>
-                        <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
-                        <supportBranchPrefix>support/</supportBranchPrefix>
-                        <versionTagPrefix>v-</versionTagPrefix>
-                    </prefixes>
-                    <msgPrefix>[jgitflow-maven-plugin]</msgPrefix>
-                    <enableFeatureVersions>true</enableFeatureVersions>
-                    <pushFeatures>false</pushFeatures>
-                    <pushReleases>false</pushReleases>
-                    <pushHotfixes>false</pushHotfixes>
-                    <pushSupport>true</pushSupport>
-                    <skipBuild>false</skipBuild>
-                    <skipDeploy>false</skipDeploy>
-                    <skipTests>false</skipTests>
-                </configuration>
-            </plugin>
+      <plugin>
+        <groupId>external.atlassian.jgitflow</groupId>
+        <artifactId>jgitflow-maven-plugin</artifactId>
+        <version>1.0-m5.1</version>
+        <configuration>
+          <defaultOriginUrl>https://github.com/informationgrid/ingrid-iplug-excel</defaultOriginUrl>
+          <noDeploy>true</noDeploy>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

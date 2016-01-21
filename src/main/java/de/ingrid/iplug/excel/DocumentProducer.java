@@ -33,6 +33,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.elasticsearch.IndexInfo;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -248,4 +249,14 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
             }
 		}
 	}
+
+    @Override
+    public Integer getDocumentCount() {
+        return null;
+    }
+
+    @Override
+    public IndexInfo getIndexInfo() {
+        return null;
+    }
 }

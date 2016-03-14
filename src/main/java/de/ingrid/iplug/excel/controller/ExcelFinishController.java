@@ -33,7 +33,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.thoughtworks.xstream.XStream;
+
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.excel.ExcelPlug;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
@@ -83,6 +86,10 @@ public class ExcelFinishController {
             sheets.removeSheet(sheet);
         }
         sheets.addSheet(sheet);
+        
+        // save mapping to config object
+        XStream xstream = new XStream();
+        ExcelPlug.conf.sheets = xstream.toXML( sheets );
 
         // update fields
         for (final Sheet aSheet : sheets) {

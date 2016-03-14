@@ -67,8 +67,7 @@ public class Configuration implements IConfig {
     @Override
     public void setPropertiesFromPlugdescription(Properties props, PlugdescriptionCommandObject pd) {
         if (pd.get( "sheets" ) != null) {
-            xstream = new XStream();
-            props.setProperty( "plugdescription.sheets", xstream.toXML( pd.get( "sheets" ) ) );
+            props.setProperty( "plugdescription.sheets", this.sheets );
         }
     }
 }

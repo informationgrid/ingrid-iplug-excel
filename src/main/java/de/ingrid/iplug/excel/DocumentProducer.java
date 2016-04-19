@@ -109,7 +109,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 		}
         
         public int getNumberOfDocuments() {
-            return _prev != null ? getNumberOfDocuments() + _documentEntries.size() : _documentEntries.size();
+            return _prev != null ? _prev.getNumberOfDocuments() + _documentEntries.size() : _documentEntries.size();
         }
 
 		/* (non-Javadoc)
@@ -274,5 +274,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
     @Override
     public IndexInfo getIndexInfo() {
         return null;
+    }
+    
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
     }
 }

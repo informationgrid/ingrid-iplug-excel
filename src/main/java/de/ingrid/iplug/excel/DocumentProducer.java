@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -30,9 +30,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.elasticsearch.IndexInfo;
+import de.ingrid.admin.elasticsearch.StatusProvider;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -48,7 +51,12 @@ import de.ingrid.utils.PlugDescription;
 @Service
 public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
-	private SheetDocumentIterator _sheetDocumentIterator;
+    @Autowired
+    private StatusProvider statusProvider;
+    
+    private SheetDocumentIterator _sheetDocumentIterator;
+	
+	private int numberOfDocuments = -1;
 
 	static class SheetDocumentIterator implements Iterator<ElasticDocument> {
 
@@ -99,6 +107,10 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 				_values = _sheet.getValues();
 			}
 		}
+        
+        public int getNumberOfDocuments() {
+            return _prev != null ? _prev.getNumberOfDocuments() + _documentEntries.size() : _documentEntries.size();
+        }
 
 		/* (non-Javadoc)
 		 * @see java.util.Iterator#hasNext()
@@ -206,6 +218,10 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	 * @see de.ingrid.admin.object.IDocumentProducer#hasNext()
 	 */
 	public boolean hasNext() {
+        if (numberOfDocuments < 0) {
+            numberOfDocuments = _sheetDocumentIterator.getNumberOfDocuments();
+            statusProvider.addState( "FETCH", "Found " + numberOfDocuments + " records.");
+        }
 		return _sheetDocumentIterator.hasNext();
 	}
 
@@ -225,6 +241,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	public void configure(final PlugDescription plugDescription) {
 		final File workinDirectory = plugDescription.getWorkinDirectory();
 		final Sheets sheets = (Sheets) plugDescription.get("sheets");
+		numberOfDocuments = -1;
         if (sheets != null) {
             final List<Sheet> sheetsList = sheets.getSheets();
             _sheetDocumentIterator = null;
@@ -248,4 +265,18 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
             }
 		}
 	}
+
+    @Override
+    public Integer getDocumentCount() {
+        return null;
+    }
+
+    @Override
+    public IndexInfo getIndexInfo() {
+        return null;
+    }
+    
+    public void setStatusProvider(StatusProvider statusProvider) {
+        this.statusProvider = statusProvider;
+    }
 }

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -33,7 +33,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.thoughtworks.xstream.XStream;
+
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.excel.ExcelPlug;
 import de.ingrid.iplug.excel.model.AbstractEntry;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
@@ -83,6 +86,10 @@ public class ExcelFinishController {
             sheets.removeSheet(sheet);
         }
         sheets.addSheet(sheet);
+        
+        // save mapping to config object
+        XStream xstream = new XStream();
+        ExcelPlug.conf.sheets = xstream.toXML( sheets );
 
         // update fields
         for (final Sheet aSheet : sheets) {

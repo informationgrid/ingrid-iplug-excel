@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,12 +22,22 @@
  */
 package de.ingrid.iplug.excel;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+
 import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.elasticsearch.StatusProvider;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
@@ -38,17 +48,22 @@ import de.ingrid.iplug.excel.service.SheetsService;
 import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.PlugDescription;
 
-public class DocumentProducerTest extends TestCase {
+@RunWith(MockitoJUnitRunner.class)
+public class DocumentProducerTest {
+    
+    @Mock StatusProvider statusProvider;
 
+    @Test
 	public void testProduce() throws Exception {
         final DocumentProducer documentProducer = new DocumentProducer();
+        documentProducer.setStatusProvider( statusProvider );
 
 		// setup plugdescription
 		final PlugDescription plugDescription = new PlugDescription();
 		final File xls = new File("src/test/resources/mapping/test.xls");
 		plugDescription.setWorkinDirectory(xls.getParentFile().getParentFile());
         final Sheets sheets = SheetsService.createSheets(xls);
-		// setup 0te sheet
+		// setup 1st sheet
 		Sheet sheet = sheets.getSheets().get(0);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
@@ -66,7 +81,7 @@ public class DocumentProducerTest extends TestCase {
 			}
 		}
 
-		// setup 1te sheet
+		// setup 2nd sheet
 		sheet = sheets.getSheets().get(1);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
@@ -92,29 +107,29 @@ public class DocumentProducerTest extends TestCase {
 		final List<ElasticDocument> documents = new ArrayList<ElasticDocument>();
 		while (documentProducer.hasNext()) {
 			final ElasticDocument next = documentProducer.next();
-			assertNotNull(next);
+			assertThat( next, is( not( nullValue() )));
 			documents.add(next);
 		}
-		assertEquals(5, documents.size());
+		assertThat(documents.size(), is(5));
 		ElasticDocument document = documents.get(0);
-		assertEquals("Foo", document.get("B"));
-		assertEquals(StringUtils.padding(32), document.get("C"));
+		assertThat((String)document.get("B"), is("Foo"));
+		assertThat((String)document.get("C"), is(StringUtils.padding(32)));
 
 		document = documents.get(1);
-		assertEquals("Foobar", document.get("B"));
-		assertEquals(StringUtils.padding(2323), document.get("C"));
+		assertThat((String)document.get("B"), is("Foobar"));
+		assertThat((String)document.get("C"), is(StringUtils.padding(2323)));
 
 		document = documents.get(2);
-		assertEquals(StringUtils.padding(139), document.get("B"));
-		assertEquals("130,90", document.get("C"));
+		assertThat((String)document.get("B"), is(StringUtils.padding(139)));
+		assertThat((String)document.get("C"), is("130,90"));
 
 		document = documents.get(3);
-		assertEquals(StringUtils.padding(229), document.get("B"));
-		assertEquals("200,99", document.get("C"));
+		assertThat((String)document.get("B"), is(StringUtils.padding(229)));
+		assertThat((String)document.get("C"), is("200,99"));
 
 		document = documents.get(4);
-		assertEquals(StringUtils.padding(189), document.get("B"));
-		assertEquals("150", document.get("C"));
+		assertThat((String)document.get("B"), is(StringUtils.padding(189)));
+		assertThat((String)document.get("C"), is("150"));
 
 	}
 }

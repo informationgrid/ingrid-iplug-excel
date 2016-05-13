@@ -22,20 +22,31 @@
   **************************************************#
   -->
 
-<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
-http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+<web-app version="2.4" 
+    xmlns="http://java.sun.com/xml/ns/j2ee" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
+    
+    <!-- SPRING Dispatcher Config (MVC) -->
     <servlet>
         <servlet-name>springapp</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/springapp-servlet.xml,
+                /WEB-INF/override/*.xml
+            </param-value>
+        </init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>springapp</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>*.json</url-pattern>
     </servlet-mapping>
     <servlet>
         <servlet-name>forwarding</servlet-name>
@@ -58,6 +69,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
         <servlet-name>forwarding</servlet-name>
         <url-pattern>*.js</url-pattern>
     </servlet-mapping>
+    
   	<listener>
  		<listener-class>de.ingrid.admin.ContextListener</listener-class>
  	</listener>
@@ -124,7 +136,12 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 	<error-page>
 		<error-code>403</error-code>
 		<location>/base/auth/roleFailure.html</location>
-	</error-page>   
+	</error-page>
+    
+    <error-page>
+        <error-code>404</error-code>
+        <location>/base/welcome.html</location>
+    </error-page>
     
     <error-page>
        <exception-type>org.springframework.web.HttpSessionRequiredException</exception-type>

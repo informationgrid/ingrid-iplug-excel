@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2015 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2016 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -67,8 +67,7 @@ public class Configuration implements IConfig {
     @Override
     public void setPropertiesFromPlugdescription(Properties props, PlugdescriptionCommandObject pd) {
         if (pd.get( "sheets" ) != null) {
-            xstream = new XStream();
-            props.setProperty( "plugdescription.sheets", xstream.toXML( pd.get( "sheets" ) ) );
+            props.setProperty( "plugdescription.sheets", this.sheets );
         }
     }
 }

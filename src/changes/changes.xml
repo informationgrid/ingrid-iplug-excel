@@ -29,6 +29,12 @@
   </properties>
   <body>
 
+    <release version="4.0.0" date="2016-08-25" description="Release 4.0.0">
+      <action type="fix" dev="wemove" issue="REDMINE-411">
+        Catch error on invalid stored password. Updated usage info of start script (resetPassword).
+      </action>
+    </release>
+    
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="add" dev="wemove" issue="REDMINE-34">
         Improved status messages while indexing.

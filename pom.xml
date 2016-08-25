@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-iplug-excel</artifactId>
   <packaging>jar</packaging>
-  <version>4.0.1-SNAPSHOT</version>
+  <version>4.0.0</version>
   <name>ingrid-iplug-excel</name>
   <scm>
     <connection>scm:git:git@github.com:informationgrid/ingrid-iplug-excel.git</connection>

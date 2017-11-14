@@ -183,7 +183,11 @@ startIplug()
   
   CLASS=de.ingrid.iplug.excel.ExcelPlug
 
-  exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
+  if [ "$RUN_DIRECTLY" ]; then
+    exec "$JAVA" $INGRID_OPTS $CLASS
+  else
+    exec nohup "$JAVA" $INGRID_OPTS $CLASS > console.log &
+  fi
 
   echo "jetty ($INGRID_HOME) started."
   echo $! > $PID

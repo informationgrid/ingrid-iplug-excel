@@ -1,4 +1,4 @@
-FROM openjdk:8-jre-alpine
+FROM docker-registry.wemove.com/ingrid-java
 ENV INGRID_USER=root
 ENV RUN_DIRECTLY=true
 

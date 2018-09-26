@@ -34,7 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.elasticsearch.IndexInfo;
+import de.ingrid.elasticsearch.IndexInfo;
 import de.ingrid.admin.elasticsearch.StatusProvider;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
@@ -53,6 +53,9 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
     @Autowired
     private StatusProvider statusProvider;
+
+    @Autowired
+	private IndexInfo indexInfo;
     
     private SheetDocumentIterator _sheetDocumentIterator;
 	
@@ -273,7 +276,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
     @Override
     public IndexInfo getIndexInfo() {
-        return null;
+        return indexInfo;
     }
     
     public void setStatusProvider(StatusProvider statusProvider) {

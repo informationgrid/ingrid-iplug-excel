@@ -17,6 +17,14 @@
             "dataSourceName": {
                 "type": "keyword",
                 "store": true
+            },
+            "title": {
+                "type": "text",
+                "store": true
+            },
+            "summary": {
+                "type": "text",
+                "store": true
             }
         }
     }

@@ -22,7 +22,6 @@
  */
 package de.ingrid.iplug.excel;
 
-import com.tngtech.configbuilder.ConfigBuilder;
 import de.ingrid.admin.JettyStarter;
 import de.ingrid.admin.elasticsearch.IndexScheduler;
 import de.ingrid.elasticsearch.search.IndexImpl;
@@ -49,7 +48,6 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 	private static Logger log = LogManager.getLogger(ExcelPlug.class);
 
 	private final IndexImpl _indexSearcher;
-	public static Configuration conf;
 
 	private final IndexScheduler indexScheduler;
 	
@@ -106,9 +104,8 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
     }
     
     public static void main(String[] args) throws Exception {
-        conf = new ConfigBuilder<>(Configuration.class).withCommandLineArgs(args).build();
-        new JettyStarter( conf );
-    }
+		new JettyStarter();
+	}
 
     @Override
     public IngridDocument call(IngridCall info) {

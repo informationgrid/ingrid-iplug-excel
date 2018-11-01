@@ -37,11 +37,8 @@ import de.ingrid.utils.query.IngridQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-@org.springframework.context.annotation.Configuration
-@PropertySource(value = {"classpath:config.properties", "classpath:config.override.properties"})
 @Service
 public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 

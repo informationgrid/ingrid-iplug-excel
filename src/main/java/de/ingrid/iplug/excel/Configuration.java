@@ -22,32 +22,23 @@
  */
 package de.ingrid.iplug.excel;
 
-import java.util.Properties;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.thoughtworks.xstream.XStream;
-import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertiesFiles;
-import com.tngtech.configbuilder.annotation.propertyloaderconfiguration.PropertyLocations;
-import com.tngtech.configbuilder.annotation.valueextractor.DefaultValue;
-import com.tngtech.configbuilder.annotation.valueextractor.PropertyValue;
-
 import de.ingrid.admin.IConfig;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Value;
 
-@PropertiesFiles({ "config" })
-@PropertyLocations(directories = { "conf" }, fromClassLoader = true)
+import java.util.Properties;
+
+@org.springframework.context.annotation.Configuration
 public class Configuration implements IConfig {
 
     @SuppressWarnings("unused")
     private static Log log = LogFactory.getLog( Configuration.class );
 
-    @PropertyValue("plugdescription.sheets")
-    @DefaultValue("")
+    @Value("${plugdescription.sheets:}")
     public String sheets;
-
-    private XStream xstream;
 
     @Override
     public void initialize() {}
@@ -58,7 +49,7 @@ public class Configuration implements IConfig {
 
         if (pdObject.get( "sheets" ) == null) {
             if (!sheets.equals( "" )) {
-                xstream = new XStream();
+                XStream xstream = new XStream();
                 pdObject.put( "sheets", xstream.fromXML( sheets ) );
             }
         }

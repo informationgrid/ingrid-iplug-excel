@@ -22,7 +22,6 @@
  */
 package de.ingrid.iplug.excel;
 
-import com.tngtech.configbuilder.ConfigBuilder;
 import de.ingrid.admin.JettyStarter;
 import de.ingrid.admin.elasticsearch.IndexScheduler;
 import de.ingrid.elasticsearch.search.IndexImpl;
@@ -38,18 +37,14 @@ import de.ingrid.utils.query.IngridQuery;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-@org.springframework.context.annotation.Configuration
-@PropertySource(value = {"classpath:config.properties", "classpath:config.override.properties"})
 @Service
 public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
 	private static Logger log = LogManager.getLogger(ExcelPlug.class);
 
 	private final IndexImpl _indexSearcher;
-	public static Configuration conf;
 
 	private final IndexScheduler indexScheduler;
 	
@@ -106,9 +101,8 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
     }
     
     public static void main(String[] args) throws Exception {
-        conf = new ConfigBuilder<>(Configuration.class).withCommandLineArgs(args).build();
-        new JettyStarter( conf );
-    }
+		new JettyStarter();
+	}
 
     @Override
     public IngridDocument call(IngridCall info) {

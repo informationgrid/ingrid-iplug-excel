@@ -101,7 +101,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
     }
     
     public static void main(String[] args) throws Exception {
-		new JettyStarter();
+		new JettyStarter(Configuration.class);
 	}
 
     @Override

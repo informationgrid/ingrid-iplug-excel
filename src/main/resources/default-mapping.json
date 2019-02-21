@@ -1,35 +1,35 @@
 {
-    "_default_" : {
-        "_source" : { "enabled" : true },
-        "properties": {
-            "iPlugId": {
-                "type": "keyword",
-                "store": true
-            },
-            "partner": {
-                "type": "keyword",
-                "store": true
-            },
-            "provider": {
-                "type": "keyword",
-                "store": true
-            },
-            "datatype": {
-                "type": "keyword",
-                "store": true
-            },
-            "dataSourceName": {
-                "type": "keyword",
-                "store": true
-            },
-            "title": {
-                "type": "text",
-                "store": true
-            },
-            "summary": {
-                "type": "text",
-                "store": true
-            }
-        }
+  "_source": {
+    "enabled": true
+  },
+  "properties": {
+    "iPlugId": {
+      "type": "keyword",
+      "store": true
+    },
+    "partner": {
+      "type": "keyword",
+      "store": true
+    },
+    "provider": {
+      "type": "keyword",
+      "store": true
+    },
+    "datatype": {
+      "type": "keyword",
+      "store": true
+    },
+    "dataSourceName": {
+      "type": "keyword",
+      "store": true
+    },
+    "title": {
+      "type": "text",
+      "store": true
+    },
+    "summary": {
+      "type": "text",
+      "store": true
     }
+  }
 }

@@ -34,12 +34,16 @@ import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Define filters for sheet.
  *
  */
 public class SheetFilter {
+
+    private static Logger log = LogManager.getLogger(SheetFilter.class);
 
     public static boolean trimSheet(final Sheet sheet) {
         // return that sheet is already empty if no columns or rows exists
@@ -239,7 +243,7 @@ public class SheetFilter {
                 return false;
             }
         } catch (final Exception e) {
-            e.printStackTrace();
+            log.error("Error matching filter", e);
             return false;
         }
     }

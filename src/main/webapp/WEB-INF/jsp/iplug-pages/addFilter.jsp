@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -56,17 +56,17 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Filter anwenden</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addFilter').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addFilter').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdrücke zutreffen. Mehrere Filter sind AND verknüpft.</h2>
+			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdrï¿½cke zutreffen. Mehrere Filter sind AND verknï¿½pft.</h2>
 			<form method="post" action="../iplug-pages/addFilter.html" id="addFilter">
 				<div class="input full">
 					<input type="hidden" name="index" value="${index}"/>

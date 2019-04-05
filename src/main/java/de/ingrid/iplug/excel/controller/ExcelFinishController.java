@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,30 +22,32 @@
  */
 package de.ingrid.iplug.excel.controller;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Collection;
-
+import com.thoughtworks.xstream.XStream;
+import de.ingrid.admin.command.PlugdescriptionCommandObject;
+import de.ingrid.iplug.excel.Configuration;
+import de.ingrid.iplug.excel.model.AbstractEntry;
+import de.ingrid.iplug.excel.model.Sheet;
+import de.ingrid.iplug.excel.model.Sheets;
+import de.ingrid.utils.tool.PlugDescriptionUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.thoughtworks.xstream.XStream;
-
-import de.ingrid.admin.command.PlugdescriptionCommandObject;
-import de.ingrid.iplug.excel.ExcelPlug;
-import de.ingrid.iplug.excel.model.AbstractEntry;
-import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.utils.tool.PlugDescriptionUtil;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/iplug-pages/finish.html")
 @SessionAttributes({ "plugDescription", "sheet" })
 public class ExcelFinishController {
+
+    @Autowired
+    private Configuration config;
 
     /**
      * Mapping finish. Create excel file for mapping. 
@@ -89,7 +91,7 @@ public class ExcelFinishController {
         
         // save mapping to config object
         XStream xstream = new XStream();
-        ExcelPlug.conf.sheets = xstream.toXML( sheets );
+        config.sheets = xstream.toXML( sheets );
 
         // update fields
         for (final Sheet aSheet : sheets) {

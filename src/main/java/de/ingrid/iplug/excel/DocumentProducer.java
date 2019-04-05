@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -29,12 +29,13 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.elasticsearch.IndexInfo;
+import de.ingrid.elasticsearch.IndexInfo;
 import de.ingrid.admin.elasticsearch.StatusProvider;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
@@ -51,8 +52,13 @@ import de.ingrid.utils.PlugDescription;
 @Service
 public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
+	private static Logger log = LogManager.getLogger(DocumentProducer.class);
+
     @Autowired
     private StatusProvider statusProvider;
+
+    @Autowired
+	private IndexInfo indexInfo;
     
     private SheetDocumentIterator _sheetDocumentIterator;
 	
@@ -61,7 +67,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	static class SheetDocumentIterator implements Iterator<ElasticDocument> {
 
 		@SuppressWarnings("unused")
-        private static final Logger LOG = Logger.getLogger(SheetDocumentIterator.class);
+        private static final Logger LOG = LogManager.getLogger(SheetDocumentIterator.class);
 
 		private final SheetDocumentIterator _prev;
 
@@ -260,7 +266,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
                         }
                     }
                 } catch (final IOException e) {
-                    e.printStackTrace();
+					log.error("Error configuring document producer", e);
                 }
             }
 		}
@@ -273,7 +279,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 
     @Override
     public IndexInfo getIndexInfo() {
-        return null;
+        return indexInfo;
     }
     
     public void setStatusProvider(StatusProvider statusProvider) {

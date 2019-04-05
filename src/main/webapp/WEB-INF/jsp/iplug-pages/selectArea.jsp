@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -54,19 +54,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Globalen Bereich auswählen</h1>
+		<h1 id="head">Globalen Bereich auswï¿½hlen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('selectArea').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Wählen Sie einen Teilbereich Ihres Sheets aus. Außerhalb liegende Daten werden verworfen.</h2>
+			<h2>Wï¿½hlen Sie einen Teilbereich Ihres Sheets aus. Auï¿½erhalb liegende Daten werden verworfen.</h2>
 			<form method="post" action="../iplug-pages/selectArea.html" id="selectArea">
 				<table id="konfigForm">
 					<tr>

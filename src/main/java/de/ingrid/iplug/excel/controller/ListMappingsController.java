@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,6 +22,8 @@
  */
 package de.ingrid.iplug.excel.controller;
 
+import de.ingrid.iplug.excel.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,6 +41,9 @@ import de.ingrid.utils.query.IngridQuery;
 @Controller
 @SessionAttributes("plugDescription")
 public class ListMappingsController {
+
+    @Autowired
+    private Configuration config;
 
     /**
      * List mappings.
@@ -60,6 +65,9 @@ public class ListMappingsController {
         if (commandObject.getArrayList(IngridQuery.RANKED) != null )
             commandObject.getArrayList(IngridQuery.RANKED).clear();
         commandObject.setRankinTypes(true,  isDate, isOff);
+
+        // make sure the sheets are added to the plugdescription
+        config.addPlugdescriptionValues(commandObject);
         
         return "/iplug-pages/listMappings";
 	}

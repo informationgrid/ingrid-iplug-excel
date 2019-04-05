@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -54,14 +54,14 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Zum Index hinzufügen</h1>
+		<h1 id="head">Zum Index hinzufï¿½gen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
@@ -86,7 +86,7 @@
 						<td>
 							<div class="input full">
 								<select name="fieldName">
-									<option value="">-- bitte wählen --</option>
+									<option value="">-- bitte wï¿½hlen --</option>
 									<option value="title">title</option>
 									<option value="summary">summary</option>
 								</select>

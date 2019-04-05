@@ -78,7 +78,7 @@
 
   <bean id="indexInfo" class="de.ingrid.elasticsearch.IndexInfo">
     <property name="toAlias" value="ingrid"/>
-    <property name="toIndex" value="excel-test"/>
+    <property name="toIndex" value="excel"/>
     <property name="toType" value="default"/>
     <!--<property name="docIdField" value="" />-->
   </bean>

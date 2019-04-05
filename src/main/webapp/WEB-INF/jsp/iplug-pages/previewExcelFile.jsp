@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -55,19 +55,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Sheet auswählen</h1>
+		<h1 id="head">Sheet auswï¿½hlen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
-			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
+			<h2>Welches Sheet dieser Datei mï¿½chten Sie indexieren?</h2>
 			<form:form action="../iplug-pages/previewExcelFile.html" method="post" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>

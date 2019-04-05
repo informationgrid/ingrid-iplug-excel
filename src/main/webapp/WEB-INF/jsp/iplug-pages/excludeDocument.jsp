@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -54,19 +54,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Einzelnen Datensatz ausschließen</h1>
+		<h1 id="head">Einzelnen Datensatz ausschlieï¿½en</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Sie können für einzelne Datensätze definieren, dass diese nicht berücksichtigt werden sollen</h2>
+			<h2>Sie kï¿½nnen fï¿½r einzelne Datensï¿½tze definieren, dass diese nicht berï¿½cksichtigt werden sollen</h2>
 			<form method="post" action="../iplug-pages/excludeDocument.html" id="excludeDocument">
 				<div class="input full">
 					<input type="hidden" name="type" value="${sheet.documentType}"/>

@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -57,12 +57,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Weitere Angaben</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
@@ -81,7 +81,7 @@
 					<tr>
 						<td class="leftCol">Label:</td>
 						<td>
-							<form:checkbox path="firstIsLabel" value="true" /> Erste Zeile / Spalte enthält Überschriften
+							<form:checkbox path="firstIsLabel" value="true" /> Erste Zeile / Spalte enthï¿½lt ï¿½berschriften
 						</td>
 					</tr>
 					<tr>

@@ -2,7 +2,7 @@
   **************************************************-
   ingrid-iplug-excel
   ==================================================
-  Copyright (C) 2014 - 2018 wemove digital solutions GmbH
+  Copyright (C) 2014 - 2019 wemove digital solutions GmbH
   ==================================================
   Licensed under the EUPL, Version 1.1 or â€“ as soon they will be
   approved by the European Commission - subsequent versions of the
@@ -57,14 +57,14 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Mapping der Daten auf den Index</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufï¿½gen</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurück</a>
+			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurï¿½ck</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
-			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
+			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufï¿½gen</a>
 		</div>
 		<form action="../iplug-pages/finish.html" method="post" style="display:none" id="submit">
 			
@@ -72,7 +72,7 @@
 		
 		<div id="content">
 			<h2>Definieren Sie, was indexiert werden soll</h2>
-			<a href="selectArea.html">Globalen Bereich Auswählen</a>
+			<a href="selectArea.html">Globalen Bereich Auswï¿½hlen</a>
 			<c:choose>
 				<c:when test="${sheet.selected}">
 					von ${sheet.fromColumn.label}/${sheet.fromRow.label} bis ${sheet.toColumn.label}/${sheet.toRow.label}
@@ -85,13 +85,13 @@
 			<br/>
 			<c:choose>
 				<c:when test="${sheet.documentType == 'COLUMN'}">
-					<a href="../iplug-pages/excludeDocument.html">Einzelne Spalte ausschließen</a>
+					<a href="../iplug-pages/excludeDocument.html">Einzelne Spalte ausschlieï¿½en</a>
 					<c:forEach var="col" items="${sheet.excludedColumns}">
 					    ${col.label} <a href="../iplug-pages/removeExclusion.html?index=${col.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
 					</c:forEach>
 				</c:when>
 				<c:when test="${sheet.documentType == 'ROW'}">
-					<a href="../iplug-pages/excludeDocument.html">Einzelne Zeile ausschließen</a>
+					<a href="../iplug-pages/excludeDocument.html">Einzelne Zeile ausschlieï¿½en</a>
 					<c:forEach var="row" items="${sheet.excludedRows}">
 					    ${row.label} <a href="../iplug-pages/removeExclusion.html?index=${row.index}"> <img src="../images/iplug-pages/delete.png" border="0" align="absmiddle"/></a>
 					</c:forEach>

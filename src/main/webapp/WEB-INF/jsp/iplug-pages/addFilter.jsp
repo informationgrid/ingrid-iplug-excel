@@ -56,17 +56,17 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Filter anwenden</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addFilter').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addFilter').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdr�cke zutreffen. Mehrere Filter sind AND verkn�pft.</h2>
+			<h2>Es werden nur Daten indexiert, auf die die angegebenen Ausdrücke zutreffen. Mehrere Filter sind AND verknüpft.</h2>
 			<form method="post" action="../iplug-pages/addFilter.html" id="addFilter">
 				<div class="input full">
 					<input type="hidden" name="index" value="${index}"/>

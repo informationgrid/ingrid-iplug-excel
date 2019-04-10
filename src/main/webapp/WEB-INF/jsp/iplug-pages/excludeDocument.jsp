@@ -54,19 +54,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Einzelnen Datensatz ausschlie�en</h1>
+		<h1 id="head">Einzelnen Datensatz ausschließen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('excludeDocument').submit();">Speichern</a>
 		</div>
 		<div id="content">
-			<h2>Sie k�nnen f�r einzelne Datens�tze definieren, dass diese nicht ber�cksichtigt werden sollen</h2>
+			<h2>Sie können für einzelne Datensätze definieren, dass diese nicht berücksichtigt werden sollen</h2>
 			<form method="post" action="../iplug-pages/excludeDocument.html" id="excludeDocument">
 				<div class="input full">
 					<input type="hidden" name="type" value="${sheet.documentType}"/>

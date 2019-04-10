@@ -57,12 +57,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Weitere Angaben</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/previewExcelFile.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheet').submit();">Weiter</a>
 		</div>
@@ -81,7 +81,7 @@
 					<tr>
 						<td class="leftCol">Label:</td>
 						<td>
-							<form:checkbox path="firstIsLabel" value="true" /> Erste Zeile / Spalte enth�lt �berschriften
+							<form:checkbox path="firstIsLabel" value="true" /> Erste Zeile / Spalte enthält Überschriften
 						</td>
 					</tr>
 					<tr>

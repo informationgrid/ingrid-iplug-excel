@@ -55,19 +55,19 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Sheet ausw�hlen</h1>
+		<h1 id="head">Sheet auswählen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/listMappings.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('sheets').submit();">Weiter</a>
 		</div>
 		<div id="content">
-			<h2>Welches Sheet dieser Datei m�chten Sie indexieren?</h2>
+			<h2>Welches Sheet dieser Datei möchten Sie indexieren?</h2>
 			<form:form action="../iplug-pages/previewExcelFile.html" method="post" modelAttribute="sheets"> 
 			<c:forEach items="${sheets.sheets}" var="sheet" >
 			<h2>

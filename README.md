@@ -20,11 +20,11 @@ Requirements
 Installation
 ------------
 
-Download from https://dev.informationgrid.eu/ingrid-distributions/ingrid-iplug-excel/
+Download from https://distributions.informationgrid.eu/ingrid-iplug-excel/
  
 or
 
-build from source with `mvn package assembly:single`.
+build from source with `mvn clean package`.
 
 Execute
 
@@ -43,21 +43,21 @@ Contribute
 - Issue Tracker: https://github.com/informationgrid/ingrid-iplug-excel/issues
 - Source Code: https://github.com/informationgrid/ingrid-iplug-excel
  
-### Set up eclipse project
+### Setup Eclipse project
 
-```
-mvn eclipse:eclipse
-```
+* import project as Maven-Project
+* right click on project and select Maven -> Select Maven Profiles ... (Ctrl+Alt+P)
+* choose profile "development"
+* run "mvn compile" from Commandline (unpacks base-webapp) 
+* run de.ingrid.iplug.excel.ExcelPlug as Java Application
+* in browser call "http://localhost:10012" with login "admin/admin"
 
-and import project into eclipse.
+### Setup IntelliJ IDEA project
 
-### Debug under eclipse
-
-- execute `mvn install` to expand the base web application
-- set up a java application Run Configuration with start class `de.ingrid.iplug.excel.ExcelPlug`
-- add the VM argument `-Djetty.webapp=src/main/webapp` to the Run Configuration
-- add src/main/resources to class path
-- the admin gui starts per default on port 8082, change this with VM argument `-Djetty.port=8083`
+* choose action "Add Maven Projects" and select pom.xml
+* in Maven panel expand "Profiles" and make sure "development" is checked
+* run de.ingrid.iplug.excel.ExcelPlug
+* in browser call "http://localhost:10012" with login "admin/admin"
 
 Support
 -------

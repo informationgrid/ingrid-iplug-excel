@@ -54,14 +54,14 @@
 	<c:import url="../base/subNavi.jsp"></c:import>
 	
 	<div id="contentBox" class="contentMiddle">
-		<h1 id="head">Zum Index hinzuf�gen</h1>
+		<h1 id="head">Zum Index hinzufügen</h1>
 		<div class="controls">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zur�ck</a>
+			<a href="#" onclick="document.location='../iplug-pages/mapping.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('addToIndex').submit();">Speichern</a>
 		</div>
@@ -86,7 +86,7 @@
 						<td>
 							<div class="input full">
 								<select name="fieldName">
-									<option value="">-- bitte w�hlen --</option>
+									<option value="">-- bitte wählen --</option>
 									<option value="title">title</option>
 									<option value="summary">summary</option>
 								</select>

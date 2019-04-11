@@ -56,12 +56,12 @@
 	<div id="contentBox" class="contentMiddle">
 		<h1 id="head">Daten Mappings</h1>
 		<div class="controls">
-            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zur�ck</a>
+            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zurück</a>
             <a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
             <a href="#" onclick="document.location='../base/save.html';">Mapping beenden und speichern</a>
         </div>
         <div class="controls cBottom">
-            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zur�ck</a>
+            <a href="#" onclick="document.location='../base/fieldQuery.html';">Zurück</a>
             <a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
             <a href="#" onclick="document.location='../base/save.html';">Mapping beenden und speichern</a>
         </div>
@@ -84,7 +84,7 @@
 					<td>${sheet.description}&nbsp;</td>
 					<td>
 						<form action="../iplug-pages/deleteMapping.html" method="POST" style="float:left">
-							<input type="submit" value="L�schen"/>
+							<input type="submit" value="Löschen"/>
 							<input type="hidden" name="sheetIndex" value="${status.index}"/>
 						</form>
 						<form action="../iplug-pages/editMapping.html" method="GET" style="float:left">

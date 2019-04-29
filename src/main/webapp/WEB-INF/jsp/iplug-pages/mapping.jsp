@@ -62,7 +62,7 @@
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
 		</div>
 		<div class="controls cBottom">
-			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurüäßßck</a>
+			<a href="#" onclick="document.location='../iplug-pages/settings.html';">Zurück</a>
 			<a href="#" onclick="document.location='../base/welcome.html';">Abbrechen</a>
 			<a href="#" onclick="document.getElementById('submit').submit();">Mapping hinzufügen</a>
 		</div>

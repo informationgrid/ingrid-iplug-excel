@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-iplug-excel</artifactId>
   <packaging>jar</packaging>
-  <version>5.0.1</version>
+  <version>5.1.0</version>
   <name>InGrid iPlug Excel</name>
   <description>This iPlug indexes documents from an Excel file and can be queried by the iBus.</description>
 

@@ -29,6 +29,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import de.ingrid.utils.statusprovider.StatusProviderService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +37,6 @@ import org.springframework.stereotype.Service;
 
 import de.ingrid.admin.StringUtils;
 import de.ingrid.elasticsearch.IndexInfo;
-import de.ingrid.admin.elasticsearch.StatusProvider;
 import de.ingrid.admin.mapping.FieldType;
 import de.ingrid.admin.object.IDocumentProducer;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -55,7 +55,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	private static Logger log = LogManager.getLogger(DocumentProducer.class);
 
     @Autowired
-    private StatusProvider statusProvider;
+    private StatusProviderService statusProviderService;
 
     @Autowired
 	private IndexInfo indexInfo;
@@ -226,7 +226,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
 	public boolean hasNext() {
         if (numberOfDocuments < 0) {
             numberOfDocuments = _sheetDocumentIterator.getNumberOfDocuments();
-            statusProvider.addState( "FETCH", "Found " + numberOfDocuments + " records.");
+            statusProviderService.getDefaultStatusProvider().addState( "FETCH", "Found " + numberOfDocuments + " records.");
         }
 		return _sheetDocumentIterator.hasNext();
 	}
@@ -282,7 +282,7 @@ public class DocumentProducer implements IDocumentProducer, IConfigurable {
         return indexInfo;
     }
     
-    public void setStatusProvider(StatusProvider statusProvider) {
-        this.statusProvider = statusProvider;
+    public void setStatusProviderService(StatusProviderService statusProviderService) {
+        this.statusProviderService = statusProviderService;
     }
 }

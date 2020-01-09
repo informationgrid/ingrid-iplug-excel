@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2019 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2020 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -22,41 +22,34 @@
  */
 package de.ingrid.iplug.excel;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
-import static org.hamcrest.CoreMatchers.nullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
+import de.ingrid.admin.StringUtils;
+import de.ingrid.admin.mapping.FieldType;
+import de.ingrid.iplug.excel.model.*;
+import de.ingrid.iplug.excel.service.SheetsService;
+import de.ingrid.utils.ElasticDocument;
+import de.ingrid.utils.PlugDescription;
+import de.ingrid.utils.statusprovider.StatusProviderService;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import de.ingrid.admin.StringUtils;
-import de.ingrid.admin.elasticsearch.StatusProvider;
-import de.ingrid.admin.mapping.FieldType;
-import de.ingrid.iplug.excel.model.Column;
-import de.ingrid.iplug.excel.model.DocumentType;
-import de.ingrid.iplug.excel.model.Row;
-import de.ingrid.iplug.excel.model.Sheet;
-import de.ingrid.iplug.excel.model.Sheets;
-import de.ingrid.iplug.excel.service.SheetsService;
-import de.ingrid.utils.ElasticDocument;
-import de.ingrid.utils.PlugDescription;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DocumentProducerTest {
     
-    @Mock StatusProvider statusProvider;
+    StatusProviderService statusProviderService;
 
     @Test
 	public void testProduce() throws Exception {
+		statusProviderService = new StatusProviderService();
         final DocumentProducer documentProducer = new DocumentProducer();
-        documentProducer.setStatusProvider( statusProvider );
+        documentProducer.setStatusProviderService( statusProviderService );
 
 		// setup plugdescription
 		final PlugDescription plugDescription = new PlugDescription();

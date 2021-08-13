@@ -5,7 +5,7 @@
     <author email="andre.wallat@wemove.com">André Wallat</author>
   </properties>
   <body>
-    <release version="5.9.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.9.0-SNAPSHOT">
+    <release version="5.10.0-SNAPSHOT" date="2021-xx-xx" description="Release 5.10.0-SNAPSHOT">
       <action type="add" dev="wemove" issue="2085">
         Improve InGrid Search - Add ngram Analyzer and additional sort hash.
       </action>
@@ -76,13 +76,13 @@
         Added docker integration.
       </action>
     </release>
-    
+
     <release version="4.0.2" date="2017-04-06" description="Release 4.0.2">
       <action type="fix" dev="wemove" issue="REDMINE-616">
         Fixed handling of multiple values inside an index field on detail request.
       </action>
     </release>
-    
+
     <release version="4.0.1" date="2016-02-01" description="Release 4.0.1">
       <action type="fix" dev="wemove" issue="REDMINE-465">
         Fixed wrong path to save data when using cygwin.
@@ -94,7 +94,7 @@
         Catch error on invalid stored password. Updated usage info of start script (resetPassword).
       </action>
     </release>
-    
+
     <release version="3.6.2" date="2016-05-13" description="Release 3.6.2">
       <action type="add" dev="wemove" issue="REDMINE-34">
         Improved status messages while indexing.
@@ -103,7 +103,7 @@
         Fixed redirect to welcome page for a logged in user.
       </action>
     </release>
-    
+
     <release version="3.6.1" date="2015-11-18" description="Release 3.6.1">
       <action type="update" dev="wemove" issue="REDMINE-15">
         Remove all references to PortalU.
@@ -115,13 +115,13 @@
         Use encrypted password for web interface.
       </action>
     </release>
-    
+
     <release version="3.6.0.3" date="2015-09-09" description="Bugfix-Release 3.6.0.3">
       <action type="fix" dev="wemove" issue="REDMINE-142,REDMINE-89">
         Fixed query generation and request of index fields.
       </action>
     </release>
-    
+
     <release version="3.6.0" date="2015-06-19" description="Release 3.6.0">
       <action type="add" dev="wemove" issue="REDMINE-6">
         Added elastic search as new indexing method.

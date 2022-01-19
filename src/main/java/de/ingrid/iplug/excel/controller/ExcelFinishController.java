@@ -23,6 +23,7 @@
 package de.ingrid.iplug.excel.controller;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.Configuration;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -91,6 +92,7 @@ public class ExcelFinishController {
         
         // save mapping to config object
         XStream xstream = new XStream();
+        xstream.addPermission(AnyTypePermission.ANY);
         config.sheets = xstream.toXML( sheets );
 
         // update fields

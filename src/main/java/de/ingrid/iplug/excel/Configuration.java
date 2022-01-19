@@ -23,6 +23,7 @@
 package de.ingrid.iplug.excel;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.admin.IConfig;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import org.apache.commons.logging.Log;
@@ -50,6 +51,7 @@ public class Configuration implements IConfig {
         if (pdObject.get( "sheets" ) == null) {
             if (!sheets.equals( "" )) {
                 XStream xstream = new XStream();
+                xstream.addPermission(AnyTypePermission.ANY);
                 pdObject.put( "sheets", xstream.fromXML( sheets ) );
             }
         }

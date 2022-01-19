@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2021 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -23,6 +23,7 @@
 package de.ingrid.iplug.excel.controller;
 
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.security.AnyTypePermission;
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
 import de.ingrid.iplug.excel.Configuration;
 import de.ingrid.iplug.excel.model.AbstractEntry;
@@ -91,6 +92,7 @@ public class ExcelFinishController {
         
         // save mapping to config object
         XStream xstream = new XStream();
+        xstream.addPermission(AnyTypePermission.ANY);
         config.sheets = xstream.toXML( sheets );
 
         // update fields

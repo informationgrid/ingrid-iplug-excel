@@ -29,48 +29,49 @@ import de.ingrid.iplug.excel.service.SheetsService;
 import de.ingrid.utils.ElasticDocument;
 import de.ingrid.utils.PlugDescription;
 import de.ingrid.utils.statusprovider.StatusProviderService;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.core.Is.is;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class DocumentProducerTest {
     
     StatusProviderService statusProviderService;
 
-    @Test
-	public void testProduce() throws Exception {
+	@Test
+	void testProduce() throws Exception {
 		statusProviderService = new StatusProviderService();
-        final DocumentProducer documentProducer = new DocumentProducer();
-        documentProducer.setStatusProviderService( statusProviderService );
+		final DocumentProducer documentProducer = new DocumentProducer();
+		documentProducer.setStatusProviderService(statusProviderService);
 
 		// setup plugdescription
 		final PlugDescription plugDescription = new PlugDescription();
 		final File xls = new File("src/test/resources/mapping/test.xls");
 		plugDescription.setWorkinDirectory(xls.getParentFile().getParentFile());
-        final Sheets sheets = SheetsService.createSheets(xls);
+		final Sheets sheets = SheetsService.createSheets(xls);
 		// setup 1st sheet
 		Sheet sheet = sheets.getSheets().get(0);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
-        Column column = sheet.getColumn(1);
+		Column column = sheet.getColumn(1);
 		column.setFieldType(FieldType.TEXT);
 		column.setMapped(true);
-        column = sheet.getColumn(2);
+		column = sheet.getColumn(2);
 		column.setFieldType(FieldType.NUMBER);
 		column.setMapped(true);
-        for (final Row row : sheet.getRows()) {
-            if (row.getIndex() >= 2 && row.getIndex() <= 3) {
-                row.setMatchFilter(true);
+		for (final Row row : sheet.getRows()) {
+			if (row.getIndex() >= 2 && row.getIndex() <= 3) {
+				row.setMatchFilter(true);
 			} else {
-                row.setMatchFilter(false);
+				row.setMatchFilter(false);
 			}
 		}
 
@@ -78,17 +79,17 @@ public class DocumentProducerTest {
 		sheet = sheets.getSheets().get(1);
 		sheet.setFileName("test.xls");
 		sheet.setDocumentType(DocumentType.ROW);
-        column = sheet.getColumn(1);
+		column = sheet.getColumn(1);
 		column.setFieldType(FieldType.NUMBER);
 		column.setMapped(true);
-        column = sheet.getColumn(2);
-        column.setFieldType(FieldType.TEXT);
+		column = sheet.getColumn(2);
+		column.setFieldType(FieldType.TEXT);
 		column.setMapped(true);
-        for (final Row row : sheet.getRows()) {
-            if (row.getIndex() >= 2 && row.getIndex() <= 4) {
-                row.setMatchFilter(true);
+		for (final Row row : sheet.getRows()) {
+			if (row.getIndex() >= 2 && row.getIndex() <= 4) {
+				row.setMatchFilter(true);
 			} else {
-                row.setMatchFilter(false);
+				row.setMatchFilter(false);
 			}
 		}
 
@@ -100,7 +101,7 @@ public class DocumentProducerTest {
 		final List<ElasticDocument> documents = new ArrayList<ElasticDocument>();
 		while (documentProducer.hasNext()) {
 			final ElasticDocument next = documentProducer.next();
-			assertThat( next, is( not( nullValue() )));
+			assertThat(next, is(not(nullValue())));
 			documents.add(next);
 		}
 		assertThat(documents.size(), is(5));

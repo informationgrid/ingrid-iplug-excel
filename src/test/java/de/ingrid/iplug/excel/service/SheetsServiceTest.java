@@ -26,15 +26,18 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
 
-public class SheetsServiceTest extends TestCase {
+public class SheetsServiceTest {
 
+	@Test
 	public void testCreateSheets() throws Exception {
         final Sheets sheets = SheetsService.createSheets(new File("src/test/resources/mapping/test.xls"));
 		final List<Sheet> sheetList = sheets.getSheets();

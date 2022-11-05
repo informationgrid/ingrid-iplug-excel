@@ -8,7 +8,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>ingrid-iplug-excel</artifactId>
   <packaging>jar</packaging>
-  <version>5.15.0-SNAPSHOT</version>
+  <version>5.15.0.3324-SNAPSHOT</version>
   <name>InGrid iPlug Excel</name>
   <description>This iPlug indexes documents from an Excel file and can be queried by the iBus.</description>
 
@@ -31,10 +31,14 @@
 
   <!-- ==================== PROPERTIES ==================== -->
   <properties>
+    <java.version>17</java.version>
     <iplug.type>IPLUG_EXCEL</iplug.type>
     <ingrid-base-webapp.version>5.15.0.3324-SNAPSHOT</ingrid-base-webapp.version>
-    <spring.version>5.3.23</spring.version>
-    <log4j2.version>2.17.1</log4j2.version>
+    <log4j2.version>2.19.0</log4j2.version>
+    <spring.version>2.7.5</spring.version>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <servlet-api.version>3.1.0</servlet-api.version>
   </properties>
 
   <!-- ==================== DEPENDENCY MANAGEMENT ==================== -->
@@ -50,19 +54,14 @@
         <version>3.5-beta5</version>
       </dependency>
       <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-beans</artifactId>
+        <!-- Import dependency management from Spring Boot -->
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <version>${spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-context</artifactId>
-        <version>${spring.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-core</artifactId>
-        <version>${spring.version}</version>
+        <!-- <relativePath />-->
+        <!-- lookup parent from repository -->
+        <type>pom</type>
+        <scope>import</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -145,24 +144,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <!-- The two following dependencies are needed for Jetty -->
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jetty</artifactId>
-      <version>6.1.26</version>
-    </dependency>
-    <dependency>
-      <groupId>org.mortbay.jetty</groupId>
-      <artifactId>jsp-2.1</artifactId>
-      <version>6.1.14</version>
-      <exclusions>
-        <!-- already included in jetty -->
-        <exclusion>
-          <groupId>org.mortbay.jetty</groupId>
-          <artifactId>servlet-api-2.5</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
+    
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>

@@ -154,7 +154,6 @@
     <dependency>
       <groupId>org.hamcrest</groupId>
       <artifactId>hamcrest</artifactId>
-      <version>2.2</version>
       <scope>test</scope>
     </dependency>
     <!-- End of Jetty - Dependencies -->
@@ -179,7 +178,7 @@
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
-      <version>2.0.44-beta</version>
+      <version>4.8.1</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -214,12 +213,17 @@
       <plugin>
         <groupId>org.openrewrite.maven</groupId>
         <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.35.1</version>
+        <version>4.36.0</version>
         <configuration>
           <activeRecipes>
-            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>
-            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>
+<!--            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
+<!--            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>-->
 <!--            <recipe>org.openrewrite.java.migrate.JavaxServletToJakartaServlet</recipe>-->
+            <recipe>org.openrewrite.java.testing.mockito.CleanupMockitoImports</recipe>
+            <recipe>org.openrewrite.java.testing.mockito.MockitoJUnitRunnerSilentToExtension</recipe>
+            <recipe>org.openrewrite.java.testing.mockito.Mockito1to3Migration</recipe>
+            <recipe>org.openrewrite.java.testing.mockito.Mockito1to4Migration</recipe>
+            <recipe>org.openrewrite.java.testing.mockito.MockUtilsToStatic</recipe>
           </activeRecipes>
         </configuration>
         <dependencies>
@@ -231,7 +235,7 @@
           <dependency>
                         <groupId>org.openrewrite.recipe</groupId>
                         <artifactId>rewrite-testing-frameworks</artifactId>
-                        <version>1.29.0</version>
+                        <version>1.30.0</version>
                       </dependency>
           <dependency>
             <groupId>org.openrewrite.recipe</groupId>

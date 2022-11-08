@@ -573,6 +573,7 @@ public class Sheet implements Externalizable {
 	 */
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == null) return false;
 		final Sheet other = (Sheet) obj;
         return other.getSheetIndex() == _sheetIndex && other.getFileName().equals(_fileName);
 	}

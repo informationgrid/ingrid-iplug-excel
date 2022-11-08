@@ -22,9 +22,9 @@
   **************************************************#
   -->
 
-<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.1.1"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.1.1 http://maven.apache.org/xsd/assembly-2.1.1.xsd">
   <id>installer</id>
   <formats>
     <format>jar</format>
@@ -37,7 +37,6 @@
       <includes>
         <include>config.properties</include>
         <include>elasticsearch.properties</include>
-        <include>ingrid.auth</include>
         <include>log4j2.xml</include>
       </includes>
     </fileSet>
@@ -62,14 +61,11 @@
     </fileSet>
     <fileSet>
       <directory>src/main/webapp</directory>
-      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
-      <excludes>
-        <exclude>**/WEB-INF/jetty-web.xml</exclude>
-      </excludes>
+      <outputDirectory>${project.artifactId}-${project.version}/public</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>target/base-webapp</directory>
-      <outputDirectory>${project.artifactId}-${project.version}/webapp</outputDirectory>
+      <outputDirectory>${project.artifactId}-${project.version}/public</outputDirectory>
     </fileSet>
     <fileSet>
       <directory>target/logs</directory>
@@ -82,8 +78,8 @@
   </fileSets>
   <files>
     <file>
-      <source>src/main/release/jetty/jetty-web.xml</source>
-      <outputDirectory>${project.artifactId}-${project.version}/webapp/WEB-INF</outputDirectory>
+      <source>src/main/resources/springapp-servlet.xml</source>
+      <outputDirectory>${project.artifactId}-${project.version}/conf</outputDirectory>
       <filtered>true</filtered>
     </file>
   </files>

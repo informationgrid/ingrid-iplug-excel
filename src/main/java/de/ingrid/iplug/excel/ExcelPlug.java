@@ -7,12 +7,12 @@
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
  * EUPL (the "Licence");
- * 
+ *
  * You may not use this work except in compliance with the Licence.
  * You may obtain a copy of the Licence at:
- * 
+ *
  * http://ec.europa.eu/idabc/eupl5
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the Licence is distributed on an "AS IS" basis,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,6 @@
 package de.ingrid.iplug.excel;
 
 import de.ingrid.admin.Config;
-import de.ingrid.admin.JettyInitializer;
 import de.ingrid.admin.elasticsearch.IndexScheduler;
 import de.ingrid.elasticsearch.ElasticConfig;
 import de.ingrid.elasticsearch.IBusIndexManager;
@@ -44,10 +43,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.web.embedded.jetty.JettyServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.ImportResource;
@@ -65,11 +60,9 @@ import java.io.IOException;
                 @ComponentScan.Filter(type = FilterType.REGEX, pattern = "de.ingrid.admin.controller.RedirectController"),
 
         })
-//@Primary
 public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
     private static final Logger log = LogManager.getLogger(ExcelPlug.class);
-    private final Integer jettyPort;
 
     @Autowired
     private ElasticConfig elasticConfig;
@@ -104,8 +97,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         } else {
             log.info("No external configuration found.");
         }
-        
-        this.jettyPort = baseConfig.getWebappPort();
+
         this.communicationProxyUrl = baseConfig.communicationProxyUrl;
     }
 
@@ -130,7 +122,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         if (elasticConfig.esCommunicationThroughIBus) {
 
             ClauseQuery cq = new ClauseQuery(true, false);
-			cq.addField(new FieldQuery(true, false, "iPlugId", communicationProxyUrl));
+            cq.addField(new FieldQuery(true, false, "iPlugId", communicationProxyUrl));
             query.addClause(cq);
             return this.iBusIndexManager.search(query, start, length);
         }
@@ -178,7 +170,6 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
     public static void main(String[] args) {
         SpringApplication.run(ExcelPlug.class, args);
-//		BaseWebappApplication.main(args);// JettyStarter(Configuration.class);
     }
 
     @Override
@@ -193,16 +184,6 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         log.warn("The following method is not supported: " + info.getMethod());
 
         return doc;
-    }
-
-
-    @Bean
-    @ConditionalOnProperty(prefix = "development", name = "mode", havingValue = "true")
-    public ConfigurableServletWebServerFactory servletContainerFactory() {
-        JettyServletWebServerFactory factory = new JettyServletWebServerFactory();
-        factory.addServerCustomizers(new JettyInitializer());
-        factory.setPort(jettyPort);
-        return factory;
     }
 
 }

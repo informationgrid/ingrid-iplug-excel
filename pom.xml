@@ -210,40 +210,6 @@
           <noDeploy>true</noDeploy>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.openrewrite.maven</groupId>
-        <artifactId>rewrite-maven-plugin</artifactId>
-        <version>4.36.0</version>
-        <configuration>
-          <activeRecipes>
-<!--            <recipe>org.openrewrite.java.testing.junit5.JUnit5BestPractices</recipe>-->
-<!--            <recipe>org.openrewrite.java.spring.framework.UpgradeSpringFramework_5_3</recipe>-->
-<!--            <recipe>org.openrewrite.java.migrate.JavaxServletToJakartaServlet</recipe>-->
-            <recipe>org.openrewrite.java.testing.mockito.CleanupMockitoImports</recipe>
-            <recipe>org.openrewrite.java.testing.mockito.MockitoJUnitRunnerSilentToExtension</recipe>
-            <recipe>org.openrewrite.java.testing.mockito.Mockito1to3Migration</recipe>
-            <recipe>org.openrewrite.java.testing.mockito.Mockito1to4Migration</recipe>
-            <recipe>org.openrewrite.java.testing.mockito.MockUtilsToStatic</recipe>
-          </activeRecipes>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-spring</artifactId>
-            <version>4.29.0</version>
-          </dependency>
-          <dependency>
-                        <groupId>org.openrewrite.recipe</groupId>
-                        <artifactId>rewrite-testing-frameworks</artifactId>
-                        <version>1.30.0</version>
-                      </dependency>
-          <dependency>
-            <groupId>org.openrewrite.recipe</groupId>
-            <artifactId>rewrite-migrate-java</artifactId>
-            <version>1.13.0</version>
-          </dependency>
-        </dependencies>
-      </plugin>
     </plugins>
   </build>
 </project>

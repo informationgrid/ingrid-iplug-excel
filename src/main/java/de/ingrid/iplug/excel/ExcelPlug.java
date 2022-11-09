@@ -72,8 +72,8 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
 
     private final IndexImpl _indexSearcher;
 
+    private Config baseConfig;
     private final IndexScheduler indexScheduler;
-    private final String communicationProxyUrl;
 
     @Autowired
     public ExcelPlug(final IndexImpl indexSearcher,
@@ -85,6 +85,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         super(60000, new PlugDescriptionFieldFilters(fieldFilters),
                 metadataInjectors, preProcessors, postProcessors);
         _indexSearcher = indexSearcher;
+        this.baseConfig = baseConfig;
         this.indexScheduler = indexScheduler;
 
         try {
@@ -97,8 +98,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         } else {
             log.info("No external configuration found.");
         }
-
-        this.communicationProxyUrl = baseConfig.communicationProxyUrl;
+        
     }
 
     /* (non-Javadoc)
@@ -122,7 +122,7 @@ public class ExcelPlug extends HeartBeatPlug implements IRecordLoader {
         if (elasticConfig.esCommunicationThroughIBus) {
 
             ClauseQuery cq = new ClauseQuery(true, false);
-            cq.addField(new FieldQuery(true, false, "iPlugId", communicationProxyUrl));
+            cq.addField(new FieldQuery(true, false, "iPlugId", baseConfig.communicationProxyUrl));
             query.addClause(cq);
             return this.iBusIndexManager.search(query, start, length);
         }

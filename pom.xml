@@ -78,6 +78,10 @@
           <artifactId>ingrid-ibus</artifactId>
         </exclusion>
         <exclusion>
+          <groupId>de.ingrid</groupId>
+          <artifactId>ingrid-ibus-backend</artifactId>
+        </exclusion>
+        <exclusion>
           <groupId>opensymphony</groupId>
           <artifactId>quartz</artifactId>
         </exclusion>

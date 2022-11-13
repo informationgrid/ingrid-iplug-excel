@@ -49,7 +49,7 @@ import org.springframework.context.annotation.ImportResource;
 
 import java.io.IOException;
 
-@ImportResource("/springapp-servlet.xml")
+@ImportResource({"/springapp-servlet.xml", "/override/*.xml"})
 @SpringBootApplication(scanBasePackages = "de.ingrid")
 @ComponentScan(
         basePackages = "de.ingrid",

@@ -34,10 +34,7 @@ import java.util.Map;
 
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.FormulaEvaluator;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import de.ingrid.admin.command.PlugdescriptionCommandObject;
@@ -162,20 +159,20 @@ public class SheetsService {
 
 					Comparable<? extends Object> value = null;
 					switch (poiCell.getCellType()) {
-					case Cell.CELL_TYPE_BOOLEAN:
+                    case BOOLEAN:
 						value = new Boolean(poiCell.getBooleanCellValue());
 						break;
-					case Cell.CELL_TYPE_NUMERIC:
+					case NUMERIC:
 						if (DateUtil.isCellDateFormatted(poiCell)) {
 							value = getFormattedDateString(poiCell);
                         } else {
 							value = new Double(poiCell.getNumericCellValue());
 						}
 						break;
-					case Cell.CELL_TYPE_STRING:
+                    case STRING:
 						value = poiCell.getStringCellValue();
 						break;
-					case Cell.CELL_TYPE_FORMULA:
+                    case FORMULA:
 						value = calculateFormula(poiCell, eval);
 						break;
 					default:
@@ -220,22 +217,22 @@ public class SheetsService {
 
     private static Comparable<? extends Object> calculateFormula(final Cell poiCell, final FormulaEvaluator eval) {
 		Comparable<? extends Object> ret = null;
-		final int type = eval.evaluateFormulaCell(poiCell);
+		final CellType type = eval.evaluateFormulaCell(poiCell);
 		switch (type) {
-        case Cell.CELL_TYPE_NUMERIC:
+        case NUMERIC:
             if (DateUtil.isCellDateFormatted(poiCell)) {
                 ret = getFormattedDateString(poiCell);
             } else {
                 ret = poiCell.getNumericCellValue();
             }
             break;
-        case Cell.CELL_TYPE_BOOLEAN:
+        case BOOLEAN:
             ret = poiCell.getBooleanCellValue();
             break;
-        case Cell.CELL_TYPE_BLANK:
-        case Cell.CELL_TYPE_ERROR:
-        case Cell.CELL_TYPE_FORMULA:
-        case Cell.CELL_TYPE_STRING:
+        case BLANK:
+        case ERROR:
+        case FORMULA:
+        case STRING:
         default:
             ret = poiCell.getStringCellValue();
 		}

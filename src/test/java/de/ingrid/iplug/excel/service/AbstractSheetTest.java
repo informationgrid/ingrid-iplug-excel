@@ -25,7 +25,6 @@ package de.ingrid.iplug.excel.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Point;
@@ -33,7 +32,7 @@ import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
 
-public abstract class AbstractSheetTest extends TestCase {
+public abstract class AbstractSheetTest {
 
 	protected List<Column> getTestColumns() {
 		final List<Column> columns = new ArrayList<Column>();

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -29,10 +29,14 @@ import de.ingrid.iplug.excel.model.Point;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SheetFilterTest extends AbstractSheetTest {
 
-    public void testTrim() {
+	@Test
+	public void testTrim() {
         final Sheet emptySheet = new Sheet();
         emptySheet.addColumn(new Column(0));
         emptySheet.addRow(new Row(0));
@@ -49,7 +53,8 @@ public class SheetFilterTest extends AbstractSheetTest {
         assertEquals(2, sheet.getRows().size());
     }
 
-    public void testSelect() throws Exception {
+	@Test
+	public void testSelect() throws Exception {
         final Sheet sheet = getTestSheet();
 
         for (final Column column : sheet.getColumns()) {
@@ -77,7 +82,8 @@ public class SheetFilterTest extends AbstractSheetTest {
         }
     }
 
-    public void testFilterColumn() {
+	@Test
+	public void testFilterColumn() {
         final Sheet sheet = getTestSheet();
         for (final Column column : sheet.getColumns()) {
             column.setMapped(true);
@@ -103,7 +109,8 @@ public class SheetFilterTest extends AbstractSheetTest {
         }
     }
 
-    public void testFilterAll() {
+	@Test
+	public void testFilterAll() {
         final Sheet sheet = getTestSheet();
         for (final Column column : sheet.getColumns()) {
             column.setMapped(true);

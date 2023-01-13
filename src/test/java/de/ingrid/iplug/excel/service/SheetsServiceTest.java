@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -26,15 +26,18 @@ import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Sheets;
 import de.ingrid.iplug.excel.model.Values;
 
-public class SheetsServiceTest extends TestCase {
+public class SheetsServiceTest {
 
+	@Test
 	public void testCreateSheets() throws Exception {
         final Sheets sheets = SheetsService.createSheets(new File("src/test/resources/mapping/test.xls"));
 		final List<Sheet> sheetList = sheets.getSheets();

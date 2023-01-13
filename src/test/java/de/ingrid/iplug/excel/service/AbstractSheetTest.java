@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -25,7 +25,6 @@ package de.ingrid.iplug.excel.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
 import de.ingrid.iplug.excel.model.Column;
 import de.ingrid.iplug.excel.model.DocumentType;
 import de.ingrid.iplug.excel.model.Point;
@@ -33,7 +32,7 @@ import de.ingrid.iplug.excel.model.Row;
 import de.ingrid.iplug.excel.model.Sheet;
 import de.ingrid.iplug.excel.model.Values;
 
-public abstract class AbstractSheetTest extends TestCase {
+public abstract class AbstractSheetTest {
 
 	protected List<Column> getTestColumns() {
 		final List<Column> columns = new ArrayList<Column>();

@@ -2,7 +2,7 @@
  * **************************************************-
  * ingrid-iplug-excel
  * ==================================================
- * Copyright (C) 2014 - 2022 wemove digital solutions GmbH
+ * Copyright (C) 2014 - 2023 wemove digital solutions GmbH
  * ==================================================
  * Licensed under the EUPL, Version 1.1 or – as soon they will be
  * approved by the European Commission - subsequent versions of the
@@ -573,6 +573,7 @@ public class Sheet implements Externalizable {
 	 */
 	@Override
 	public boolean equals(final Object obj) {
+		if (obj == null) return false;
 		final Sheet other = (Sheet) obj;
         return other.getSheetIndex() == _sheetIndex && other.getFileName().equals(_fileName);
 	}

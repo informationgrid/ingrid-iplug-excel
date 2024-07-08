@@ -1,3 +1,5 @@
+DEPRECATED: This iPlug is not maintained anymore!
+
 Excel iPlug
 ========
 
